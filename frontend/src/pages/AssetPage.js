@@ -60,6 +60,33 @@ const AssetPage = ({ onLogout }) => {
     device.provider.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+  const handleSaveNewBalance = async (newBalance) => {
+    try {
+      // Add to local state
+      const device = {
+        id: `new-${Date.now()}`,
+        serialNumber: newBalance.serialNumber,
+        storeName: newBalance.storeName,
+        storeComuna: newBalance.storeComuna,
+        type: newBalance.type,
+        installation_date: newBalance.installationDate,
+        provider: newBalance.provider,
+        licenseStatus: 'active',
+        warrantyExpiry: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]
+      };
+
+      setAllDevices([device, ...allDevices]);
+      toast.success('Balanza configurada exitosamente');
+      setShowNewBalanceForm(false);
+      
+      // Here you would normally save to backend
+      // await axios.post(`${API}/balances`, newBalance);
+    } catch (error) {
+      toast.error('Error al guardar la balanza');
+      console.error(error);
+    }
+  };
+
   if (loading) {
     return (
       <Layout onLogout={onLogout}>
