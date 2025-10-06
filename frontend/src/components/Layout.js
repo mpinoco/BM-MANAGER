@@ -31,33 +31,33 @@ const Layout = ({ children, onLogout }) => {
         }}
       >
         {/* Header with Walmart Logo */}
-        <div className="p-4 border-b border-blue-700">
+        <div className="p-5 border-b border-white/10">
           {sidebarOpen ? (
             <div>
-              <div className="flex items-center justify-between mb-3">
-                <div className="bg-blue-400/30 px-3 py-2 rounded-lg">
+              <div className="flex items-center justify-between mb-4">
+                <div className="bg-white/95 px-4 py-2.5 rounded-xl shadow-lg">
                   <img 
                     src="/images/logowalmart.png" 
                     alt="Walmart Logo" 
-                    className="h-8 w-auto"
+                    className="h-7 w-auto"
                   />
                 </div>
                 <button 
                   onClick={() => setSidebarOpen(!sidebarOpen)}
-                  className="text-white hover:bg-blue-700 p-2 rounded-lg transition-colors"
+                  className="text-white/90 hover:text-white hover:bg-white/10 p-2 rounded-lg transition-all"
                 >
                   <X size={20} />
                 </button>
               </div>
-              <div>
-                <h2 className="text-white text-base font-bold">BM MANAGER</h2>
-                <p className="text-[10px] text-blue-200">Sistema de Gestión de Balanzas</p>
+              <div className="space-y-1">
+                <h2 className="text-white text-lg font-bold tracking-tight">BM MANAGER</h2>
+                <p className="text-xs text-white/70">Sistema de Gestión de Balanzas</p>
               </div>
             </div>
           ) : (
             <button 
               onClick={() => setSidebarOpen(!sidebarOpen)}
-              className="text-white hover:bg-blue-700 p-2 rounded-lg transition-colors w-full"
+              className="text-white hover:bg-white/10 p-2 rounded-lg transition-all w-full"
             >
               <Menu size={20} className="mx-auto" />
             </button>
