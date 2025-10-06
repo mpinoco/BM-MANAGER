@@ -88,7 +88,7 @@ const Layout = ({ children, onLogout }) => {
         <div className="border-t border-white/10">
           {sidebarOpen && (
             <div className="p-4 text-center bg-white/5">
-              <p className="text-white text-xs font-semibold tracking-wide">ALLCOM</p>
+              <p className="text-white text-xs font-semibold tracking-wide">ALLCOM IA Technologies 2025</p>
               <p className="text-white/60 text-[10px] mt-0.5">Versión 1.1 2025</p>
             </div>
           )}
