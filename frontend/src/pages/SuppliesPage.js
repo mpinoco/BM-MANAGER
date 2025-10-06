@@ -57,7 +57,7 @@ const SuppliesPage = ({ onLogout }) => {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-gray-600 mb-1">Proveedores Activos</p>
-                <h3 className="text-3xl font-bold" style={{ color: '#0071CE' }}>4</h3>
+                <h3 className="text-3xl font-bold" style={{ color: '#0071CE' }}>2</h3>
               </div>
               <div className="w-12 h-12 rounded-full flex items-center justify-center" style={{ backgroundColor: 'rgba(0, 113, 206, 0.1)' }}>
                 <Truck className="w-6 h-6" style={{ color: '#0071CE' }} />
@@ -68,8 +68,8 @@ const SuppliesPage = ({ onLogout }) => {
           <Card className="p-6 shadow-lg">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-gray-600 mb-1">Categorías</p>
-                <h3 className="text-3xl font-bold" style={{ color: '#FFC220' }}>4</h3>
+                <p className="text-sm text-gray-600 mb-1">Tipos de Papel</p>
+                <h3 className="text-3xl font-bold" style={{ color: '#FFC220' }}>2</h3>
               </div>
               <div className="w-12 h-12 rounded-full flex items-center justify-center" style={{ backgroundColor: 'rgba(255, 194, 32, 0.1)' }}>
                 <Package className="w-6 h-6" style={{ color: '#FFC220' }} />
@@ -81,7 +81,7 @@ const SuppliesPage = ({ onLogout }) => {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-gray-600 mb-1">Stock Óptimo</p>
-                <h3 className="text-3xl font-bold text-green-600">98%</h3>
+                <h3 className="text-3xl font-bold text-green-600">100%</h3>
               </div>
               <div className="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center">
                 <CheckCircle2 className="w-6 h-6 text-green-600" />
