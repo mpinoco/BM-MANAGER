@@ -171,12 +171,15 @@ const MapPage = ({ onLogout }) => {
               attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
-            {filteredStores.map(store => (
-              <Marker 
-                key={store.id} 
-                position={[store.latitude, store.longitude]}
-                icon={createCustomIcon(store)}
-              >
+            {filteredStores.map((store, idx) => {
+              // Extract 3-digit code from store name or use index
+              const localCode = store.sap_code ? store.sap_code.split('-')[1].slice(-3) : (idx + 1).toString().padStart(3, '0');
+              return (
+                <Marker 
+                  key={store.id} 
+                  position={[store.latitude, store.longitude]}
+                  icon={createCustomIcon(store, localCode)}
+                >
                 <Popup>
                   <div className="p-2 min-w-[200px]">
                     <h3 className="font-bold text-lg mb-2">{store.name}</h3>
