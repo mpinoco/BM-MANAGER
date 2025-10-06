@@ -65,7 +65,7 @@ const Layout = ({ children, onLogout }) => {
         </div>
 
         {/* Navigation */}
-        <nav className="flex-1 px-3 py-4 space-y-1 overflow-y-auto">
+        <nav className="flex-1 px-3 py-4 space-y-1.5 overflow-y-auto">
           {menuItems.map((item) => {
             const Icon = item.icon;
             const isActive = location.pathname === item.path;
@@ -73,14 +73,14 @@ const Layout = ({ children, onLogout }) => {
               <button
                 key={item.path}
                 onClick={() => navigate(item.path)}
-                className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-all ${
+                className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-xl transition-all ${
                   isActive 
-                    ? 'bg-white text-blue-600 shadow-lg' 
-                    : 'text-white hover:bg-blue-700'
+                    ? 'bg-white text-blue-600 shadow-lg font-semibold' 
+                    : 'text-white/90 hover:text-white hover:bg-white/10'
                 }`}
               >
-                <Icon size={20} />
-                {sidebarOpen && <span className="font-medium text-sm">{item.label}</span>}
+                <Icon size={19} />
+                {sidebarOpen && <span className="text-sm">{item.label}</span>}
               </button>
             );
           })}
