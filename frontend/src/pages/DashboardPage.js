@@ -198,18 +198,90 @@ const DashboardPage = ({ onLogout }) => {
             </ResponsiveContainer>
           </Card>
 
-          {/* Top IA Stores */}
+          {/* Top 10 Production Stores */}
           <Card className="p-6 shadow-lg">
-            <h3 className="text-xl font-semibold mb-4 text-gray-800">Top 3 Locales con Balanzas IA</h3>
+            <h3 className="text-xl font-semibold mb-4 text-gray-800">Top 10 Locales con Mayor Producción</h3>
             <ResponsiveContainer width="100%" height={250}>
-              <BarChart data={topStoresIA} layout="vertical">
+              <BarChart data={topStoresProduction} layout="vertical">
                 <CartesianGrid strokeDasharray="3 3" />
-                <XAxis type="number" />
+                <XAxis type="number" label={{ value: 'Kg/día', position: 'insideBottom', offset: -5 }} />
                 <YAxis dataKey="name" type="category" width={100} />
                 <Tooltip />
-                <Bar dataKey="balances" fill="#79b9e7" radius={[0, 8, 8, 0]} />
+                <Bar dataKey="kg" fill="#0071CE" radius={[0, 8, 8, 0]} />
               </BarChart>
             </ResponsiveContainer>
+          </Card>
+        </div>
+
+        {/* New Sections Row */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          {/* Top 5 Most Weighed Products */}
+          <Card className="p-6 shadow-lg">
+            <h3 className="text-xl font-semibold mb-4 text-gray-800 flex items-center gap-2">
+              <TrendingUp className="w-5 h-5 text-green-600" />
+              Top 5 Productos Más Pesados
+            </h3>
+            <div className="space-y-3">
+              {topProducts.map((product, idx) => (
+                <div key={product.name} className="flex items-center justify-between p-3 bg-green-50 rounded-lg">
+                  <div className="flex items-center gap-3">
+                    <span className="text-2xl font-bold text-green-600">#{idx + 1}</span>
+                    <div>
+                      <p className="font-semibold text-gray-800">{product.name}</p>
+                      <p className="text-sm text-gray-600">{product.kg.toLocaleString()} kg/día</p>
+                    </div>
+                  </div>
+                  <Badge style={{ backgroundColor: '#10b981', color: 'white' }}>{product.trend}</Badge>
+                </div>
+              ))}
+            </div>
+          </Card>
+
+          {/* Top 5 Least Weighed Products */}
+          <Card className="p-6 shadow-lg">
+            <h3 className="text-xl font-semibold mb-4 text-gray-800 flex items-center gap-2">
+              <Activity className="w-5 h-5 text-amber-600" />
+              Top 5 Productos Menos Pesados
+            </h3>
+            <div className="space-y-3">
+              {leastProducts.map((product, idx) => (
+                <div key={product.name} className="flex items-center justify-between p-3 bg-amber-50 rounded-lg">
+                  <div className="flex items-center gap-3">
+                    <span className="text-2xl font-bold text-amber-600">#{idx + 1}</span>
+                    <div>
+                      <p className="font-semibold text-gray-800">{product.name}</p>
+                      <p className="text-sm text-gray-600">{product.kg} kg/día</p>
+                    </div>
+                  </div>
+                  <Badge style={{ backgroundColor: product.trend.startsWith('+') ? '#10b981' : '#f59e0b', color: 'white' }}>{product.trend}</Badge>
+                </div>
+              ))}
+            </div>
+          </Card>
+
+          {/* Top 5 Fraud Attempts */}
+          <Card className="p-6 shadow-lg">
+            <h3 className="text-xl font-semibold mb-4 text-gray-800 flex items-center gap-2">
+              <AlertCircle className="w-5 h-5 text-red-600" />
+              Detecciones IA - No Pesables
+            </h3>
+            <div className="space-y-3">
+              {fraudAttempts.map((item, idx) => (
+                <div key={item.name} className="flex items-center gap-3 p-3 bg-red-50 rounded-lg">
+                  <img 
+                    src={item.image} 
+                    alt={item.name}
+                    className="w-12 h-12 rounded-lg object-cover"
+                    onError={(e) => e.target.src = 'https://via.placeholder.com/100'}
+                  />
+                  <div className="flex-1">
+                    <p className="font-semibold text-gray-800 text-sm">{item.name}</p>
+                    <p className="text-xs text-gray-600">{item.detections} detecciones</p>
+                  </div>
+                  <Badge style={{ backgroundColor: '#ef4444', color: 'white' }}>⚠️</Badge>
+                </div>
+              ))}
+            </div>
           </Card>
         </div>
 
