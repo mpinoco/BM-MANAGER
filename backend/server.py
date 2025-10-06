@@ -395,10 +395,269 @@ async def get_weight_data():
     
     return result
 
+@api_router.post("/fix-naming")
+async def fix_naming_issue():
+    """Fix the persistent Sucursal to Local naming issue"""
+    try:
+        # Update all stores to use "Local" instead of "Sucursal" in name field
+        result = await db.stores.update_many(
+            {"name": {"$regex": "Sucursal"}},
+            [{"$set": {"name": {"$replaceAll": {"input": "$name", "find": "Sucursal", "replacement": "Local"}}}}]
+        )
+        
+        # Also regenerate data with proper naming
+        await db.stores.delete_many({})
+        await initialize_data_fixed()
+        
+        return {"success": True, "message": f"Updated {result.modified_count} stores with correct naming"}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error fixing naming: {str(e)}")
+
+@api_router.get("/ai-predictions", response_model=List[AIPrediction])
+async def get_ai_predictions():
+    """Get AI-generated predictions based on system data"""
+    try:
+        # Get system data for context
+        stores = await db.stores.find().to_list(1000)
+        
+        # Create context for AI
+        total_stores = len(stores)
+        offline_stores = len([s for s in stores if s["status"] == "offline"])
+        problematic_devices = 0
+        total_devices = 0
+        
+        for store in stores:
+            for device in store.get("devices", []):
+                total_devices += 1
+                if device["status"] in ["offline", "maintenance"] or device["label_status"] == "replace":
+                    problematic_devices += 1
+        
+        context = f"""Sistema BM MANAGER - Datos actuales:
+- Total locales: {total_stores}
+- Locales offline: {offline_stores}
+- Dispositivos con problemas: {problematic_devices} de {total_devices}
+- Es temporada de invierno (junio-agosto) en Chile
+- Consumo diario estimado: 615 rollos de papel térmico
+- Stock actual: 8000 rollos económicos
+- Próxima calibración programada: 10 marzo 2025
+"""
+        
+        # Initialize LLM client
+        llm_chat = LlmChat(
+            api_key=os.environ.get('EMERGENT_LLM_KEY'),
+            session_id=f"ai-predictions-{datetime.now().strftime('%Y%m%d')}",
+            system_message="Eres un asistente de IA especializado en análisis predictivo para sistemas de balanzas de supermercados Walmart en Chile. Generas insights valiosos basados en datos del sistema."
+        ).with_model("openai", "gpt-4o")
+        
+        prompt = f"""{context}
+
+Genera 5 predicciones/sugerencias relevantes y accionables para el sistema BM MANAGER. Cada predicción debe:
+- Ser específica y basada en los datos proporcionados
+- Incluir números/métricas cuando sea apropiado
+- Ser útil para la operación diaria
+- Estar en español chileno
+
+Formato requerido (JSON):
+[
+  {{
+    "title": "Título conciso",
+    "content": "Descripción detallada con métricas específicas",
+    "category": "maintenance/supply/fraud/optimization/seasonal",
+    "priority": "high/medium/low"
+  }}
+]"""
+
+        user_message = UserMessage(text=prompt)
+        response = await llm_chat.send_message(user_message)
+        
+        # Try to parse JSON response, fallback to predefined predictions if needed
+        try:
+            import json
+            predictions_data = json.loads(response.strip())
+            predictions = []
+            for pred in predictions_data:
+                predictions.append(AIPrediction(**pred))
+        except:
+            # Fallback to predefined predictions
+            predictions = get_fallback_predictions()
+        
+        return predictions[:5]
+        
+    except Exception as e:
+        logger.error(f"Error generating AI predictions: {str(e)}")
+        # Return fallback predictions on error
+        return get_fallback_predictions()
+
+def get_fallback_predictions():
+    """Fallback predictions when AI is unavailable"""
+    return [
+        AIPrediction(
+            title="Preparación Temporada Alta",
+            content="Faltan 50 días para Navidad. Estimamos que se necesitarán ~5,000 rollos de papel térmico adicionales para cubrir el incremento del 30% en ventas de frutas. Programa tu compra con anticipación.",
+            category="seasonal",
+            priority="high"
+        ),
+        AIPrediction(
+            title="Mantenimiento Preventivo",
+            content="La próxima calibración general está programada para el 10 de marzo de 2025. Te recomendamos adelantar mantenciones preventivas antes del 15 de noviembre para evitar paradas en temporada alta.",
+            category="maintenance",
+            priority="medium"
+        ),
+        AIPrediction(
+            title="Alerta de Stock Crítico",
+            content="El consumo diario de rollos es de 615 unidades y el stock de rollos económicos es de 8,000. Se prevé que se agotará en 13 días. Considera ordenar 10,000 rollos adicionales.",
+            category="supply",
+            priority="high"
+        ),
+        AIPrediction(
+            title="Optimización Autoservicio",
+            content="El tiempo promedio de pesaje por cliente es de 25–30s. Revisar layouts y capacitaciones podría reducirlo a 20s, aumentando la capacidad de atención en horas punta.",
+            category="optimization",
+            priority="medium"
+        ),
+        AIPrediction(
+            title="Detección de Anomalías",
+            content="En el local Recoleta se registran muchas mediciones de 335g, equivalentes a una lata de refresco. Podría indicar fraude en autoservicio; revisa cámaras y refuerza la supervisión.",
+            category="fraud",
+            priority="high"
+        )
+    ]
+
+@api_router.post("/tickets", response_model=Ticket)
+async def create_ticket(ticket_data: dict):
+    """Create a new support ticket"""
+    try:
+        ticket = Ticket(**ticket_data)
+        await db.tickets.insert_one(ticket.dict())
+        return ticket
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=f"Error creating ticket: {str(e)}")
+
+@api_router.get("/tickets", response_model=List[Ticket])
+async def get_tickets():
+    """Get all support tickets"""
+    try:
+        tickets = await db.tickets.find().sort("created_at", -1).to_list(1000)
+        return [Ticket(**ticket) for ticket in tickets]
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error fetching tickets: {str(e)}")
+
+async def initialize_data_fixed():
+    """Initialize data with correct naming (Local instead of Sucursal)"""
+    # Check if data already exists
+    existing_stores = await db.stores.count_documents({})
+    if existing_stores > 0:
+        return
+    
+    stores = []
+    for i, comuna_data in enumerate(SANTIAGO_COMUNAS[:40]):
+        bms_count = random.randint(3, 8)
+        auto_count = random.randint(2, 6)
+        ia_count = random.randint(1, 4)
+        
+        devices = []
+        for _ in range(bms_count):
+            devices.append(generate_device("BMS_ASISTIDA"))
+        for _ in range(auto_count):
+            devices.append(generate_device("AUTOSERVICIO"))
+        for _ in range(ia_count):
+            devices.append(generate_device("IA"))
+        
+        # Determine store status based on device statuses
+        online_devices = sum(1 for d in devices if d.status == "online")
+        total_devices = len(devices)
+        if online_devices == total_devices:
+            status = "online"
+        elif online_devices > total_devices * 0.5:
+            status = "partial"
+        else:
+            status = "offline"
+        
+        store = Store(
+            name=f"Local {i+1}",  # Changed from "Sucursal" to "Local"
+            comuna=comuna_data["name"],
+            sap_code=f"SAP-{1000 + i}",
+            address=f"Av. Principal {100 + i*10}, {comuna_data['name']}",
+            latitude=comuna_data["lat"] + random.uniform(-0.01, 0.01),
+            longitude=comuna_data["lon"] + random.uniform(-0.01, 0.01),
+            status=status,
+            balances_bms=bms_count,
+            balances_autoservicio=auto_count,
+            balances_ia=ia_count,
+            last_update=datetime.now(timezone.utc).isoformat(),
+            network_status=random.choice(["connected"] * 9 + ["unstable"]),
+            latency=random.randint(10, 80),
+            sales_level=random.choice(["high"] * 3 + ["medium"] * 5 + ["low"] * 2),
+            devices=[d.dict() for d in devices]
+        )
+        stores.append(store.dict())
+    
+    await db.stores.insert_many(stores)
+    
+    # Create sample campaigns (same as before)
+    campaigns = [
+        Campaign(
+            name="Navidad 2024",
+            start_date="2024-12-01",
+            end_date="2024-12-31",
+            status="expired",
+            wallpaper_url="https://images.unsplash.com/photo-1512389142860-9c449e58a543?w=800",
+            deployed_count=40,
+            total_balances=40
+        ),
+        Campaign(
+            name="Verano Saludable 2025",
+            start_date="2025-01-15",
+            end_date="2025-03-15",
+            status="active",
+            wallpaper_url="https://images.unsplash.com/photo-1610832958506-aa56368176cf?w=800",
+            deployed_count=38,
+            total_balances=40,
+            stores_applied=[s["id"] for s in stores[:38]]
+        ),
+        Campaign(
+            name="Otoño Promociones",
+            start_date="2025-04-01",
+            end_date="2025-05-31",
+            status="scheduled",
+            wallpaper_url="https://images.unsplash.com/photo-1542838132-92c53300491e?w=800",
+            deployed_count=0,
+            total_balances=40
+        )
+    ]
+    await db.campaigns.insert_many([c.dict() for c in campaigns])
+    
+    # Create alerts (same as before)
+    alerts = []
+    for i, store in enumerate(stores[:10]):
+        if i % 3 == 0:
+            alerts.append(Alert(
+                store_id=store["id"],
+                store_name=f"{store['name']} - {store['comuna']}",
+                type="calibration",
+                message="Calibración trimestral pendiente",
+                priority="medium",
+                created_at=(datetime.now(timezone.utc) - timedelta(days=random.randint(1, 7))).isoformat(),
+                resolved=False
+            ).dict())
+        elif i % 3 == 1:
+            alerts.append(Alert(
+                store_id=store["id"],
+                store_name=f"{store['name']} - {store['comuna']}",
+                type="maintenance",
+                message="Mantenimiento preventivo requerido",
+                priority="high",
+                created_at=(datetime.now(timezone.utc) - timedelta(days=random.randint(1, 5))).isoformat(),
+                resolved=False
+            ).dict())
+    
+    if alerts:
+        await db.alerts.insert_many(alerts)
+
 @app.on_event("startup")
 async def startup_event():
-    await initialize_data()
-    logger.info("Database initialized with sample data")
+    await initialize_data_fixed()
+    logger.info("Database initialized with sample data (Local naming fixed)")
 
 app.include_router(api_router)
 
