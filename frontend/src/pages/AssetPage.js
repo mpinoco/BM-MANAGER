@@ -5,14 +5,17 @@ import Layout from '@/components/Layout';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
-import { Search, HardDrive, Calendar, CheckCircle, AlertCircle } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Search, HardDrive, Calendar, CheckCircle, AlertCircle, Plus, Settings } from 'lucide-react';
 import { toast } from 'sonner';
+import NewBalanceForm from '@/components/NewBalanceForm';
 
 const AssetPage = ({ onLogout }) => {
   const [stores, setStores] = useState([]);
   const [allDevices, setAllDevices] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
+  const [showNewBalanceForm, setShowNewBalanceForm] = useState(false);
 
   useEffect(() => {
     loadData();
