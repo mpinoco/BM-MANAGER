@@ -82,6 +82,19 @@ const SelfServicePage = ({ onLogout }) => {
     loadStores();
   }, []);
 
+  // Update deployment duration timer
+  useEffect(() => {
+    let interval;
+    if (isDeploying && deploymentStartTime) {
+      interval = setInterval(() => {
+        setDeploymentDuration(Math.floor((Date.now() - deploymentStartTime) / 1000));
+      }, 1000);
+    }
+    return () => {
+      if (interval) clearInterval(interval);
+    };
+  }, [isDeploying, deploymentStartTime]);
+
   const loadStores = async () => {
     try {
       const response = await axios.get(`${API}/stores`);
