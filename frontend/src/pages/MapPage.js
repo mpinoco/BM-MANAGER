@@ -222,7 +222,8 @@ const MapPage = ({ onLogout }) => {
                   </div>
                 </Popup>
               </Marker>
-            ))}
+              );
+            })}
           </MapContainer>
         </Card>
       </div>
