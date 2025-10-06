@@ -288,6 +288,8 @@ const AssetPage = ({ onLogout }) => {
             </table>
           </div>
         </Card>
+          </>
+        )}
       </div>
     </Layout>
   );
