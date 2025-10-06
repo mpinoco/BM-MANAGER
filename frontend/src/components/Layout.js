@@ -87,21 +87,21 @@ const Layout = ({ children, onLogout }) => {
         </nav>
 
         {/* Allcom Text and Logout */}
-        <div className="border-t border-blue-700">
+        <div className="border-t border-white/10">
           {sidebarOpen && (
-            <div className="p-4 text-center">
-              <p className="text-white text-xs font-semibold">ALLCOM</p>
-              <p className="text-blue-200 text-[10px]">Versión 1.1 2025</p>
+            <div className="p-4 text-center bg-white/5">
+              <p className="text-white text-xs font-semibold tracking-wide">ALLCOM</p>
+              <p className="text-white/60 text-[10px] mt-0.5">Versión 1.1 2025</p>
             </div>
           )}
           <div className="p-3">
             <Button
               onClick={onLogout}
               variant="ghost"
-              className="w-full flex items-center gap-3 text-white hover:bg-blue-700 justify-start px-4"
+              className="w-full flex items-center gap-3 text-white/90 hover:text-white hover:bg-white/10 justify-start px-4 py-2.5 rounded-xl transition-all"
             >
-              <LogOut size={20} />
-              {sidebarOpen && <span>Cerrar Sesión</span>}
+              <LogOut size={19} />
+              {sidebarOpen && <span className="text-sm">Cerrar Sesión</span>}
             </Button>
           </div>
         </div>
