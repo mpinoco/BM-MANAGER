@@ -8,11 +8,12 @@ const SuppliesPage = ({ onLogout }) => {
   const supplies = [
     {
       id: 1,
-      category: 'Papel Térmico',
+      category: 'Papel Térmico Premium',
       vendor: 'Papelera Nacional S.A.',
       quality: 'Premium 80gsm',
       glueAmount: '15%',
       rollDimensions: '80mm x 80m',
+      metersPerRoll: 80,
       coreSize: '12mm',
       unitsPerBox: 50,
       costPerRoll: '$2.500',
@@ -23,11 +24,12 @@ const SuppliesPage = ({ onLogout }) => {
     },
     {
       id: 2,
-      category: 'Papel Térmico Económico',
+      category: 'Papel Térmico Estándar',
       vendor: 'Distribuidora Sur',
       quality: 'Estándar 55gsm',
       glueAmount: '10%',
       rollDimensions: '80mm x 60m',
+      metersPerRoll: 60,
       coreSize: '12mm',
       unitsPerBox: 60,
       costPerRoll: '$1.800',
@@ -35,36 +37,6 @@ const SuppliesPage = ({ onLogout }) => {
       minStock: 3000,
       lastOrder: '2025-02-15',
       nextOrder: '2025-03-10'
-    },
-    {
-      id: 3,
-      category: 'Cabezales de Impresión',
-      vendor: 'TechPrint Solutions',
-      quality: 'OEM Original',
-      glueAmount: 'N/A',
-      rollDimensions: 'N/A',
-      coreSize: 'N/A',
-      unitsPerBox: 10,
-      costPerRoll: '$45.000',
-      stock: 120,
-      minStock: 50,
-      lastOrder: '2025-01-20',
-      nextOrder: '2025-03-20'
-    },
-    {
-      id: 4,
-      category: 'Rodillos de Presión',
-      vendor: 'Alcon Repuestos',
-      quality: 'Alta Durabilidad',
-      glueAmount: 'N/A',
-      rollDimensions: 'Universal',
-      coreSize: 'N/A',
-      unitsPerBox: 20,
-      costPerRoll: '$8.500',
-      stock: 300,
-      minStock: 100,
-      lastOrder: '2025-02-01',
-      nextOrder: '2025-04-01'
     }
   ];
 
