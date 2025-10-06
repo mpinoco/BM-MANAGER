@@ -174,20 +174,18 @@ const AssetPage = ({ onLogout }) => {
               <tbody>
                 {filteredDevices.slice(0, 50).map((device) => (
                   <tr key={device.id} className="border-b hover:bg-gray-50 transition-colors">
-                    <td className="px-4 py-3">
-                      <span className="font-mono text-sm font-semibold" style={{ color: '#0071CE' }}>
+                    <td className="px-3 py-2">
+                      <span className="font-mono text-xs font-semibold whitespace-nowrap" style={{ color: '#0071CE' }}>
                         {device.serialNumber}
                       </span>
                     </td>
-                    <td className="px-4 py-3">
-                      <div>
-                        <p className="font-semibold text-gray-800">{device.storeName}</p>
-                        <p className="text-xs text-gray-600">{device.storeComuna}</p>
-                      </div>
+                    <td className="px-3 py-2">
+                      <p className="font-semibold text-sm text-gray-800 whitespace-nowrap">{device.storeName} - {device.storeComuna}</p>
                     </td>
-                    <td className="px-4 py-3 text-center">
+                    <td className="px-3 py-2 text-center">
                       <Badge 
                         variant="outline"
+                        className="text-xs whitespace-nowrap"
                         style={{
                           borderColor: device.type === 'IA' ? '#0071CE' : '#FFC220',
                           color: device.type === 'IA' ? '#0071CE' : '#FFC220'
@@ -196,12 +194,13 @@ const AssetPage = ({ onLogout }) => {
                         {device.type}
                       </Badge>
                     </td>
-                    <td className="px-4 py-3 text-center text-sm text-gray-700">
+                    <td className="px-3 py-2 text-center text-xs text-gray-700 whitespace-nowrap">
                       {new Date(device.installation_date).toLocaleDateString('es-CL')}
                     </td>
-                    <td className="px-4 py-3 text-sm text-gray-700">{device.provider}</td>
-                    <td className="px-4 py-3 text-center">
+                    <td className="px-3 py-2 text-xs text-gray-700 whitespace-nowrap">{device.provider}</td>
+                    <td className="px-3 py-2 text-center">
                       <Badge 
+                        className="text-xs whitespace-nowrap"
                         style={{
                           backgroundColor: device.licenseStatus === 'active' ? '#10b981' : '#f59e0b',
                           color: 'white'
@@ -210,7 +209,7 @@ const AssetPage = ({ onLogout }) => {
                         {device.licenseStatus === 'active' ? 'Activa' : 'Pendiente'}
                       </Badge>
                     </td>
-                    <td className="px-4 py-3 text-center text-sm text-gray-700">
+                    <td className="px-3 py-2 text-center text-xs text-gray-700 whitespace-nowrap">
                       {device.warrantyExpiry}
                     </td>
                   </tr>
