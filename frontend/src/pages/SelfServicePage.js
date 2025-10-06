@@ -136,19 +136,50 @@ const SelfServicePage = ({ onLogout }) => {
 
     setIsDeploying(true);
     setDeploymentProgress(0);
+    setDeploymentStartTime(Date.now());
+    setDeploymentDuration(0);
+    setDeploymentErrors([]);
+    
+    // Calculate package size (simulate based on number of images)
+    const calculatedSize = flowSteps.length * 2.8; // ~2.8MB per high-quality image
+    setPackageSize(calculatedSize);
 
     const targetCount = getTargetStoresCount();
+    
     const interval = setInterval(() => {
       setDeploymentProgress(prev => {
+        // Update duration
+        setDeploymentDuration(Math.floor((Date.now() - deploymentStartTime) / 1000));
+        
         if (prev >= targetCount) {
           clearInterval(interval);
           setIsDeploying(false);
-          toast.success(`Flujo desplegado satisfactoriamente en ${targetCount} locales`);
+          
+          // Simulate some random errors (5% chance per store)
+          const errors = [];
+          for (let i = 0; i < targetCount; i++) {
+            if (Math.random() < 0.05) {
+              errors.push(`Local ${i + 1}: Error de conectividad`);
+            }
+          }
+          setDeploymentErrors(errors);
+          
+          if (errors.length === 0) {
+            toast.success(`Flujo desplegado satisfactoriamente en ${targetCount} locales`);
+          } else {
+            toast.warning(`Desplegado en ${targetCount - errors.length}/${targetCount} locales. ${errors.length} errores.`);
+          }
           return targetCount;
         }
         return prev + 1;
       });
-    }, 200);
+    }, 300);
+  };
+
+  const formatDuration = (seconds) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
   };
 
   const validateConfiguration = () => {
