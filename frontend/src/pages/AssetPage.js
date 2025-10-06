@@ -100,20 +100,60 @@ const AssetPage = ({ onLogout }) => {
   return (
     <Layout onLogout={onLogout}>
       <div className="p-8 space-y-6">
-        {/* Header */}
-        <div className="flex justify-between items-center">
-          <div>
-            <h1 className="text-3xl font-bold text-gray-800" style={{ fontFamily: 'Inter, sans-serif' }}>
-              Activos
-            </h1>
-            <p className="text-gray-600 mt-1">Inventario completo de balanzas</p>
-          </div>
-          <div className="flex items-center gap-4">
-            <Badge className="px-4 py-2 text-base" style={{ backgroundColor: '#0071CE', color: 'white' }}>
-              Total Activos: {allDevices.length}
-            </Badge>
-          </div>
-        </div>
+        {showNewBalanceForm ? (
+          <NewBalanceForm 
+            stores={stores}
+            onSave={handleSaveNewBalance}
+            onCancel={() => setShowNewBalanceForm(false)}
+          />
+        ) : (
+          <>
+            {/* Header */}
+            <div className="flex justify-between items-center">
+              <div>
+                <h1 className="text-3xl font-bold text-gray-800" style={{ fontFamily: 'Inter, sans-serif' }}>
+                  Activos
+                </h1>
+                <p className="text-gray-600 mt-1">Inventario completo de balanzas</p>
+              </div>
+              <div className="flex items-center gap-4">
+                <Badge className="px-4 py-2 text-base" style={{ backgroundColor: '#0071CE', color: 'white' }}>
+                  Total Activos: {allDevices.length}
+                </Badge>
+              </div>
+            </div>
+
+            {/* Configure New Balance Button */}
+            <Card 
+              className="p-8 shadow-xl hover:shadow-2xl transition-all cursor-pointer border-2 hover:scale-[1.02]"
+              style={{ 
+                borderColor: '#0071CE',
+                background: 'linear-gradient(135deg, rgba(0, 113, 206, 0.05) 0%, rgba(255, 194, 32, 0.05) 100%)'
+              }}
+              onClick={() => setShowNewBalanceForm(true)}
+            >
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-6">
+                  <div 
+                    className="w-20 h-20 rounded-2xl flex items-center justify-center shadow-lg"
+                    style={{ backgroundColor: '#0071CE' }}
+                  >
+                    <Settings className="w-10 h-10 text-white" />
+                  </div>
+                  <div>
+                    <h2 className="text-2xl font-bold text-gray-800 mb-2" style={{ fontFamily: 'Inter, sans-serif' }}>
+                      Configurar Nueva Balanza
+                    </h2>
+                    <p className="text-gray-600 text-lg">
+                      Registre un nuevo equipo Marques en el sistema con toda su información técnica
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-3">
+                  <Plus size={32} style={{ color: '#0071CE' }} />
+                </div>
+              </div>
+            </Card>
 
         {/* Summary Cards */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
