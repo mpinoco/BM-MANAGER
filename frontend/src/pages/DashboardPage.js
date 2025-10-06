@@ -300,7 +300,8 @@ const DashboardPage = ({ onLogout }) => {
                     <td className="px-4 py-3 text-center">
                       <Button 
                         size="sm" 
-                        variant="outline"
+                        className="hover:shadow-lg hover:scale-105 transition-all duration-200"
+                        style={{ backgroundColor: '#0071CE', color: 'white' }}
                         onClick={() => navigate(`/store/${store.id}`)}
                       >
                         Ver Detalles
