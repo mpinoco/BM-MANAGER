@@ -38,7 +38,7 @@ const AssetPage = ({ onLogout }) => {
             storeComuna: store.comuna,
             storeId: store.id,
             serialNumber: `BMCL-${randomHex}`,
-            provider: device.type === 'IA' ? 'Alcon IA Systems' : 'Balanzas Chile S.A.',
+            provider: device.type === 'IA' ? 'Allcom IA Systems' : 'Balanzas Chile S.A.',
             licenseStatus: Math.random() > 0.1 ? 'active' : 'pending',
             warrantyExpiry: new Date(Date.now() + Math.random() * 365 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]
           });
