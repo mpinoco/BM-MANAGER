@@ -129,34 +129,25 @@ const SuppliesPage = ({ onLogout }) => {
                     <p className="font-semibold text-gray-800">{supply.quality}</p>
                   </div>
                   <div>
+                    <p className="text-xs text-gray-500">Metros/Rollo</p>
+                    <p className="font-semibold text-gray-800">{supply.metersPerRoll}m</p>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <p className="text-xs text-gray-500">Dimensiones</p>
+                    <p className="font-semibold text-gray-800">{supply.rollDimensions}</p>
+                  </div>
+                  <div>
                     <p className="text-xs text-gray-500">Unidades/Caja</p>
                     <p className="font-semibold text-gray-800">{supply.unitsPerBox}</p>
                   </div>
                 </div>
 
-                {supply.rollDimensions !== 'N/A' && (
-                  <div className="grid grid-cols-2 gap-4">
-                    <div>
-                      <p className="text-xs text-gray-500">Dimensiones Rollo</p>
-                      <p className="font-semibold text-gray-800">{supply.rollDimensions}</p>
-                    </div>
-                    <div>
-                      <p className="text-xs text-gray-500">Diámetro Centro</p>
-                      <p className="font-semibold text-gray-800">{supply.coreSize}</p>
-                    </div>
-                  </div>
-                )}
-
-                {supply.glueAmount !== 'N/A' && (
-                  <div>
-                    <p className="text-xs text-gray-500">Cantidad de Pega</p>
-                    <p className="font-semibold text-gray-800">{supply.glueAmount}</p>
-                  </div>
-                )}
-
                 <div className="grid grid-cols-3 gap-4">
                   <div>
-                    <p className="text-xs text-gray-500">Costo/Unidad</p>
+                    <p className="text-xs text-gray-500">Costo/Rollo</p>
                     <p className="font-semibold" style={{ color: '#0071CE' }}>{supply.costPerRoll}</p>
                   </div>
                   <div>
