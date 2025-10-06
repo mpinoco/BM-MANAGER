@@ -9,7 +9,7 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Badge } from '@/components/ui/badge';
-import { CheckCircle, Upload, Image, Settings, Send, Loader2, Eye } from 'lucide-react';
+import { CheckCircle, Upload, Image, Settings, Send, Loader2, Eye, Clock, Package, AlertCircle, CheckCircle2 } from 'lucide-react';
 import { toast } from 'sonner';
 
 const SelfServicePage = ({ onLogout }) => {
