@@ -30,18 +30,26 @@ const Layout = ({ children, onLogout }) => {
         {/* Header with Walmart Logo */}
         <div className="p-4 border-b border-blue-700">
           {sidebarOpen ? (
-            <div className="flex items-center justify-between">
-              <img 
-                src="/images/logowalmart.png" 
-                alt="Walmart Logo" 
-                className="h-10 w-auto"
-              />
-              <button 
-                onClick={() => setSidebarOpen(!sidebarOpen)}
-                className="text-white hover:bg-blue-700 p-2 rounded-lg transition-colors"
-              >
-                <X size={20} />
-              </button>
+            <div>
+              <div className="flex items-center justify-between mb-3">
+                <div className="bg-blue-400/30 px-3 py-2 rounded-lg">
+                  <img 
+                    src="/images/logowalmart.png" 
+                    alt="Walmart Logo" 
+                    className="h-8 w-auto"
+                  />
+                </div>
+                <button 
+                  onClick={() => setSidebarOpen(!sidebarOpen)}
+                  className="text-white hover:bg-blue-700 p-2 rounded-lg transition-colors"
+                >
+                  <X size={20} />
+                </button>
+              </div>
+              <div>
+                <h2 className="text-white text-base font-bold">BM MANAGER</h2>
+                <p className="text-[10px] text-blue-200">Sistema de Gestión de Balanzas</p>
+              </div>
             </div>
           ) : (
             <button 
@@ -50,12 +58,6 @@ const Layout = ({ children, onLogout }) => {
             >
               <Menu size={20} className="mx-auto" />
             </button>
-          )}
-          {sidebarOpen && (
-            <div className="mt-2">
-              <h2 className="text-white text-lg font-bold">BM MANAGER</h2>
-              <p className="text-xs text-blue-200">Sistema de Gestión de Balanzas</p>
-            </div>
           )}
         </div>
 
