@@ -61,10 +61,40 @@ const DashboardPage = ({ onLogout }) => {
     { name: 'Offline', value: metrics.stores_offline, color: '#ef4444' }
   ] : [];
 
-  const topStoresIA = stores
-    .sort((a, b) => b.balances_ia - a.balances_ia)
-    .slice(0, 3)
-    .map(s => ({ name: s.comuna, balances: s.balances_ia }));
+  // Top 10 stores by weight (production)
+  const topStoresProduction = stores
+    .map(s => ({ 
+      name: s.comuna, 
+      kg: Math.floor(Math.random() * 5000) + 2000 // Simulated daily weight
+    }))
+    .sort((a, b) => b.kg - a.kg)
+    .slice(0, 10);
+
+  // Top 5 most and least weighed products
+  const topProducts = [
+    { name: 'Tomate', kg: 2847, trend: '+12%' },
+    { name: 'Plátano', kg: 2631, trend: '+8%' },
+    { name: 'Palta', kg: 2419, trend: '+15%' },
+    { name: 'Manzana', kg: 2186, trend: '+5%' },
+    { name: 'Naranja', kg: 1954, trend: '+3%' }
+  ];
+
+  const leastProducts = [
+    { name: 'Kiwi', kg: 124, trend: '-2%' },
+    { name: 'Ciruela', kg: 156, trend: '-5%' },
+    { name: 'Durazno', kg: 189, trend: '+1%' },
+    { name: 'Frutilla', kg: 203, trend: '-3%' },
+    { name: 'Limón', kg: 247, trend: '+2%' }
+  ];
+
+  // Top 5 non-weighable products detected (fraud attempts)
+  const fraudAttempts = [
+    { name: 'Botella Coca-Cola', image: 'https://images.unsplash.com/photo-1554866585-cd94860890b7?w=100', detections: 23 },
+    { name: 'Paquete Galletas', image: 'https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=100', detections: 19 },
+    { name: 'Caja Cereal', image: 'https://images.unsplash.com/photo-1517686469429-8bdb88b9f907?w=100', detections: 15 },
+    { name: 'Lata Atún', image: 'https://images.unsplash.com/photo-1520961174526-c20f36e40f56?w=100', detections: 12 },
+    { name: 'Bolsa Papas Chips', image: 'https://images.unsplash.com/photo-1566478989037-eec170784d0b?w=100', detections: 9 }
+  ];
 
   if (loading) {
     return (
