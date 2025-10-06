@@ -324,7 +324,7 @@ Por favor atender a la brevedad.`;
                         onClick={() => sendWhatsAppTicket(device, 'Alcom')}
                       >
                         <MessageCircle size={16} className="mr-2" />
-                        Reportar a Alcom
+                        Reportar a Allcom
                       </Button>
                       <Button
                         size="sm"
