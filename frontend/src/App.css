@@ -31,15 +31,15 @@ button:active {
 
 /* Status indicators */
 .status-online {
-  background-color: #10b981;
+  background-color: #10b981; /* Verde - En línea */
 }
 
 .status-partial {
-  background-color: #f59e0b;
+  background-color: #f59e0b; /* Naranja - Offline */
 }
 
 .status-offline {
-  background-color: #ef4444;
+  background-color: #ef4444; /* Rojo - Apagada */
 }
 
 /* Walmart brand colors */
