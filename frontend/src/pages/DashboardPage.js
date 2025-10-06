@@ -12,6 +12,7 @@ import { toast } from 'sonner';
 import { useNavigate } from 'react-router-dom';
 import DonutChart from '@/components/DonutChart';
 import EnhancedBarChart from '@/components/EnhancedBarChart';
+import AIAssistant from '@/components/AIAssistant';
 
 const DashboardPage = ({ onLogout }) => {
   const navigate = useNavigate();
