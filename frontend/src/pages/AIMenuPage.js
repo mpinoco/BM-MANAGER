@@ -72,8 +72,23 @@ const AIMenuPage = ({ onLogout }) => {
     }
   };
 
-  const sendWhatsAppTicket = (device, reportTo) => {
-    const message = `🚨 TICKET AUTOMÁTICO - BM MANAGER
+  const sendWhatsAppTicket = async (device, reportTo) => {
+    try {
+      const ticketData = {
+        device_id: device.id,
+        store_name: device.storeName,
+        store_comuna: device.storeComuna,
+        store_address: device.storeAddress,
+        sap_code: device.sapCode,
+        issue: device.issue,
+        description: `Problema detectado en balanza ${device.type} - Estado: ${device.status}`,
+        reported_to: reportTo,
+        assigned_to: contacts.find(c => c.role.includes(reportTo === 'Alcom' ? 'Alcom' : 'Operador'))?.name
+      };
+
+      const response = await axios.post(`${API}/tickets`, ticketData);
+      
+      const message = `🚨 TICKET #${response.data.id} - BM MANAGER
 
 Local: ${device.storeName} - ${device.storeComuna}
 Dirección: ${device.storeAddress}
@@ -86,11 +101,22 @@ Balanza con Problema:
 - Estado: ${device.status}
 
 Reportar a: ${reportTo}
+Asignado a: ${ticketData.assigned_to || 'Por asignar'}
 
 Por favor atender a la brevedad.`;
-    
-    toast.success(`Ticket generado y enviado por WhatsApp a ${reportTo}`);
-    console.log(message);
+      
+      // Simulate WhatsApp integration
+      console.log('WhatsApp Message:', message);
+      
+      toast.success(`Ticket #${response.data.id} generado y enviado por WhatsApp a ${reportTo}`);
+      
+      // Refresh data to show new ticket
+      loadData();
+      
+    } catch (error) {
+      console.error('Error creating ticket:', error);
+      toast.error('Error al generar ticket');
+    }
   };
 
   const addContact = () => {
