@@ -185,7 +185,23 @@ const DashboardPage = ({ onLogout }) => {
 
         {/* Weight Trends */}
         <Card className="p-6 shadow-lg">
-          <h3 className="text-xl font-semibold mb-4 text-gray-800">Peso Promedio Semanal - Productos Clave</h3>
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="text-xl font-semibold text-gray-800">Peso Promedio Semanal - Productos Clave</h3>
+            <div className="flex items-center gap-4">
+              <div className="flex items-center gap-2">
+                <span className="text-2xl">🍅</span>
+                <span className="text-sm text-gray-600">Tomate</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="text-2xl">🥑</span>
+                <span className="text-sm text-gray-600">Palta</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="text-2xl">🍌</span>
+                <span className="text-sm text-gray-600">Plátano</span>
+              </div>
+            </div>
+          </div>
           <ResponsiveContainer width="100%" height={300}>
             <LineChart>
               <CartesianGrid strokeDasharray="3 3" />
@@ -200,9 +216,9 @@ const DashboardPage = ({ onLogout }) => {
                   type="monotone" 
                   dataKey="value" 
                   name={product.product}
-                  stroke={['#10b981', '#f59e0b', '#79b9e7'][idx]}
-                  strokeWidth={2}
-                  dot={{ r: 4 }}
+                  stroke={['#10b981', '#f59e0b', '#0071CE'][idx]}
+                  strokeWidth={3}
+                  dot={{ r: 5, strokeWidth: 2 }}
                 />
               ))}
             </LineChart>
