@@ -175,6 +175,9 @@ const DashboardPage = ({ onLogout }) => {
           </Card>
         </div>
 
+        {/* AI Assistant */}
+        <AIAssistant variant="dashboard" />
+
         {/* Enhanced Charts Row */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Enhanced Donut Chart */}
