@@ -89,6 +89,28 @@ class WeightData(BaseModel):
     weights: List[float]
     dates: List[str]
 
+class AIPrediction(BaseModel):
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    title: str
+    content: str
+    category: str  # maintenance, supply, fraud, optimization, etc.
+    priority: str  # high, medium, low
+    created_at: str = Field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
+
+class Ticket(BaseModel):
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    device_id: str
+    store_name: str
+    store_comuna: str
+    store_address: str
+    sap_code: str
+    issue: str
+    description: str
+    reported_to: str  # "Alcom" or "Servicio Técnico"
+    status: str = "Pendiente"  # Pendiente, En Proceso, Resuelto
+    created_at: str = Field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
+    assigned_to: Optional[str] = None
+
 # =================== INITIAL DATA GENERATION ===================
 
 SANTIAGO_COMUNAS = [
