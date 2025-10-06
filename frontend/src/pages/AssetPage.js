@@ -72,7 +72,7 @@ const AssetPage = ({ onLogout }) => {
         <div className="flex justify-between items-center">
           <div>
             <h1 className="text-3xl font-bold text-gray-800" style={{ fontFamily: 'Inter, sans-serif' }}>
-              Gestión de Activos
+              Activos
             </h1>
             <p className="text-gray-600 mt-1">Inventario completo de balanzas</p>
           </div>
