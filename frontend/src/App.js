@@ -9,6 +9,10 @@ import OpenManagerPage from "@/pages/OpenManagerPage";
 import CampaignsPage from "@/pages/CampaignsPage";
 import SelfServicePage from "@/pages/SelfServicePage";
 import ReportsPage from "@/pages/ReportsPage";
+import ConsumptionPage from "@/pages/ConsumptionPage";
+import SuppliesPage from "@/pages/SuppliesPage";
+import AssetPage from "@/pages/AssetPage";
+import AIMenuPage from "@/pages/AIMenuPage";
 import { Toaster } from "@/components/ui/sonner";
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
