@@ -145,7 +145,7 @@ const LoginPage = ({ onLogin }) => {
 
             {/* Copyright */}
             <div className="mt-6 text-center text-[10px] text-white">
-              <p className="drop-shadow-lg opacity-80">© 2025 ALLCOM IA Technologies</p>
+              <p className="drop-shadow-lg opacity-80">© ALLCOM IA Technologies 2025</p>
             </div>
           </div>
         </div>
