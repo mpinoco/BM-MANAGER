@@ -1,4 +1,4 @@
-from fastapi import FastAPI, APIRouter
+from fastapi import FastAPI, APIRouter, HTTPException
 from dotenv import load_dotenv
 from starlette.middleware.cors import CORSMiddleware
 from motor.motor_asyncio import AsyncIOMotorClient
@@ -6,10 +6,10 @@ import os
 import logging
 from pathlib import Path
 from pydantic import BaseModel, Field
-from typing import List
+from typing import List, Optional
 import uuid
-from datetime import datetime
-
+from datetime import datetime, timezone, timedelta
+import random
 
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
@@ -19,40 +19,364 @@ mongo_url = os.environ['MONGO_URL']
 client = AsyncIOMotorClient(mongo_url)
 db = client[os.environ['DB_NAME']]
 
-# Create the main app without a prefix
 app = FastAPI()
-
-# Create a router with the /api prefix
 api_router = APIRouter(prefix="/api")
 
+# =================== MODELS ===================
 
-# Define Models
-class StatusCheck(BaseModel):
+class BalanceDevice(BaseModel):
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
-    client_name: str
-    timestamp: datetime = Field(default_factory=datetime.utcnow)
+    type: str  # "BMS_ASISTIDA", "AUTOSERVICIO", "IA"
+    status: str = "online"  # online, offline, maintenance
+    firmware_version: str = "v2.3.1"
+    last_calibration: str
+    installation_date: str
+    avg_consumption: float  # kWh per day
+    label_status: str = "good"  # good, warning, replace
+    printhead_life: int  # percentage
 
-class StatusCheckCreate(BaseModel):
-    client_name: str
+class Store(BaseModel):
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    name: str
+    comuna: str
+    sap_code: str
+    address: str
+    latitude: float
+    longitude: float
+    status: str  # "online", "partial", "offline"
+    balances_bms: int
+    balances_autoservicio: int
+    balances_ia: int
+    last_update: str
+    network_status: str = "connected"
+    latency: int  # ms
+    sales_level: str = "high"  # high, medium, low
+    devices: List[BalanceDevice] = []
 
-# Add your routes to the router instead of directly to app
+class Campaign(BaseModel):
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    name: str
+    start_date: str
+    end_date: str
+    status: str  # active, scheduled, expired
+    wallpaper_url: str
+    deployed_count: int = 0
+    total_balances: int = 0
+    stores_applied: List[str] = []
+
+class Alert(BaseModel):
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    store_id: str
+    store_name: str
+    type: str  # calibration, maintenance, firmware
+    message: str
+    priority: str  # high, medium, low
+    created_at: str
+    resolved: bool = False
+
+class Metrics(BaseModel):
+    total_kg_today: float
+    active_balances: int
+    calibration_percentage: float
+    pending_updates: int
+    stores_online: int
+    stores_partial: int
+    stores_offline: int
+
+class WeightData(BaseModel):
+    product: str
+    weights: List[float]
+    dates: List[str]
+
+# =================== INITIAL DATA GENERATION ===================
+
+SANTIAGO_COMUNAS = [
+    {"name": "Las Condes", "lat": -33.4172, "lon": -70.5838},
+    {"name": "Providencia", "lat": -33.4269, "lon": -70.6103},
+    {"name": "Vitacura", "lat": -33.3820, "lon": -70.5754},
+    {"name": "Santiago Centro", "lat": -33.4489, "lon": -70.6693},
+    {"name": "Ñuñoa", "lat": -33.4564, "lon": -70.5989},
+    {"name": "La Reina", "lat": -33.4450, "lon": -70.5404},
+    {"name": "Maipú", "lat": -33.5115, "lon": -70.7581},
+    {"name": "Pudahuel", "lat": -33.4403, "lon": -70.7460},
+    {"name": "Cerrillos", "lat": -33.4974, "lon": -70.7093},
+    {"name": "Estación Central", "lat": -33.4596, "lon": -70.6989},
+    {"name": "La Florida", "lat": -33.5282, "lon": -70.5985},
+    {"name": "Puente Alto", "lat": -33.6110, "lon": -70.5756},
+    {"name": "San Miguel", "lat": -33.4969, "lon": -70.6513},
+    {"name": "La Cisterna", "lat": -33.5323, "lon": -70.6620},
+    {"name": "El Bosque", "lat": -33.5625, "lon": -70.6756},
+    {"name": "San Bernardo", "lat": -33.5926, "lon": -70.7009},
+    {"name": "Quilicura", "lat": -33.3608, "lon": -70.7342},
+    {"name": "Renca", "lat": -33.4044, "lon": -70.7212},
+    {"name": "Independencia", "lat": -33.4164, "lon": -70.6643},
+    {"name": "Recoleta", "lat": -33.4029, "lon": -70.6399},
+    {"name": "Conchalí", "lat": -33.3835, "lon": -70.6717},
+    {"name": "Huechuraba", "lat": -33.3695, "lon": -70.6369},
+    {"name": "Macul", "lat": -33.4850, "lon": -70.5990},
+    {"name": "Peñalolén", "lat": -33.4896, "lon": -70.5428},
+    {"name": "La Granja", "lat": -33.5383, "lon": -70.6220},
+    {"name": "San Joaquín", "lat": -33.4975, "lon": -70.6297},
+    {"name": "Pedro Aguirre Cerda", "lat": -33.4868, "lon": -70.6741},
+    {"name": "Lo Prado", "lat": -33.4440, "lon": -70.7243},
+    {"name": "Cerro Navia", "lat": -33.4236, "lon": -70.7417},
+    {"name": "Quinta Normal", "lat": -33.4345, "lon": -70.6937},
+    {"name": "Lo Espejo", "lat": -33.5225, "lon": -70.6897},
+    {"name": "San Ramón", "lat": -33.5363, "lon": -70.6481},
+    {"name": "La Pintana", "lat": -33.5833, "lon": -70.6344},
+    {"name": "Lo Barnechea", "lat": -33.3486, "lon": -70.5091},
+    {"name": "Colina", "lat": -33.2017, "lon": -70.6755},
+    {"name": "Lampa", "lat": -33.2896, "lon": -70.8780},
+    {"name": "Talagante", "lat": -33.6631, "lon": -70.9294},
+    {"name": "Buin", "lat": -33.7326, "lon": -70.7429},
+    {"name": "Paine", "lat": -33.8124, "lon": -70.7439},
+    {"name": "Melipilla", "lat": -33.6875, "lon": -71.2148}
+]
+
+def generate_device(device_type: str) -> BalanceDevice:
+    statuses = ["online"] * 8 + ["offline"] * 1 + ["maintenance"] * 1
+    return BalanceDevice(
+        type=device_type,
+        status=random.choice(statuses),
+        firmware_version=random.choice(["v2.3.1", "v2.3.0", "v2.2.5"]),
+        last_calibration=(datetime.now(timezone.utc) - timedelta(days=random.randint(1, 90))).isoformat(),
+        installation_date=(datetime.now(timezone.utc) - timedelta(days=random.randint(180, 1095))).isoformat(),
+        avg_consumption=round(random.uniform(0.5, 2.5), 2),
+        label_status=random.choice(["good"] * 8 + ["warning"] * 1 + ["replace"] * 1),
+        printhead_life=random.randint(60, 100)
+    )
+
+async def initialize_data():
+    # Check if data already exists
+    existing_stores = await db.stores.count_documents({})
+    if existing_stores > 0:
+        return
+    
+    stores = []
+    for i, comuna_data in enumerate(SANTIAGO_COMUNAS[:40]):
+        bms_count = random.randint(3, 8)
+        auto_count = random.randint(2, 6)
+        ia_count = random.randint(1, 4)
+        
+        devices = []
+        for _ in range(bms_count):
+            devices.append(generate_device("BMS_ASISTIDA"))
+        for _ in range(auto_count):
+            devices.append(generate_device("AUTOSERVICIO"))
+        for _ in range(ia_count):
+            devices.append(generate_device("IA"))
+        
+        # Determine store status based on device statuses
+        online_devices = sum(1 for d in devices if d.status == "online")
+        total_devices = len(devices)
+        if online_devices == total_devices:
+            status = "online"
+        elif online_devices > total_devices * 0.5:
+            status = "partial"
+        else:
+            status = "offline"
+        
+        store = Store(
+            name=f"Sucursal {i+1}",
+            comuna=comuna_data["name"],
+            sap_code=f"SAP-{1000 + i}",
+            address=f"Av. Principal {100 + i*10}, {comuna_data['name']}",
+            latitude=comuna_data["lat"] + random.uniform(-0.01, 0.01),
+            longitude=comuna_data["lon"] + random.uniform(-0.01, 0.01),
+            status=status,
+            balances_bms=bms_count,
+            balances_autoservicio=auto_count,
+            balances_ia=ia_count,
+            last_update=datetime.now(timezone.utc).isoformat(),
+            network_status=random.choice(["connected"] * 9 + ["unstable"]),
+            latency=random.randint(10, 80),
+            sales_level=random.choice(["high"] * 3 + ["medium"] * 5 + ["low"] * 2),
+            devices=[d.dict() for d in devices]
+        )
+        stores.append(store.dict())
+    
+    await db.stores.insert_many(stores)
+    
+    # Create sample campaigns
+    campaigns = [
+        Campaign(
+            name="Navidad 2024",
+            start_date="2024-12-01",
+            end_date="2024-12-31",
+            status="expired",
+            wallpaper_url="https://images.unsplash.com/photo-1512389142860-9c449e58a543?w=800",
+            deployed_count=40,
+            total_balances=40
+        ),
+        Campaign(
+            name="Verano Saludable 2025",
+            start_date="2025-01-15",
+            end_date="2025-03-15",
+            status="active",
+            wallpaper_url="https://images.unsplash.com/photo-1610832958506-aa56368176cf?w=800",
+            deployed_count=38,
+            total_balances=40,
+            stores_applied=[s["id"] for s in stores[:38]]
+        ),
+        Campaign(
+            name="Otoño Promociones",
+            start_date="2025-04-01",
+            end_date="2025-05-31",
+            status="scheduled",
+            wallpaper_url="https://images.unsplash.com/photo-1542838132-92c53300491e?w=800",
+            deployed_count=0,
+            total_balances=40
+        )
+    ]
+    await db.campaigns.insert_many([c.dict() for c in campaigns])
+    
+    # Create alerts
+    alerts = []
+    for i, store in enumerate(stores[:10]):
+        if i % 3 == 0:
+            alerts.append(Alert(
+                store_id=store["id"],
+                store_name=f"{store['name']} - {store['comuna']}",
+                type="calibration",
+                message="Calibración trimestral pendiente",
+                priority="medium",
+                created_at=(datetime.now(timezone.utc) - timedelta(days=random.randint(1, 7))).isoformat(),
+                resolved=False
+            ).dict())
+        elif i % 3 == 1:
+            alerts.append(Alert(
+                store_id=store["id"],
+                store_name=f"{store['name']} - {store['comuna']}",
+                type="maintenance",
+                message="Mantenimiento preventivo requerido",
+                priority="high",
+                created_at=(datetime.now(timezone.utc) - timedelta(days=random.randint(1, 5))).isoformat(),
+                resolved=False
+            ).dict())
+    
+    if alerts:
+        await db.alerts.insert_many(alerts)
+
+# =================== API ENDPOINTS ===================
+
 @api_router.get("/")
 async def root():
-    return {"message": "Hello World"}
+    return {"message": "BM MANAGER API v1.0"}
 
-@api_router.post("/status", response_model=StatusCheck)
-async def create_status_check(input: StatusCheckCreate):
-    status_dict = input.dict()
-    status_obj = StatusCheck(**status_dict)
-    _ = await db.status_checks.insert_one(status_obj.dict())
-    return status_obj
+@api_router.get("/stores", response_model=List[Store])
+async def get_stores():
+    stores = await db.stores.find().to_list(1000)
+    return [Store(**store) for store in stores]
 
-@api_router.get("/status", response_model=List[StatusCheck])
-async def get_status_checks():
-    status_checks = await db.status_checks.find().to_list(1000)
-    return [StatusCheck(**status_check) for status_check in status_checks]
+@api_router.get("/stores/{store_id}", response_model=Store)
+async def get_store(store_id: str):
+    store = await db.stores.find_one({"id": store_id})
+    if not store:
+        raise HTTPException(status_code=404, detail="Store not found")
+    return Store(**store)
 
-# Include the router in the main app
+@api_router.put("/stores/{store_id}")
+async def update_store(store_id: str, store_data: dict):
+    result = await db.stores.update_one(
+        {"id": store_id},
+        {"$set": store_data}
+    )
+    if result.matched_count == 0:
+        raise HTTPException(status_code=404, detail="Store not found")
+    return {"success": True}
+
+@api_router.get("/campaigns", response_model=List[Campaign])
+async def get_campaigns():
+    campaigns = await db.campaigns.find().to_list(1000)
+    return [Campaign(**campaign) for campaign in campaigns]
+
+@api_router.post("/campaigns", response_model=Campaign)
+async def create_campaign(campaign: Campaign):
+    await db.campaigns.insert_one(campaign.dict())
+    return campaign
+
+@api_router.put("/campaigns/{campaign_id}")
+async def update_campaign(campaign_id: str, campaign_data: dict):
+    result = await db.campaigns.update_one(
+        {"id": campaign_id},
+        {"$set": campaign_data}
+    )
+    if result.matched_count == 0:
+        raise HTTPException(status_code=404, detail="Campaign not found")
+    return {"success": True}
+
+@api_router.get("/alerts", response_model=List[Alert])
+async def get_alerts():
+    alerts = await db.alerts.find({"resolved": False}).to_list(1000)
+    return [Alert(**alert) for alert in alerts]
+
+@api_router.put("/alerts/{alert_id}/resolve")
+async def resolve_alert(alert_id: str):
+    result = await db.alerts.update_one(
+        {"id": alert_id},
+        {"$set": {"resolved": True}}
+    )
+    if result.matched_count == 0:
+        raise HTTPException(status_code=404, detail="Alert not found")
+    return {"success": True}
+
+@api_router.get("/metrics", response_model=Metrics)
+async def get_metrics():
+    stores = await db.stores.find().to_list(1000)
+    
+    total_balances = sum(s["balances_bms"] + s["balances_autoservicio"] + s["balances_ia"] for s in stores)
+    active_balances = 0
+    calibrated_count = 0
+    total_devices = 0
+    
+    for store in stores:
+        for device in store.get("devices", []):
+            total_devices += 1
+            if device["status"] == "online":
+                active_balances += 1
+            # Check if calibrated within last 90 days
+            last_cal = datetime.fromisoformat(device["last_calibration"])
+            if (datetime.now(timezone.utc) - last_cal).days <= 90:
+                calibrated_count += 1
+    
+    stores_online = sum(1 for s in stores if s["status"] == "online")
+    stores_partial = sum(1 for s in stores if s["status"] == "partial")
+    stores_offline = sum(1 for s in stores if s["status"] == "offline")
+    
+    return Metrics(
+        total_kg_today=round(random.uniform(15000, 25000), 2),
+        active_balances=active_balances,
+        calibration_percentage=round((calibrated_count / total_devices * 100) if total_devices > 0 else 0, 1),
+        pending_updates=random.randint(3, 12),
+        stores_online=stores_online,
+        stores_partial=stores_partial,
+        stores_offline=stores_offline
+    )
+
+@api_router.get("/weight-data", response_model=List[WeightData])
+async def get_weight_data():
+    # Generate sample weekly data for 3 products
+    base_date = datetime.now(timezone.utc) - timedelta(days=6)
+    dates = [(base_date + timedelta(days=i)).strftime("%d/%m") for i in range(7)]
+    
+    products = [
+        {"product": "Tomate", "base": 450, "variance": 80},
+        {"product": "Palta", "base": 320, "variance": 60},
+        {"product": "Plátano", "base": 580, "variance": 100}
+    ]
+    
+    result = []
+    for p in products:
+        weights = [round(p["base"] + random.uniform(-p["variance"], p["variance"]), 1) for _ in range(7)]
+        result.append(WeightData(product=p["product"], weights=weights, dates=dates))
+    
+    return result
+
+@app.on_event("startup")
+async def startup_event():
+    await initialize_data()
+    logger.info("Database initialized with sample data")
+
 app.include_router(api_router)
 
 app.add_middleware(
@@ -63,7 +387,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Configure logging
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
