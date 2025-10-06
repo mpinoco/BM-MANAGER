@@ -25,7 +25,10 @@ const Layout = ({ children, onLogout }) => {
       {/* Sidebar */}
       <aside 
         className={`${sidebarOpen ? 'w-64' : 'w-20'} transition-all duration-300 shadow-xl flex flex-col`}
-        style={{ backgroundColor: '#0071CE' }}
+        style={{ 
+          background: 'linear-gradient(180deg, #0071CE 0%, #004C8C 100%)',
+          boxShadow: '4px 0 20px rgba(0, 0, 0, 0.1)'
+        }}
       >
         {/* Header with Walmart Logo */}
         <div className="p-4 border-b border-blue-700">
