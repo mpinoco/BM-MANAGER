@@ -50,6 +50,10 @@ const SelfServicePage = ({ onLogout }) => {
   const [deploymentProgress, setDeploymentProgress] = useState(0);
   const [showPreview, setShowPreview] = useState(false);
   const [previewStep, setPreviewStep] = useState(1);
+  const [deploymentStartTime, setDeploymentStartTime] = useState(null);
+  const [deploymentDuration, setDeploymentDuration] = useState(0);
+  const [packageSize, setPackageSize] = useState(0);
+  const [deploymentErrors, setDeploymentErrors] = useState([]);
 
   const demoImages = {
     bienvenido: [
