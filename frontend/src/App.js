@@ -99,6 +99,38 @@ function App() {
               <Navigate to="/login" replace />
             } 
           />
+          <Route 
+            path="/consumption" 
+            element={
+              isAuthenticated ? 
+              <ConsumptionPage onLogout={handleLogout} /> : 
+              <Navigate to="/login" replace />
+            } 
+          />
+          <Route 
+            path="/supplies" 
+            element={
+              isAuthenticated ? 
+              <SuppliesPage onLogout={handleLogout} /> : 
+              <Navigate to="/login" replace />
+            } 
+          />
+          <Route 
+            path="/assets" 
+            element={
+              isAuthenticated ? 
+              <AssetPage onLogout={handleLogout} /> : 
+              <Navigate to="/login" replace />
+            } 
+          />
+          <Route 
+            path="/ai-menu" 
+            element={
+              isAuthenticated ? 
+              <AIMenuPage onLogout={handleLogout} /> : 
+              <Navigate to="/login" replace />
+            } 
+          />
         </Routes>
       </BrowserRouter>
       <Toaster position="top-right" />
