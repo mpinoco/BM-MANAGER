@@ -23,7 +23,7 @@ const AIMenuPage = ({ onLogout }) => {
     { id: 1, name: 'Juan Pérez', phone: '+56 9 8765 4321', role: 'Supervisor Plataforma', permissions: 'admin' },
     { id: 2, name: 'María González', phone: '+56 9 8765 4322', role: 'Operador Tienda - Las Condes', permissions: 'user' },
     { id: 3, name: 'Carlos Silva', phone: '+56 9 8765 4323', role: 'Operador Tienda - Providencia', permissions: 'user' },
-    { id: 4, name: 'Ana Rojas', phone: '+56 9 8765 4324', role: 'Técnico Alcom', permissions: 'admin' },
+    { id: 4, name: 'Ana Rojas', phone: '+56 9 8765 4324', role: 'Técnico Allcom', permissions: 'admin' },
   ]);
 
   useEffect(() => {
