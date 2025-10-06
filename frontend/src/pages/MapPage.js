@@ -136,7 +136,7 @@ const MapPage = ({ onLogout }) => {
                 size="sm" 
                 variant={filterLevel === 'high' ? 'default' : 'outline'}
                 onClick={() => setFilterLevel('high')}
-                style={filterLevel === 'high' ? { backgroundColor: '#047857' } : {}}
+                style={filterLevel === 'high' ? { backgroundColor: '#047857', color: 'white' } : {}}
               >
                 Alto
               </Button>
@@ -144,7 +144,7 @@ const MapPage = ({ onLogout }) => {
                 size="sm" 
                 variant={filterLevel === 'medium' ? 'default' : 'outline'}
                 onClick={() => setFilterLevel('medium')}
-                style={filterLevel === 'medium' ? { backgroundColor: '#10b981' } : {}}
+                style={filterLevel === 'medium' ? { backgroundColor: '#10b981', color: 'white' } : {}}
               >
                 Medio
               </Button>
@@ -152,7 +152,7 @@ const MapPage = ({ onLogout }) => {
                 size="sm" 
                 variant={filterLevel === 'low' ? 'default' : 'outline'}
                 onClick={() => setFilterLevel('low')}
-                style={filterLevel === 'low' ? { backgroundColor: '#6ee7b7' } : {}}
+                style={filterLevel === 'low' ? { backgroundColor: '#6ee7b7', color: 'white' } : {}}
               >
                 Bajo
               </Button>
