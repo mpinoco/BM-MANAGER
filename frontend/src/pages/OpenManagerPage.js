@@ -216,12 +216,13 @@ const OpenManagerPage = ({ onLogout }) => {
             <Card className="p-6 shadow-lg">
               <h3 className="text-xl font-semibold mb-4 text-gray-800">Historial de Mantenimiento</h3>
               <div className="space-y-3">
-                <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                <div className="flex items-center justify-between p-4 bg-green-50 rounded-lg border border-green-200">
                   <div className="flex items-center gap-3">
                     <CheckCircle2 className="w-5 h-5 text-green-600" />
                     <div>
-                      <p className="font-semibold text-gray-800">Mantenimiento Preventivo</p>
+                      <p className="font-semibold text-gray-800">Última Mantención Preventiva</p>
                       <p className="text-sm text-gray-600">15/01/2025 - Completado</p>
+                      <p className="text-xs text-gray-500">Próximo mantenimiento: 15/04/2025</p>
                     </div>
                   </div>
                   <Badge variant="default" className="bg-green-600">Completado</Badge>
@@ -246,7 +247,7 @@ const OpenManagerPage = ({ onLogout }) => {
                   </div>
                   <Button 
                     size="sm" 
-                    style={{ backgroundColor: '#f47421' }}
+                    style={{ backgroundColor: '#FFC220', color: '#000' }}
                     onClick={handleScheduleMaintenance}
                   >
                     Reagendar
