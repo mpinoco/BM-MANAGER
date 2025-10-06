@@ -83,7 +83,7 @@ const AIMenuPage = ({ onLogout }) => {
         issue: device.issue,
         description: `Problema detectado en balanza ${device.type} - Estado: ${device.status}`,
         reported_to: reportTo,
-        assigned_to: contacts.find(c => c.role.includes(reportTo === 'Alcom' ? 'Alcom' : 'Operador'))?.name
+        assigned_to: contacts.find(c => c.role.includes(reportTo === 'Allcom' ? 'Allcom' : 'Operador'))?.name
       };
 
       const response = await axios.post(`${API}/tickets`, ticketData);
