@@ -1,202 +1,369 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+import { API } from '@/App';
 import Layout from '@/components/Layout';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Scale, Printer, Hand, CheckCircle, ArrowRight } from 'lucide-react';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { Badge } from '@/components/ui/badge';
+import { CheckCircle, Upload, Image, Settings, Send, Loader2, Eye } from 'lucide-react';
+import { toast } from 'sonner';
 
 const SelfServicePage = ({ onLogout }) => {
-  const [currentStep, setCurrentStep] = useState(0);
-  const [isAnimating, setIsAnimating] = useState(false);
-
-  const steps = [
+  const [stores, setStores] = useState([]);
+  const [flowSteps, setFlowSteps] = useState([
     {
-      title: '¡Bienvenido!',
-      subtitle: '¿Cómo estás?',
-      icon: Hand,
-      color: '#79b9e7',
-      message: 'Iniciemos el proceso de pesaje autoservicio',
-      action: 'Comenzar'
+      id: 1,
+      title: "Paso 1 - Bienvenido",
+      description: "Imagen de bienvenida con colores corporativos",
+      currentImage: "https://images.unsplash.com/photo-1557804506-669a67965ba0?w=400&h=300&fit=crop",
+      selectedDemo: "bienvenido"
     },
     {
-      title: 'Deposite su Producto',
-      subtitle: 'Coloque el producto en la balanza',
-      icon: Scale,
-      color: '#10b981',
-      message: 'Por favor, deposite cuidadosamente el producto sobre la plataforma de la balanza',
-      action: 'Producto Depositado'
+      id: 2,
+      title: "Paso 2 - Pese su producto",
+      description: "Foto de balanza con producto",
+      currentImage: "https://images.unsplash.com/photo-1556909114-4f6e7be7b0fd?w=400&h=300&fit=crop",
+      selectedDemo: "pesar"
     },
     {
-      title: 'Cálculo de Peso',
-      subtitle: 'Procesando...',
-      icon: Scale,
-      color: '#f47421',
-      message: 'Calculando peso y precio del producto',
-      action: 'Continuar',
-      autoAdvance: true
+      id: 3,
+      title: "Paso 3 - Retire la etiqueta",
+      description: "Foto de mano tomando etiqueta",
+      currentImage: "https://images.unsplash.com/photo-1609603111802-a0d33ab4b9cf?w=400&h=300&fit=crop",
+      selectedDemo: "retirar"
     },
     {
-      title: 'Retire su Etiqueta',
-      subtitle: 'Etiqueta lista',
-      icon: Printer,
-      color: '#f59e0b',
-      message: 'Su etiqueta ha sido impresa. Por favor, retírela y péguela en el producto',
-      action: 'Etiqueta Retirada'
-    },
-    {
-      title: '¡Gracias!',
-      subtitle: 'Proceso completado',
-      icon: CheckCircle,
-      color: '#10b981',
-      message: 'Gracias por usar nuestro sistema de autoservicio',
-      action: 'Nueva Operación'
+      id: 4,
+      title: "Paso 4 - Pegue la etiqueta",
+      description: "Imagen amistosa de finalización",
+      currentImage: "https://images.unsplash.com/photo-1595475038665-62795d58f1e5?w=400&h=300&fit=crop",
+      selectedDemo: "finalizar"
     }
-  ];
+  ]);
+  
+  const [deploymentTarget, setDeploymentTarget] = useState('autoservicio');
+  const [isDeploying, setIsDeploying] = useState(false);
+  const [deploymentProgress, setDeploymentProgress] = useState(0);
+  const [showPreview, setShowPreview] = useState(false);
+  const [previewStep, setPreviewStep] = useState(1);
 
-  const handleNext = () => {
-    if (currentStep < steps.length - 1) {
-      setIsAnimating(true);
-      setTimeout(() => {
-        setCurrentStep(currentStep + 1);
-        setIsAnimating(false);
-        
-        // Auto-advance on processing step
-        if (steps[currentStep + 1].autoAdvance) {
-          setTimeout(() => {
-            handleNext();
-          }, 2000);
-        }
-      }, 300);
-    } else {
-      // Reset
-      setIsAnimating(true);
-      setTimeout(() => {
-        setCurrentStep(0);
-        setIsAnimating(false);
-      }, 300);
+  const demoImages = {
+    bienvenido: [
+      { name: "Bienvenida Corporativa", url: "https://images.unsplash.com/photo-1557804506-669a67965ba0?w=400&h=300&fit=crop" },
+      { name: "Bienvenida Walmart", url: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=400&h=300&fit=crop" },
+      { name: "Bienvenida Amigable", url: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=300&fit=crop" }
+    ],
+    pesar: [
+      { name: "Balanza con Producto", url: "https://images.unsplash.com/photo-1556909114-4f6e7be7b0fd?w=400&h=300&fit=crop" },
+      { name: "Pesaje de Frutas", url: "https://images.unsplash.com/photo-1610832958506-aa56368176cf?w=400&h=300&fit=crop" },
+      { name: "Balanza Digital", url: "https://images.unsplash.com/photo-1574025024109-fec4b973a860?w=400&h=300&fit=crop" }
+    ],
+    retirar: [
+      { name: "Mano Tomando Etiqueta", url: "https://images.unsplash.com/photo-1609603111802-a0d33ab4b9cf?w=400&h=300&fit=crop" },
+      { name: "Retirando Ticket", url: "https://images.unsplash.com/photo-1556742502-ec7c0e9f34b1?w=400&h=300&fit=crop" },
+      { name: "Proceso de Etiquetado", url: "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=400&h=300&fit=crop" }
+    ],
+    finalizar: [
+      { name: "Finalización Exitosa", url: "https://images.unsplash.com/photo-1595475038665-62795d58f1e5?w=400&h=300&fit=crop" },
+      { name: "Gracias por Comprar", url: "https://images.unsplash.com/photo-1556909114-4f6e7be7b0fd?w=400&h=300&fit=crop" },
+      { name: "Hasta Pronto", url: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=300&fit=crop" }
+    ]
+  };
+
+  useEffect(() => {
+    loadStores();
+  }, []);
+
+  const loadStores = async () => {
+    try {
+      const response = await axios.get(`${API}/stores`);
+      setStores(response.data);
+    } catch (error) {
+      console.error('Error loading stores:', error);
     }
   };
 
-  const step = steps[currentStep];
-  const Icon = step.icon;
+  const handleImageUpload = (stepId, event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        updateStepImage(stepId, e.target.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const updateStepImage = (stepId, imageUrl) => {
+    setFlowSteps(prev => prev.map(step => 
+      step.id === stepId ? { ...step, currentImage: imageUrl } : step
+    ));
+  };
+
+  const selectDemoImage = (stepId, demoType, imageUrl) => {
+    setFlowSteps(prev => prev.map(step => 
+      step.id === stepId ? { ...step, currentImage: imageUrl, selectedDemo: demoType } : step
+    ));
+  };
+
+  const getTargetStoresCount = () => {
+    switch (deploymentTarget) {
+      case 'current':
+        return 1;
+      case 'autoservicio':
+        return stores.filter(store => store.balances_autoservicio > 0).length;
+      case 'all':
+        return stores.length;
+      default:
+        return 0;
+    }
+  };
+
+  const deployFlow = async () => {
+    const allStepsHaveImages = flowSteps.every(step => step.currentImage);
+    if (!allStepsHaveImages) {
+      toast.error('Todos los pasos deben tener una imagen seleccionada');
+      return;
+    }
+
+    setIsDeploying(true);
+    setDeploymentProgress(0);
+
+    const targetCount = getTargetStoresCount();
+    const interval = setInterval(() => {
+      setDeploymentProgress(prev => {
+        if (prev >= targetCount) {
+          clearInterval(interval);
+          setIsDeploying(false);
+          toast.success(`Flujo desplegado satisfactoriamente en ${targetCount} locales`);
+          return targetCount;
+        }
+        return prev + 1;
+      });
+    }, 200);
+  };
+
+  const validateConfiguration = () => {
+    return flowSteps.every(step => step.currentImage);
+  };
 
   return (
     <Layout onLogout={onLogout}>
-      <div className="p-8 h-full flex flex-col">
+      <div className="p-8 space-y-6">
         {/* Header */}
-        <div className="mb-6">
-          <h1 className="text-3xl font-bold text-gray-800" style={{ fontFamily: 'Inter, sans-serif' }}>
-            Flujo de Autoservicio
-          </h1>
-          <p className="text-gray-600 mt-1">Simulación del proceso guiado para clientes</p>
-        </div>
-
-        {/* Progress Bar */}
-        <div className="mb-8">
-          <div className="flex justify-between items-center mb-2">
-            {steps.map((s, idx) => (
-              <div 
-                key={idx}
-                className={`flex-1 h-2 mx-1 rounded-full transition-all ${
-                  idx <= currentStep ? 'opacity-100' : 'opacity-30'
-                }`}
-                style={{ backgroundColor: idx <= currentStep ? step.color : '#e5e7eb' }}
-              />
-            ))}
+        <div className="flex justify-between items-center">
+          <div>
+            <h1 className="text-3xl font-bold text-gray-800" style={{ fontFamily: 'Inter, sans-serif' }}>
+              Configuración de Flujos de Autoservicio
+            </h1>
+            <p className="text-gray-600 mt-1">Personaliza las imágenes de cada paso en las balanzas de autoservicio</p>
           </div>
-          <p className="text-sm text-gray-600 text-center">
-            Paso {currentStep + 1} de {steps.length}
-          </p>
+          <Button 
+            onClick={() => setShowPreview(true)}
+            variant="outline"
+            className="flex items-center gap-2"
+          >
+            <Eye className="w-4 h-4" />
+            Vista Previa
+          </Button>
         </div>
 
-        {/* Main Display Card */}
-        <Card className={`flex-1 shadow-2xl overflow-hidden transition-all duration-300 ${
-          isAnimating ? 'opacity-0 transform scale-95' : 'opacity-100 transform scale-100'
-        }`} style={{ 
-          background: 'linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(240,248,255,0.95) 100%)',
-          backgroundImage: 'url("data:image/svg+xml,%3Csvg width=\\"60\\" height=\\"60\\" viewBox=\\"0 0 60 60\\" xmlns=\\"http://www.w3.org/2000/svg\\"%3E%3Ctext x=\\"5\\" y=\\"25\\" font-size=\\"20\\" opacity=\\"0.1\\"%3E🍎%3C/text%3E%3Ctext x=\\"35\\" y=\\"45\\" font-size=\\"16\\" opacity=\\"0.08\\"%3E🍊%3C/text%3E%3Ctext x=\\"10\\" y=\\"55\\" font-size=\\"18\\" opacity=\\"0.07\\"%3E🍇%3C/text%3E%3C/svg%3E")',
-          backgroundSize: '120px 120px'
-        }}>
-          <div className="h-full flex flex-col items-center justify-center p-12 text-center" style={{ position: 'relative', zIndex: 1 }}>
-            {/* Icon */}
-            <div 
-              className="w-32 h-32 rounded-full flex items-center justify-center mb-8 shadow-lg"
-              style={{ backgroundColor: `${step.color}20` }}
-            >
-              <Icon size={64} style={{ color: step.color }} />
-            </div>
+        {/* Configuration Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          {flowSteps.map((step) => (
+            <Card key={step.id} className="p-6 shadow-lg">
+              <div className="space-y-4">
+                {/* Step Header */}
+                <div className="flex items-center justify-between">
+                  <h3 className="text-xl font-semibold text-gray-800">{step.title}</h3>
+                  <Badge style={{ backgroundColor: '#0071CE', color: 'white' }}>
+                    {step.id}/4
+                  </Badge>
+                </div>
+                <p className="text-gray-600 text-sm">{step.description}</p>
 
-            {/* Title */}
-            <h2 
-              className="text-5xl font-bold mb-4"
-              style={{ color: step.color, fontFamily: 'Inter, sans-serif' }}
-            >
-              {step.title}
-            </h2>
+                {/* Current Image Preview */}
+                <div className="relative group">
+                  <img 
+                    src={step.currentImage} 
+                    alt={`Paso ${step.id}`}
+                    className="w-full h-48 object-cover rounded-lg border-2 border-gray-200"
+                  />
+                  <div className="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity rounded-lg flex items-center justify-center">
+                    <span className="text-white text-sm font-medium">Imagen Actual</span>
+                  </div>
+                </div>
 
-            {/* Subtitle */}
-            <p className="text-2xl text-gray-600 mb-8">{step.subtitle}</p>
+                {/* Upload Button */}
+                <div className="space-y-3">
+                  <Label htmlFor={`upload-${step.id}`} className="text-sm font-medium">
+                    Cargar nueva imagen
+                  </Label>
+                  <div className="flex items-center gap-2">
+                    <Input
+                      id={`upload-${step.id}`}
+                      type="file"
+                      accept="image/*"
+                      onChange={(e) => handleImageUpload(step.id, e)}
+                      className="hidden"
+                    />
+                    <Button
+                      onClick={() => document.getElementById(`upload-${step.id}`).click()}
+                      variant="outline"
+                      className="w-full"
+                    >
+                      <Upload className="w-4 h-4 mr-2" />
+                      Examinar foto
+                    </Button>
+                  </div>
+                </div>
 
-            {/* Message */}
-            <p className="text-lg text-gray-700 max-w-2xl mb-12">
-              {step.message}
-            </p>
-
-            {/* Weight Display (only on calculation step) */}
-            {currentStep === 2 && (
-              <div className="mb-8 p-8 bg-gray-50 rounded-2xl border-2 border-gray-200">
-                <p className="text-sm text-gray-600 mb-2">Peso detectado:</p>
-                <p className="text-4xl font-bold" style={{ color: '#f47421' }}>1.245 kg</p>
-                <p className="text-sm text-gray-600 mt-4 mb-2">Precio:</p>
-                <p className="text-3xl font-bold text-gray-800">$2.490</p>
+                {/* Demo Images Selection */}
+                <div className="space-y-3">
+                  <Label className="text-sm font-medium">Fotos demo</Label>
+                  <div className="grid grid-cols-3 gap-2">
+                    {demoImages[step.selectedDemo]?.map((demo, index) => (
+                      <div key={index} className="relative group cursor-pointer">
+                        <img 
+                          src={demo.url} 
+                          alt={demo.name}
+                          className="w-full h-16 object-cover rounded border hover:border-blue-500 transition-colors"
+                          onClick={() => selectDemoImage(step.id, step.selectedDemo, demo.url)}
+                        />
+                        <div className="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity rounded flex items-center justify-center">
+                          <span className="text-white text-xs text-center px-1">{demo.name}</span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
               </div>
-            )}
+            </Card>
+          ))}
+        </div>
 
-            {/* Action Button */}
-            {!step.autoAdvance && (
-              <Button
-                size="lg"
-                className="text-xl px-12 py-8 rounded-2xl shadow-lg"
-                style={{ backgroundColor: step.color }}
-                onClick={handleNext}
-              >
-                {step.action}
-                <ArrowRight size={24} className="ml-3" />
-              </Button>
-            )}
-
-            {step.autoAdvance && (
-              <div className="flex items-center gap-3">
-                <div 
-                  className="w-8 h-8 border-4 rounded-full animate-spin"
-                  style={{ 
-                    borderColor: step.color,
-                    borderTopColor: 'transparent'
-                  }}
-                />
-                <p className="text-gray-600">Procesando...</p>
+        {/* Complete Configuration */}
+        <Card className="p-6 shadow-lg">
+          <div className="text-center space-y-4">
+            <h3 className="text-xl font-semibold text-gray-800">Completar Configuración</h3>
+            {validateConfiguration() ? (
+              <div className="flex items-center justify-center gap-2 text-green-600">
+                <CheckCircle className="w-5 h-5" />
+                <span>Todos los pasos tienen imágenes configuradas</span>
+              </div>
+            ) : (
+              <div className="text-amber-600">
+                ⚠️ Faltan imágenes en algunos pasos
               </div>
             )}
           </div>
         </Card>
 
-        {/* Info Panel */}
-        <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4">
-          <Card className="p-4 shadow-md">
-            <h4 className="font-semibold text-gray-800 mb-2">Configuración de Voz</h4>
-            <p className="text-sm text-gray-600">Idioma: Español</p>
-            <p className="text-sm text-gray-600">Velocidad: Normal</p>
-          </Card>
-          <Card className="p-4 shadow-md">
-            <h4 className="font-semibold text-gray-800 mb-2">Personalización</h4>
-            <p className="text-sm text-gray-600">Tema: Walmart Corporativo</p>
-            <p className="text-sm text-gray-600">Colores: Azul Seagull</p>
-          </Card>
-          <Card className="p-4 shadow-md">
-            <h4 className="font-semibold text-gray-800 mb-2">Tiempo Promedio</h4>
-            <p className="text-sm text-gray-600">Duración: 25-30 segundos</p>
-            <p className="text-sm text-gray-600">Eficiencia: 95%</p>
-          </Card>
-        </div>
+        {/* Deployment Section */}
+        <Card className="p-6 shadow-lg">
+          <h3 className="text-xl font-semibold text-gray-800 mb-4">Paquetizar y enviar a locales</h3>
+          
+          <div className="space-y-4">
+            <div>
+              <Label className="text-sm font-medium mb-2 block">Destino de envío</Label>
+              <Select value={deploymentTarget} onValueChange={setDeploymentTarget}>
+                <SelectTrigger className="w-full max-w-md">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="current">Enviar a este local (1 local)</SelectItem>
+                  <SelectItem value="autoservicio">
+                    Enviar sólo a locales con autoservicio ({stores.filter(s => s.balances_autoservicio > 0).length} locales)
+                  </SelectItem>
+                  <SelectItem value="all">Enviar a todos los locales ({stores.length} locales)</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            {isDeploying ? (
+              <div className="space-y-4">
+                <div className="flex items-center gap-2 text-blue-600">
+                  <Loader2 className="w-5 h-5 animate-spin" />
+                  <span>Conectando con locales... {deploymentProgress}/{getTargetStoresCount()}</span>
+                </div>
+                <div className="w-full bg-gray-200 rounded-full h-3">
+                  <div 
+                    className="bg-blue-600 h-3 rounded-full transition-all duration-300"
+                    style={{ width: `${(deploymentProgress / getTargetStoresCount()) * 100}%` }}
+                  />
+                </div>
+              </div>
+            ) : (
+              <Button
+                onClick={deployFlow}
+                disabled={!validateConfiguration()}
+                className="w-full max-w-md"
+                style={{ backgroundColor: '#0071CE' }}
+              >
+                <Send className="w-4 h-4 mr-2" />
+                Paquetizar y enviar
+              </Button>
+            )}
+          </div>
+        </Card>
+
+        {/* Preview Modal */}
+        <Dialog open={showPreview} onOpenChange={setShowPreview}>
+          <DialogContent className="max-w-2xl">
+            <DialogHeader>
+              <DialogTitle>Vista Previa del Flujo de Autoservicio</DialogTitle>
+            </DialogHeader>
+            <div className="space-y-4">
+              <div className="flex justify-center gap-2">
+                {flowSteps.map((step, index) => (
+                  <Button
+                    key={step.id}
+                    size="sm"
+                    variant={previewStep === step.id ? "default" : "outline"}
+                    onClick={() => setPreviewStep(step.id)}
+                  >
+                    Paso {step.id}
+                  </Button>
+                ))}
+              </div>
+              
+              {flowSteps.map((step) => (
+                previewStep === step.id && (
+                  <div key={step.id} className="text-center space-y-4">
+                    <img 
+                      src={step.currentImage} 
+                      alt={step.title}
+                      className="w-full h-64 object-cover rounded-lg mx-auto"
+                    />
+                    <h3 className="text-xl font-semibold">{step.title}</h3>
+                    <p className="text-gray-600">{step.description}</p>
+                  </div>
+                )
+              ))}
+              
+              <div className="flex justify-between pt-4">
+                <Button 
+                  onClick={() => setPreviewStep(Math.max(1, previewStep - 1))}
+                  disabled={previewStep === 1}
+                  variant="outline"
+                >
+                  Anterior
+                </Button>
+                <Button 
+                  onClick={() => setPreviewStep(Math.min(4, previewStep + 1))}
+                  disabled={previewStep === 4}
+                  style={{ backgroundColor: '#0071CE' }}
+                >
+                  Siguiente
+                </Button>
+              </div>
+            </div>
+          </DialogContent>
+        </Dialog>
       </div>
     </Layout>
   );
