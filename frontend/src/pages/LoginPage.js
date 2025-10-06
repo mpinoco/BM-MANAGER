@@ -20,8 +20,8 @@ const LoginPage = ({ onLogin }) => {
       className="min-h-screen flex"
       style={{
         backgroundImage: 'url(/images/login-background.jpg)',
-        backgroundSize: '100% 100%',
-        backgroundPosition: 'center',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center center',
         backgroundRepeat: 'no-repeat'
       }}
     >
