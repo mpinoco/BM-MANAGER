@@ -86,16 +86,16 @@ const AIAssistant = ({ variant = 'dashboard', className = '' }) => {
   const currentPrediction = predictions[currentIndex];
 
   if (isLoginVariant) {
-    // Login variant - compact, focused on single prediction
+    // Login variant - compact, no background, text only
     return (
-      <Card className={`p-4 bg-gradient-to-r from-blue-50 to-blue-100 border-blue-200 shadow-lg ${className}`}>
+      <div className={`${className}`}>
         <div className="flex items-start gap-3">
           <div className="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center flex-shrink-0">
             <Bot className="w-6 h-6 text-white" />
           </div>
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2 mb-2">
-              <h3 className="font-semibold text-gray-800 text-sm">Asistente IA Alcom</h3>
+              <h3 className="font-semibold text-white text-sm drop-shadow-lg">Asistente IA Alcom</h3>
               <Badge 
                 className={`${getPriorityColor(currentPrediction?.priority)} text-white text-xs px-2 py-0.5`}
               >
@@ -104,26 +104,26 @@ const AIAssistant = ({ variant = 'dashboard', className = '' }) => {
             </div>
             {currentPrediction && (
               <div className="space-y-2">
-                <h4 className="font-medium text-gray-900 text-sm leading-tight">
+                <h4 className="font-medium text-white text-sm leading-tight drop-shadow-lg">
                   {currentPrediction.title}
                 </h4>
-                <p className="text-gray-700 text-xs leading-relaxed">
+                <p className="text-white text-xs leading-relaxed drop-shadow-lg opacity-90">
                   {currentPrediction.content}
                 </p>
                 <div className="flex items-center justify-between pt-1">
-                  <div className="flex items-center gap-1 text-xs text-gray-600">
+                  <div className="flex items-center gap-1 text-xs text-white opacity-80">
                     {getCategoryIcon(currentPrediction.category)}
-                    <span className="capitalize">{currentPrediction.category}</span>
+                    <span className="capitalize drop-shadow-lg">{currentPrediction.category}</span>
                   </div>
-                  <div className="flex items-center gap-1 text-xs text-gray-500">
-                    <span>{currentIndex + 1}/{predictions.length}</span>
+                  <div className="flex items-center gap-1 text-xs text-white opacity-70">
+                    <span className="drop-shadow-lg">{currentIndex + 1}/{predictions.length}</span>
                   </div>
                 </div>
               </div>
             )}
           </div>
         </div>
-      </Card>
+      </div>
     );
   }
 
