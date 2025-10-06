@@ -30,7 +30,7 @@ const NewBalanceForm = ({ stores, onSave, onCancel }) => {
 
   const providers = [
     'Balanzas Chile S.A.',
-    'Alcon IA Systems',
+    'Allcom IA Systems',
     'TechScale Ltda.',
     'Precision Systems'
   ];
