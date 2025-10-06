@@ -11,13 +11,13 @@ const Layout = ({ children, onLogout }) => {
   const menuItems = [
     { icon: LayoutDashboard, label: 'Dashboard', path: '/' },
     { icon: Map, label: 'Mapa', path: '/map' },
-    { icon: Zap, label: 'Consumo', path: '/consumption' },
+    { icon: Zap, label: 'Recursos', path: '/consumption' },
     { icon: Package, label: 'Insumos', path: '/supplies' },
-    { icon: HardDrive, label: 'Assets', path: '/assets' },
+    { icon: HardDrive, label: 'Activos', path: '/assets' },
     { icon: Megaphone, label: 'Campañas', path: '/campaigns' },
     { icon: Workflow, label: 'Autoservicio', path: '/self-service' },
     { icon: BrainCircuit, label: 'Menú IA', path: '/ai-menu' },
-    { icon: FileText, label: 'Reportes', path: '/reports' }
+    { icon: FileText, label: 'Reportes & Auditoría', path: '/reports' }
   ];
 
   return (
