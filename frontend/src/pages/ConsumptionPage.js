@@ -77,7 +77,7 @@ const ConsumptionPage = ({ onLogout }) => {
         {/* Header */}
         <div>
           <h1 className="text-3xl font-bold text-gray-800" style={{ fontFamily: 'Inter, sans-serif' }}>
-            Consumo de Recursos
+            Recursos
           </h1>
           <p className="text-gray-600 mt-1">Monitoreo de energía y consumibles</p>
         </div>
