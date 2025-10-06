@@ -230,20 +230,36 @@ const DashboardPage = ({ onLogout }) => {
           <Card className="p-6 shadow-lg">
             <h3 className="text-xl font-semibold mb-4 text-gray-800 flex items-center gap-2">
               <AlertCircle className="w-5 h-5 text-red-500" />
-              Alertas y Notificaciones
+              Alertas y Notificaciones Técnicas
             </h3>
             <div className="space-y-3">
-              {alerts.slice(0, 5).map(alert => (
-                <div key={alert.id} className="flex items-center justify-between p-4 bg-red-50 border border-red-200 rounded-lg">
-                  <div>
-                    <p className="font-semibold text-gray-800">{alert.store_name}</p>
-                    <p className="text-sm text-gray-600">{alert.message}</p>
+              {alerts.slice(0, 5).map(alert => {
+                const getPriorityColor = (priority) => {
+                  switch(priority) {
+                    case 'high': return { bg: 'bg-red-50', border: 'border-red-300', badge: '#ef4444', icon: 'text-red-600' };
+                    case 'medium': return { bg: 'bg-amber-50', border: 'border-amber-300', badge: '#f59e0b', icon: 'text-amber-600' };
+                    default: return { bg: 'bg-blue-50', border: 'border-blue-300', badge: '#0071CE', icon: 'text-blue-600' };
+                  }
+                };
+                const colors = getPriorityColor(alert.priority);
+                return (
+                  <div key={alert.id} className={`flex items-center justify-between p-4 ${colors.bg} border ${colors.border} rounded-lg hover:shadow-md transition-shadow`}>
+                    <div className="flex items-center gap-3">
+                      <AlertCircle className={`w-5 h-5 ${colors.icon} pulse`} />
+                      <div>
+                        <p className="font-semibold text-gray-800">{alert.store_name}</p>
+                        <p className="text-sm text-gray-700">{alert.message}</p>
+                        <p className="text-xs text-gray-500 mt-1">{alert.type === 'calibration' ? '⚙️ Calibración' : alert.type === 'maintenance' ? '🔧 Mantenimiento' : '📡 Firmware'}</p>
+                      </div>
+                    </div>
+                    <Badge 
+                      style={{ backgroundColor: colors.badge, color: 'white' }}
+                    >
+                      {alert.priority === 'high' ? 'Alta' : alert.priority === 'medium' ? 'Media' : 'Baja'}
+                    </Badge>
                   </div>
-                  <Badge variant={alert.priority === 'high' ? 'destructive' : 'default'}>
-                    {alert.priority}
-                  </Badge>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </Card>
         )}
