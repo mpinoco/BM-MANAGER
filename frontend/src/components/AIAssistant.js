@@ -136,7 +136,7 @@ const AIAssistant = ({ variant = 'dashboard', className = '' }) => {
             <Bot className="w-7 h-7 text-white" />
           </div>
           <div>
-            <h3 className="text-xl font-bold text-gray-800">Asistente IA Alcom</h3>
+            <h3 className="text-xl font-bold text-gray-800">Asistente IA Allcom</h3>
             <p className="text-sm text-gray-600">Predicciones inteligentes en tiempo real</p>
           </div>
         </div>
