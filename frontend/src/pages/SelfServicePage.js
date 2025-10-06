@@ -57,24 +57,24 @@ const SelfServicePage = ({ onLogout }) => {
 
   const demoImages = {
     bienvenido: [
-      { name: "Bienvenida Corporativa", url: "https://images.unsplash.com/photo-1557804506-669a67965ba0?w=400&h=300&fit=crop" },
-      { name: "Bienvenida Walmart", url: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=400&h=300&fit=crop" },
-      { name: "Bienvenida Amigable", url: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=300&fit=crop" }
+      { name: "Frutas Frescas Bienvenida", url: "https://images.unsplash.com/photo-1542838132-92c53300491e?w=400&h=300&fit=crop" },
+      { name: "Verduras Variadas", url: "https://images.unsplash.com/photo-1540420773420-3366772f4999?w=400&h=300&fit=crop" },
+      { name: "Mercado Fresco", url: "https://images.unsplash.com/photo-1488459716781-31db52582fe9?w=400&h=300&fit=crop" }
     ],
     pesar: [
-      { name: "Balanza con Producto", url: "https://images.unsplash.com/photo-1556909114-4f6e7be7b0fd?w=400&h=300&fit=crop" },
-      { name: "Pesaje de Frutas", url: "https://images.unsplash.com/photo-1610832958506-aa56368176cf?w=400&h=300&fit=crop" },
-      { name: "Balanza Digital", url: "https://images.unsplash.com/photo-1574025024109-fec4b973a860?w=400&h=300&fit=crop" }
+      { name: "Manzanas en Autoservicio", url: "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?w=400&h=300&fit=crop" },
+      { name: "Tomates Frescos", url: "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?w=400&h=300&fit=crop" },
+      { name: "Pimientos Variados", url: "https://images.unsplash.com/photo-1563565375-f3c8de43e1de?w=400&h=300&fit=crop" }
     ],
     retirar: [
-      { name: "Mano Tomando Etiqueta", url: "https://images.unsplash.com/photo-1609603111802-a0d33ab4b9cf?w=400&h=300&fit=crop" },
-      { name: "Retirando Ticket", url: "https://images.unsplash.com/photo-1556742502-ec7c0e9f34b1?w=400&h=300&fit=crop" },
-      { name: "Proceso de Etiquetado", url: "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=400&h=300&fit=crop" }
+      { name: "Bananas Frescas", url: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=300&fit=crop" },
+      { name: "Naranjas Organizadas", url: "https://images.unsplash.com/photo-1547514701-42782101795e?w=400&h=300&fit=crop" },
+      { name: "Limones Frescos", url: "https://images.unsplash.com/photo-1590005354167-6da97870c757?w=400&h=300&fit=crop" }
     ],
     finalizar: [
-      { name: "Finalización Exitosa", url: "https://images.unsplash.com/photo-1595475038665-62795d58f1e5?w=400&h=300&fit=crop" },
-      { name: "Gracias por Comprar", url: "https://images.unsplash.com/photo-1556909114-4f6e7be7b0fd?w=400&h=300&fit=crop" },
-      { name: "Hasta Pronto", url: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=300&fit=crop" }
+      { name: "Verduras Verdes", url: "https://images.unsplash.com/photo-1576045057995-568f588f82fb?w=400&h=300&fit=crop" },
+      { name: "Apio y Verduras", url: "https://images.unsplash.com/photo-1590736969955-71cc94901144?w=400&h=300&fit=crop" },
+      { name: "Brócoli y Coliflor", url: "https://images.unsplash.com/photo-1459411552884-841db9b3cc2a?w=400&h=300&fit=crop" }
     ]
   };
 
