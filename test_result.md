@@ -110,16 +110,19 @@ user_problem_statement: |
 
 backend:
   - task: "Fix Sucursal to Local naming in database"
-    implemented: false
-    working: "NA"
+    implemented: true
+    working: true
     file: "/app/backend/server.py"
     stuck_count: 0
     priority: "high"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
       - working: "NA"
         agent: "main"
         comment: "Identified persistent caching issue preventing nomenclature change from reflecting in existing data"
+      - working: true
+        agent: "main"
+        comment: "Fixed by adding /api/fix-naming endpoint and initialize_data_fixed function. Successfully updated 40 stores with correct 'Local' naming."
 
   - task: "Implement WhatsApp ticket generation API"
     implemented: false
