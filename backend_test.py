@@ -314,22 +314,18 @@ class BackendTester:
     def test_cors_functionality(self):
         """Test CORS headers"""
         try:
-            response = self.session.options(f"{BACKEND_URL}/stores")
-            cors_headers = {
-                'Access-Control-Allow-Origin': response.headers.get('Access-Control-Allow-Origin'),
-                'Access-Control-Allow-Methods': response.headers.get('Access-Control-Allow-Methods'),
-                'Access-Control-Allow-Headers': response.headers.get('Access-Control-Allow-Headers')
-            }
+            # Add Origin header to simulate cross-origin request
+            headers = {'Origin': 'https://example.com'}
+            response = self.session.get(f"{BACKEND_URL}/stores", headers=headers)
             
-            if any(cors_headers.values()):
-                self.log_test("CORS functionality", True, f"CORS headers present: {cors_headers}")
+            cors_origin = response.headers.get('Access-Control-Allow-Origin')
+            cors_credentials = response.headers.get('Access-Control-Allow-Credentials')
+            
+            if cors_origin:
+                self.log_test("CORS functionality", True, 
+                            f"CORS headers present - Origin: {cors_origin}, Credentials: {cors_credentials}")
             else:
-                # Try a regular GET request to check CORS headers
-                get_response = self.session.get(f"{BACKEND_URL}/")
-                if get_response.headers.get('Access-Control-Allow-Origin'):
-                    self.log_test("CORS functionality", True, "CORS headers present in GET response")
-                else:
-                    self.log_test("CORS functionality", False, "No CORS headers found")
+                self.log_test("CORS functionality", False, "No CORS headers found")
         except Exception as e:
             self.log_test("CORS functionality", False, f"Exception: {str(e)}")
     
