@@ -101,3 +101,102 @@
 #====================================================================================================
 # Testing Data - Main Agent and testing sub agent both should log testing data below this section
 #====================================================================================================
+
+user_problem_statement: |
+  Implement comprehensive improvements to BM MANAGER application:
+  1. Fix "Sucursal" to "Local" naming issue in MongoDB/backend data
+  2. Complete "Balanzas con Problemas" - implement functional ticket generation
+  3. AI Assistant Alcom Module with predictive insights for login and dashboard
+
+backend:
+  - task: "Fix Sucursal to Local naming in database"
+    implemented: false
+    working: "NA"
+    file: "/app/backend/server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: "NA"
+        agent: "main"
+        comment: "Identified persistent caching issue preventing nomenclature change from reflecting in existing data"
+
+  - task: "Implement WhatsApp ticket generation API"
+    implemented: false
+    working: "NA"
+    file: "/app/backend/server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: "NA"
+        agent: "main"
+        comment: "Need to create actual ticket generation and logging system"
+
+  - task: "Create AI Assistant prediction API"
+    implemented: false
+    working: "NA"
+    file: "/app/backend/server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: "NA"
+        agent: "main"
+        comment: "Need LLM integration for dynamic predictions based on system data"
+
+frontend:
+  - task: "Implement AI Assistant component for login page"
+    implemented: false
+    working: "NA"
+    file: "/app/frontend/src/pages/LoginPage.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: "NA"
+        agent: "main"
+        comment: "Need rotating prediction box with robot icon and animations"
+
+  - task: "Implement AI Assistant component for dashboard"
+    implemented: false
+    working: "NA"
+    file: "/app/frontend/src/pages/DashboardPage.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: "NA"
+        agent: "main"
+        comment: "Need enhanced version with dynamic insights and interactions"
+
+  - task: "Complete Balanzas con Problemas functionality"
+    implemented: false
+    working: "NA"
+    file: "/app/frontend/src/pages/AIMenuPage.js"
+    stuck_count: 0
+    priority: "medium"
+    needs_retesting: true
+    status_history:
+      - working: "NA"
+        agent: "main"
+        comment: "Currently only UI mockup, need functional ticket generation and persistence"
+
+metadata:
+  created_by: "main_agent"
+  version: "1.0"
+  test_sequence: 0
+  run_ui: false
+
+test_plan:
+  current_focus:
+    - "Fix Sucursal to Local naming in database"
+    - "Create AI Assistant prediction API"
+    - "Implement AI Assistant component for login page"
+  stuck_tasks: []
+  test_all: false
+  test_priority: "high_first"
+
+agent_communication:
+  - agent: "main"
+    message: "Starting comprehensive BM MANAGER improvements focusing on data fixes, AI assistant implementation, and ticket generation functionality"
