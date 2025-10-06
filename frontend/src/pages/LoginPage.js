@@ -54,15 +54,6 @@ const LoginPage = ({ onLogin }) => {
               </p>
             </div>
           </div>
-
-          {/* Logo Alcom en la parte inferior */}
-          <div>
-            <img 
-              src="/images/logo_allcom.jpg" 
-              alt="Alcom Logo" 
-              className="h-12 w-auto"
-            />
-          </div>
         </div>
 
         {/* Columna Derecha - Formulario */}
