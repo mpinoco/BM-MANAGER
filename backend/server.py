@@ -177,7 +177,7 @@ async def initialize_data():
             status = "offline"
         
         store = Store(
-            name=f"Sucursal {i+1}",
+            name=f"Local {i+1}",
             comuna=comuna_data["name"],
             sap_code=f"SAP-{1000 + i}",
             address=f"Av. Principal {100 + i*10}, {comuna_data['name']}",
