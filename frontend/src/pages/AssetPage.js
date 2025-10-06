@@ -27,12 +27,14 @@ const AssetPage = ({ onLogout }) => {
       const devices = [];
       response.data.forEach(store => {
         store.devices?.forEach(device => {
+          // Generate random serial like BMCL-9E998776
+          const randomHex = Math.floor(Math.random() * 0xFFFFFFFF).toString(16).toUpperCase().padStart(8, '0');
           devices.push({
             ...device,
             storeName: store.name,
             storeComuna: store.comuna,
             storeId: store.id,
-            serialNumber: `WMT-${store.sap_code}-${device.id.slice(0, 8).toUpperCase()}`,
+            serialNumber: `BMCL-${randomHex}`,
             provider: device.type === 'IA' ? 'Alcon IA Systems' : 'Balanzas Chile S.A.',
             licenseStatus: Math.random() > 0.1 ? 'active' : 'pending',
             warrantyExpiry: new Date(Date.now() + Math.random() * 365 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]
