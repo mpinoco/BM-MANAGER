@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { LayoutDashboard, Map, Store, Megaphone, Workflow, FileText, LogOut, Menu, X } from 'lucide-react';
+import { LayoutDashboard, Map, Megaphone, Workflow, FileText, LogOut, Menu, X, Zap, Package, HardDrive, BrainCircuit } from 'lucide-react';
 
 const Layout = ({ children, onLogout }) => {
   const navigate = useNavigate();
@@ -11,8 +11,12 @@ const Layout = ({ children, onLogout }) => {
   const menuItems = [
     { icon: LayoutDashboard, label: 'Dashboard', path: '/' },
     { icon: Map, label: 'Mapa', path: '/map' },
+    { icon: Zap, label: 'Consumo', path: '/consumption' },
+    { icon: Package, label: 'Insumos', path: '/supplies' },
+    { icon: HardDrive, label: 'Assets', path: '/assets' },
     { icon: Megaphone, label: 'Campañas', path: '/campaigns' },
     { icon: Workflow, label: 'Autoservicio', path: '/self-service' },
+    { icon: BrainCircuit, label: 'Menú IA', path: '/ai-menu' },
     { icon: FileText, label: 'Reportes', path: '/reports' }
   ];
 
