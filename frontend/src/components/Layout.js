@@ -35,13 +35,11 @@ const Layout = ({ children, onLogout }) => {
           {sidebarOpen ? (
             <div>
               <div className="flex items-center justify-between mb-4">
-                <div className="bg-white/95 px-4 py-2.5 rounded-xl shadow-lg">
-                  <img 
-                    src="/images/logowalmart.png" 
-                    alt="Walmart Logo" 
-                    className="h-7 w-auto"
-                  />
-                </div>
+                <img 
+                  src="/images/logowalmart.png" 
+                  alt="Walmart Logo" 
+                  className="h-12 w-auto"
+                />
                 <button 
                   onClick={() => setSidebarOpen(!sidebarOpen)}
                   className="text-white/90 hover:text-white hover:bg-white/10 p-2 rounded-lg transition-all"
