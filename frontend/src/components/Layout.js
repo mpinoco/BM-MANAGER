@@ -60,7 +60,7 @@ const Layout = ({ children, onLogout }) => {
         </div>
 
         {/* Navigation */}
-        <nav className="flex-1 px-3 py-4 space-y-2">
+        <nav className="flex-1 px-3 py-4 space-y-1 overflow-y-auto">
           {menuItems.map((item) => {
             const Icon = item.icon;
             const isActive = location.pathname === item.path;
@@ -70,27 +70,38 @@ const Layout = ({ children, onLogout }) => {
                 onClick={() => navigate(item.path)}
                 className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-all ${
                   isActive 
-                    ? 'bg-white text-sky-600 shadow-lg' 
-                    : 'text-white hover:bg-sky-600'
+                    ? 'bg-white text-blue-600 shadow-lg' 
+                    : 'text-white hover:bg-blue-700'
                 }`}
               >
                 <Icon size={20} />
-                {sidebarOpen && <span className="font-medium">{item.label}</span>}
+                {sidebarOpen && <span className="font-medium text-sm">{item.label}</span>}
               </button>
             );
           })}
         </nav>
 
-        {/* Logout */}
-        <div className="p-3">
-          <Button
-            onClick={onLogout}
-            variant="ghost"
-            className="w-full flex items-center gap-3 text-white hover:bg-sky-600 justify-start px-4"
-          >
-            <LogOut size={20} />
-            {sidebarOpen && <span>Cerrar Sesión</span>}
-          </Button>
+        {/* Alcom Logo and Logout */}
+        <div className="border-t border-blue-700">
+          {sidebarOpen && (
+            <div className="p-4 flex items-center justify-center">
+              <img 
+                src="/images/logo_allcom.jpg" 
+                alt="Alcom Logo" 
+                className="h-8 w-auto"
+              />
+            </div>
+          )}
+          <div className="p-3">
+            <Button
+              onClick={onLogout}
+              variant="ghost"
+              className="w-full flex items-center gap-3 text-white hover:bg-blue-700 justify-start px-4"
+            >
+              <LogOut size={20} />
+              {sidebarOpen && <span>Cerrar Sesión</span>}
+            </Button>
+          </div>
         </div>
       </aside>
 
