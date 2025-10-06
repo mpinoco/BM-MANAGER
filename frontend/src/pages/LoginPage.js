@@ -20,10 +20,9 @@ const LoginPage = ({ onLogin }) => {
       className="min-h-screen flex"
       style={{
         backgroundImage: 'url(/images/login-background.jpg)',
-        backgroundSize: 'contain',
+        backgroundSize: '100% 100%',
         backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat',
-        backgroundColor: '#f8f9fa'
+        backgroundRepeat: 'no-repeat'
       }}
     >
       {/* Overlay oscuro */}
