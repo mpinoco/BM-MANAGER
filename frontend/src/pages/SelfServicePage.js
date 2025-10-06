@@ -111,8 +111,12 @@ const SelfServicePage = ({ onLogout }) => {
         {/* Main Display Card */}
         <Card className={`flex-1 shadow-2xl overflow-hidden transition-all duration-300 ${
           isAnimating ? 'opacity-0 transform scale-95' : 'opacity-100 transform scale-100'
-        }`}>
-          <div className="h-full flex flex-col items-center justify-center p-12 text-center">
+        }`} style={{ 
+          background: 'linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(240,248,255,0.95) 100%)',
+          backgroundImage: 'url("data:image/svg+xml,%3Csvg width=\\"60\\" height=\\"60\\" viewBox=\\"0 0 60 60\\" xmlns=\\"http://www.w3.org/2000/svg\\"%3E%3Ctext x=\\"5\\" y=\\"25\\" font-size=\\"20\\" opacity=\\"0.1\\"%3E🍎%3C/text%3E%3Ctext x=\\"35\\" y=\\"45\\" font-size=\\"16\\" opacity=\\"0.08\\"%3E🍊%3C/text%3E%3Ctext x=\\"10\\" y=\\"55\\" font-size=\\"18\\" opacity=\\"0.07\\"%3E🍇%3C/text%3E%3C/svg%3E")',
+          backgroundSize: '120px 120px'
+        }}>
+          <div className="h-full flex flex-col items-center justify-center p-12 text-center" style={{ position: 'relative', zIndex: 1 }}>
             {/* Icon */}
             <div 
               className="w-32 h-32 rounded-full flex items-center justify-center mb-8 shadow-lg"
