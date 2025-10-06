@@ -174,45 +174,21 @@ const DashboardPage = ({ onLogout }) => {
           </Card>
         </div>
 
-        {/* Charts Row */}
+        {/* Enhanced Charts Row */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {/* Status Pie Chart */}
-          <Card className="p-6 shadow-lg">
-            <h3 className="text-xl font-semibold mb-4 text-gray-800">Estado de Locales</h3>
-            <ResponsiveContainer width="100%" height={250}>
-              <PieChart>
-                <Pie
-                  data={statusData}
-                  cx="50%"
-                  cy="50%"
-                  labelLine={false}
-                  label={({ name, value }) => `${name}: ${value}`}
-                  outerRadius={80}
-                  fill="#8884d8"
-                  dataKey="value"
-                >
-                  {statusData.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={entry.color} />
-                  ))}
-                </Pie>
-                <Tooltip />
-              </PieChart>
-            </ResponsiveContainer>
-          </Card>
+          {/* Enhanced Donut Chart */}
+          <DonutChart 
+            data={statusData}
+            title="Estado de Locales"
+            totalStores={stores.length}
+          />
 
-          {/* Top 10 Production Stores */}
-          <Card className="p-6 shadow-lg">
-            <h3 className="text-xl font-semibold mb-4 text-gray-800">Top 10 Locales con Mayor Producción</h3>
-            <ResponsiveContainer width="100%" height={250}>
-              <BarChart data={topStoresProduction} layout="vertical">
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis type="number" label={{ value: 'Kg/día', position: 'insideBottom', offset: -5 }} />
-                <YAxis dataKey="name" type="category" width={100} />
-                <Tooltip />
-                <Bar dataKey="kg" fill="#0071CE" radius={[0, 8, 8, 0]} />
-              </BarChart>
-            </ResponsiveContainer>
-          </Card>
+          {/* Enhanced Bar Chart */}
+          <EnhancedBarChart 
+            data={topStoresProduction}
+            title="Top 10 Locales con Mayor Producción"
+            stores={stores}
+          />
         </div>
 
         {/* New Sections Row */}
