@@ -321,7 +321,7 @@ Por favor atender a la brevedad.`;
                         size="sm"
                         className="flex-1"
                         style={{ backgroundColor: '#0071CE' }}
-                        onClick={() => sendWhatsAppTicket(device, 'Alcom')}
+                        onClick={() => sendWhatsAppTicket(device, 'Allcom')}
                       >
                         <MessageCircle size={16} className="mr-2" />
                         Reportar a Allcom
