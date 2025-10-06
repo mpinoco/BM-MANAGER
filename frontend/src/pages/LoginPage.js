@@ -66,41 +66,41 @@ const LoginPage = ({ onLogin }) => {
         </div>
 
         {/* Columna Derecha - Formulario */}
-        <div className="w-full lg:w-1/2 flex items-center justify-center p-8">
-          <div className="w-full max-w-sm">
+        <div className="w-full lg:w-1/2 flex items-center justify-end p-8 pr-16">
+          <div className="w-full max-w-xs">
             {/* Título del formulario - Sin cuadro */}
-            <div className="mb-6">
-              <h2 className="text-2xl font-bold text-white mb-1 drop-shadow-lg" style={{ fontFamily: 'Inter, sans-serif' }}>
+            <div className="mb-4">
+              <h2 className="text-lg font-bold text-white mb-1 drop-shadow-lg" style={{ fontFamily: 'Inter, sans-serif' }}>
                 Iniciar Sesión
               </h2>
-              <p className="text-white text-sm drop-shadow-lg opacity-90">BM MANAGER</p>
+              <p className="text-white text-xs drop-shadow-lg opacity-90">BM MANAGER</p>
             </div>
 
-            {/* Formulario - Sin contenedor */}
-            <form onSubmit={handleLogin} className="space-y-4">
+            {/* Formulario - Sin contenedor - 30% más pequeño */}
+            <form onSubmit={handleLogin} className="space-y-3">
               {/* Email */}
               <div>
-                <Label htmlFor="email" className="text-white text-sm font-medium drop-shadow-lg">
+                <Label htmlFor="email" className="text-white text-xs font-medium drop-shadow-lg">
                   Correo Electrónico
                 </Label>
                 <Input
                   id="email"
                   type="email"
                   defaultValue="admin@walmart.cl"
-                  className="mt-1 h-10 text-sm backdrop-blur-md bg-white/90 border-white/50"
+                  className="mt-1 h-8 text-xs backdrop-blur-md bg-white/90 border-white/50"
                 />
               </div>
 
               {/* Password */}
               <div>
-                <Label htmlFor="password" className="text-white text-sm font-medium drop-shadow-lg">
+                <Label htmlFor="password" className="text-white text-xs font-medium drop-shadow-lg">
                   Contraseña
                 </Label>
                 <Input
                   id="password"
                   type="password"
                   defaultValue="••••••••"
-                  className="mt-1 h-10 text-sm backdrop-blur-md bg-white/90 border-white/50"
+                  className="mt-1 h-8 text-xs backdrop-blur-md bg-white/90 border-white/50"
                 />
               </div>
 
@@ -109,10 +109,10 @@ const LoginPage = ({ onLogin }) => {
                 <input
                   id="remember"
                   type="checkbox"
-                  className="w-3.5 h-3.5 rounded"
+                  className="w-3 h-3 rounded"
                   style={{ accentColor: '#0071CE' }}
                 />
-                <label htmlFor="remember" className="ml-2 text-xs text-white drop-shadow-lg">
+                <label htmlFor="remember" className="ml-2 text-[10px] text-white drop-shadow-lg">
                   Recordarme
                 </label>
               </div>
@@ -122,7 +122,7 @@ const LoginPage = ({ onLogin }) => {
                 data-testid="login-button"
                 type="submit"
                 disabled={isLoading}
-                className="w-full h-10 text-sm font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all hover:scale-105"
+                className="w-full h-8 text-xs font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all hover:scale-105"
                 style={{ 
                   backgroundColor: '#0071CE',
                   color: 'white'
@@ -130,7 +130,7 @@ const LoginPage = ({ onLogin }) => {
               >
                 {isLoading ? (
                   <span className="flex items-center gap-2">
-                    <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                    <div className="w-3 h-3 border-2 border-white border-t-transparent rounded-full animate-spin" />
                     Iniciando...
                   </span>
                 ) : (
@@ -139,16 +139,16 @@ const LoginPage = ({ onLogin }) => {
               </Button>
 
               {/* Lost password */}
-              <div className="text-center pt-2">
-                <a href="#" className="text-xs text-white drop-shadow-lg hover:opacity-80 transition-opacity">
+              <div className="text-center pt-1">
+                <a href="#" className="text-[10px] text-white drop-shadow-lg hover:opacity-80 transition-opacity">
                   ¿Olvidaste tu contraseña?
                 </a>
               </div>
             </form>
 
             {/* Copyright */}
-            <div className="mt-8 text-center text-xs text-white">
-              <p className="drop-shadow-lg opacity-80">© 2025 Walmart Chile - Alcon Technologies</p>
+            <div className="mt-6 text-center text-[10px] text-white">
+              <p className="drop-shadow-lg opacity-80">© 2025 ALLCOM IA Technologies</p>
             </div>
           </div>
         </div>
