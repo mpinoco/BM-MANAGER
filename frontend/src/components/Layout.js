@@ -81,15 +81,12 @@ const Layout = ({ children, onLogout }) => {
           })}
         </nav>
 
-        {/* Alcom Logo and Logout */}
+        {/* Allcom Text and Logout */}
         <div className="border-t border-blue-700">
           {sidebarOpen && (
-            <div className="p-4 flex items-center justify-center">
-              <img 
-                src="/images/logo_allcom.jpg" 
-                alt="Alcom Logo" 
-                className="h-8 w-auto"
-              />
+            <div className="p-4 text-center">
+              <p className="text-white text-xs font-semibold">ALLCOM</p>
+              <p className="text-blue-200 text-[10px]">Versión 1.1 2025</p>
             </div>
           )}
           <div className="p-3">
