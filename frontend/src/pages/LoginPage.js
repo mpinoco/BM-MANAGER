@@ -42,20 +42,22 @@ const LoginPage = ({ onLogin }) => {
               />
             </div>
 
+            {/* AI Assistant - Moved up */}
+            <div className="mt-8">
+              <AIAssistant variant="login" className="max-w-md" />
+            </div>
+
             {/* Welcome Message */}
-            <div className="mt-16">
+            <div className="mt-8">
               <h1 className="text-6xl font-bold text-white mb-6" style={{ fontFamily: 'Inter, sans-serif', lineHeight: '1.2' }}>
                 Bienvenido
                 <br />
                 de nuevo
               </h1>
-              <p className="text-white text-lg leading-relaxed max-w-md opacity-90 mb-8">
+              <p className="text-white text-lg leading-relaxed max-w-md opacity-90">
                 Sistema integral de gestión de balanzas para Walmart Chile. 
                 Controla, monitorea y optimiza tu red de equipos en tiempo real.
               </p>
-
-              {/* AI Assistant */}
-              <AIAssistant variant="login" className="max-w-md" />
             </div>
           </div>
         </div>
