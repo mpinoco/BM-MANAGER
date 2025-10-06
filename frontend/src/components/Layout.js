@@ -25,22 +25,38 @@ const Layout = ({ children, onLogout }) => {
       {/* Sidebar */}
       <aside 
         className={`${sidebarOpen ? 'w-64' : 'w-20'} transition-all duration-300 shadow-xl flex flex-col`}
-        style={{ backgroundColor: '#79b9e7' }}
+        style={{ backgroundColor: '#0071CE' }}
       >
-        {/* Header */}
-        <div className="p-6 flex items-center justify-between">
+        {/* Header with Walmart Logo */}
+        <div className="p-4 border-b border-blue-700">
+          {sidebarOpen ? (
+            <div className="flex items-center justify-between">
+              <img 
+                src="/images/logowalmart.png" 
+                alt="Walmart Logo" 
+                className="h-10 w-auto"
+              />
+              <button 
+                onClick={() => setSidebarOpen(!sidebarOpen)}
+                className="text-white hover:bg-blue-700 p-2 rounded-lg transition-colors"
+              >
+                <X size={20} />
+              </button>
+            </div>
+          ) : (
+            <button 
+              onClick={() => setSidebarOpen(!sidebarOpen)}
+              className="text-white hover:bg-blue-700 p-2 rounded-lg transition-colors w-full"
+            >
+              <Menu size={20} className="mx-auto" />
+            </button>
+          )}
           {sidebarOpen && (
-            <div className="text-white">
-              <h2 className="text-2xl font-bold">BM MANAGER</h2>
-              <p className="text-xs text-sky-100">Walmart Chile</p>
+            <div className="mt-2">
+              <h2 className="text-white text-lg font-bold">BM MANAGER</h2>
+              <p className="text-xs text-blue-200">Sistema de Gestión de Balanzas</p>
             </div>
           )}
-          <button 
-            onClick={() => setSidebarOpen(!sidebarOpen)}
-            className="text-white hover:bg-sky-600 p-2 rounded-lg transition-colors"
-          >
-            {sidebarOpen ? <X size={20} /> : <Menu size={20} />}
-          </button>
         </div>
 
         {/* Navigation */}
