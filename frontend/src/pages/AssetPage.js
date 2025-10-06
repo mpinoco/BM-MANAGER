@@ -1,0 +1,225 @@
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+import { API } from '@/App';
+import Layout from '@/components/Layout';
+import { Card } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Input } from '@/components/ui/input';
+import { Search, HardDrive, Calendar, CheckCircle, AlertCircle } from 'lucide-react';
+import { toast } from 'sonner';
+
+const AssetPage = ({ onLogout }) => {
+  const [stores, setStores] = useState([]);
+  const [allDevices, setAllDevices] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [searchTerm, setSearchTerm] = useState('');
+
+  useEffect(() => {
+    loadData();
+  }, []);
+
+  const loadData = async () => {
+    try {
+      const response = await axios.get(`${API}/stores`);
+      setStores(response.data);
+      
+      // Flatten all devices with store info
+      const devices = [];
+      response.data.forEach(store => {
+        store.devices?.forEach(device => {
+          devices.push({
+            ...device,
+            storeName: store.name,
+            storeComuna: store.comuna,
+            storeId: store.id,
+            serialNumber: `WMT-${store.sap_code}-${device.id.slice(0, 8).toUpperCase()}`,
+            provider: device.type === 'IA' ? 'Alcon IA Systems' : 'Balanzas Chile S.A.',
+            licenseStatus: Math.random() > 0.1 ? 'active' : 'pending',
+            warrantyExpiry: new Date(Date.now() + Math.random() * 365 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]
+          });
+        });
+      });
+      
+      setAllDevices(devices);
+    } catch (error) {
+      toast.error('Error al cargar activos');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const filteredDevices = allDevices.filter(device => 
+    device.serialNumber.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    device.storeName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    device.type.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    device.provider.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  if (loading) {
+    return (
+      <Layout onLogout={onLogout}>
+        <div className="flex items-center justify-center h-full">
+          <div className="w-16 h-16 border-4 border-blue-600 border-t-transparent rounded-full animate-spin" />
+        </div>
+      </Layout>
+    );
+  }
+
+  return (
+    <Layout onLogout={onLogout}>
+      <div className="p-8 space-y-6">
+        {/* Header */}
+        <div className="flex justify-between items-center">
+          <div>
+            <h1 className="text-3xl font-bold text-gray-800" style={{ fontFamily: 'Inter, sans-serif' }}>
+              Gestión de Activos
+            </h1>
+            <p className="text-gray-600 mt-1">Inventario completo de balanzas</p>
+          </div>
+          <div className="flex items-center gap-4">
+            <Badge className="px-4 py-2 text-base" style={{ backgroundColor: '#0071CE', color: 'white' }}>
+              Total Activos: {allDevices.length}
+            </Badge>
+          </div>
+        </div>
+
+        {/* Summary Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+          <Card className="p-6 shadow-lg">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm text-gray-600 mb-1">Licencias Activas</p>
+                <h3 className="text-3xl font-bold text-green-600">
+                  {allDevices.filter(d => d.licenseStatus === 'active').length}
+                </h3>
+              </div>
+              <div className="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center">
+                <CheckCircle className="w-6 h-6 text-green-600" />
+              </div>
+            </div>
+          </Card>
+
+          <Card className="p-6 shadow-lg">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm text-gray-600 mb-1">Licencias Pendientes</p>
+                <h3 className="text-3xl font-bold text-amber-600">
+                  {allDevices.filter(d => d.licenseStatus === 'pending').length}
+                </h3>
+              </div>
+              <div className="w-12 h-12 rounded-full bg-amber-100 flex items-center justify-center">
+                <AlertCircle className="w-6 h-6 text-amber-600" />
+              </div>
+            </div>
+          </Card>
+
+          <Card className="p-6 shadow-lg">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm text-gray-600 mb-1">Proveedores</p>
+                <h3 className="text-3xl font-bold" style={{ color: '#0071CE' }}>2</h3>
+              </div>
+              <div className="w-12 h-12 rounded-full flex items-center justify-center" style={{ backgroundColor: 'rgba(0, 113, 206, 0.1)' }}>
+                <HardDrive className="w-6 h-6" style={{ color: '#0071CE' }} />
+              </div>
+            </div>
+          </Card>
+
+          <Card className="p-6 shadow-lg">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm text-gray-600 mb-1">Instalaciones 2025</p>
+                <h3 className="text-3xl font-bold" style={{ color: '#FFC220' }}>
+                  {allDevices.filter(d => d.installation_date.startsWith('2025')).length}
+                </h3>
+              </div>
+              <div className="w-12 h-12 rounded-full flex items-center justify-center" style={{ backgroundColor: 'rgba(255, 194, 32, 0.1)' }}>
+                <Calendar className="w-6 h-6" style={{ color: '#FFC220' }} />
+              </div>
+            </div>
+          </Card>
+        </div>
+
+        {/* Search Bar */}
+        <Card className="p-4 shadow-lg">
+          <div className="relative">
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+            <Input 
+              placeholder="Buscar por número de serie, local, tipo o proveedor..."
+              className="pl-10 w-full"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+          </div>
+        </Card>
+
+        {/* Assets Table */}
+        <Card className="p-6 shadow-lg">
+          <h3 className="text-xl font-semibold mb-4 text-gray-800">Registro de Activos ({filteredDevices.length})</h3>
+          <div className="overflow-x-auto">
+            <table className="w-full">
+              <thead>
+                <tr className="bg-gray-50 border-b">
+                  <th className="px-4 py-3 text-left text-sm font-semibold text-gray-700">Número de Serie</th>
+                  <th className="px-4 py-3 text-left text-sm font-semibold text-gray-700">Local</th>
+                  <th className="px-4 py-3 text-center text-sm font-semibold text-gray-700">Tipo</th>
+                  <th className="px-4 py-3 text-center text-sm font-semibold text-gray-700">Fecha Instalación</th>
+                  <th className="px-4 py-3 text-left text-sm font-semibold text-gray-700">Proveedor</th>
+                  <th className="px-4 py-3 text-center text-sm font-semibold text-gray-700">Licencia</th>
+                  <th className="px-4 py-3 text-center text-sm font-semibold text-gray-700">Garantía</th>
+                </tr>
+              </thead>
+              <tbody>
+                {filteredDevices.slice(0, 50).map((device) => (
+                  <tr key={device.id} className="border-b hover:bg-gray-50 transition-colors">
+                    <td className="px-4 py-3">
+                      <span className="font-mono text-sm font-semibold" style={{ color: '#0071CE' }}>
+                        {device.serialNumber}
+                      </span>
+                    </td>
+                    <td className="px-4 py-3">
+                      <div>
+                        <p className="font-semibold text-gray-800">{device.storeName}</p>
+                        <p className="text-xs text-gray-600">{device.storeComuna}</p>
+                      </div>
+                    </td>
+                    <td className="px-4 py-3 text-center">
+                      <Badge 
+                        variant="outline"
+                        style={{
+                          borderColor: device.type === 'IA' ? '#0071CE' : '#FFC220',
+                          color: device.type === 'IA' ? '#0071CE' : '#FFC220'
+                        }}
+                      >
+                        {device.type}
+                      </Badge>
+                    </td>
+                    <td className="px-4 py-3 text-center text-sm text-gray-700">
+                      {new Date(device.installation_date).toLocaleDateString('es-CL')}
+                    </td>
+                    <td className="px-4 py-3 text-sm text-gray-700">{device.provider}</td>
+                    <td className="px-4 py-3 text-center">
+                      <Badge 
+                        style={{
+                          backgroundColor: device.licenseStatus === 'active' ? '#10b981' : '#f59e0b',
+                          color: 'white'
+                        }}
+                      >
+                        {device.licenseStatus === 'active' ? 'Activa' : 'Pendiente'}
+                      </Badge>
+                    </td>
+                    <td className="px-4 py-3 text-center text-sm text-gray-700">
+                      {device.warrantyExpiry}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </Card>
+      </div>
+    </Layout>
+  );
+};
+
+export default AssetPage;
