@@ -135,6 +135,38 @@ function App() {
               <Navigate to="/login" replace />
             } 
           />
+          <Route 
+            path="/sustainability" 
+            element={
+              isAuthenticated ? 
+              <SustainabilityPage onLogout={handleLogout} /> : 
+              <Navigate to="/login" replace />
+            } 
+          />
+          <Route 
+            path="/obsolescence" 
+            element={
+              isAuthenticated ? 
+              <ObsolescencePage onLogout={handleLogout} /> : 
+              <Navigate to="/login" replace />
+            } 
+          />
+          <Route 
+            path="/sales-analysis" 
+            element={
+              isAuthenticated ? 
+              <SalesAnalysisPage onLogout={handleLogout} /> : 
+              <Navigate to="/login" replace />
+            } 
+          />
+          <Route 
+            path="/predictive-maintenance" 
+            element={
+              isAuthenticated ? 
+              <PredictiveMaintenancePage onLogout={handleLogout} /> : 
+              <Navigate to="/login" replace />
+            } 
+          />
         </Routes>
       </BrowserRouter>
       <Toaster position="top-right" />
