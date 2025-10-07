@@ -408,10 +408,17 @@ Por favor atender a la brevedad.`;
           </h3>
           
           <div className="mb-6">
-            <h4 className="text-lg font-medium mb-3 text-gray-700">Productos Detectados como Fraude</h4>
-            <p className="text-sm text-gray-600 mb-4">
-              La IA ha identificado estos productos que frecuentemente se intentan usar para fraude en autoservicio:
-            </p>
+            <h4 className="text-lg font-semibold mb-3 text-gray-800 flex items-center gap-2">
+              <div className="w-6 h-6 rounded bg-red-500 flex items-center justify-center">
+                <span className="text-white text-xs font-bold">⚠</span>
+              </div>
+              Productos Detectados como Fraude
+            </h4>
+            <div className="p-3 rounded-lg" style={{ backgroundColor: '#0071CE', opacity: '0.1' }}>
+              <p className="text-sm font-medium" style={{ color: '#0071CE' }}>
+                La IA ha identificado estos productos que frecuentemente se intentan usar para fraude en autoservicio:
+              </p>
+            </div>
             
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
               {[
