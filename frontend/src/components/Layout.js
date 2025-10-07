@@ -17,6 +17,10 @@ const Layout = ({ children, onLogout }) => {
     { icon: Megaphone, label: 'Campañas', path: '/campaigns' },
     { icon: Workflow, label: 'Autoservicio', path: '/self-service' },
     { icon: BrainCircuit, label: 'Menú IA', path: '/ai-menu' },
+    { icon: Leaf, label: 'Sostenibilidad', path: '/sustainability' },
+    { icon: AlertTriangle, label: 'Obsolescencia', path: '/obsolescence' },
+    { icon: TrendingUp, label: 'Ventas & Análisis', path: '/sales-analysis' },
+    { icon: Recycle, label: 'Mantenimiento Predictivo', path: '/predictive-maintenance' },
     { icon: FileText, label: 'Reportes & Auditoría', path: '/reports' }
   ];
 
