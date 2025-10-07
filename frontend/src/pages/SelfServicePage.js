@@ -312,53 +312,100 @@ const SelfServicePage = ({ onLogout }) => {
         </Card>
 
         {/* Deployment Section */}
-        <Card className="p-6 shadow-lg">
-          <h3 className="text-xl font-semibold text-gray-800 mb-4">Paquetizar y enviar a locales</h3>
+        <Card className="p-6 shadow-xl border-l-4 border-blue-500 bg-gradient-to-r from-blue-50 to-indigo-50">
+          <div className="flex items-center justify-between mb-6">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-lg bg-blue-600 flex items-center justify-center">
+                <Send className="w-5 h-5 text-white" />
+              </div>
+              <div>
+                <h3 className="text-xl font-bold text-gray-800">Paquetizar y enviar a locales</h3>
+                <p className="text-sm text-gray-600">Distribuye la configuración de flujos a los locales seleccionados</p>
+              </div>
+            </div>
+            <Badge 
+              className="px-3 py-1 text-xs font-semibold"
+              style={{ backgroundColor: validateConfiguration() ? '#10b981' : '#f59e0b', color: 'white' }}
+            >
+              {validateConfiguration() ? '✓ Listo' : '⚠ Incompleto'}
+            </Badge>
+          </div>
           
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {/* Control Panel */}
             <div className="space-y-4">
-              <div>
-                <Label className="text-sm font-medium mb-2 block">Destino de envío</Label>
+              <div className="p-4 bg-white rounded-lg border shadow-sm">
+                <Label className="text-sm font-medium mb-3 block flex items-center gap-2">
+                  <Settings className="w-4 h-4" />
+                  Configuración de Destino
+                </Label>
                 <Select value={deploymentTarget} onValueChange={setDeploymentTarget}>
                   <SelectTrigger className="w-full">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="current">Enviar a este local (1 local)</SelectItem>
-                    <SelectItem value="autoservicio">
-                      Enviar sólo a locales con autoservicio ({stores.filter(s => s.balances_autoservicio > 0).length} locales)
+                    <SelectItem value="current">
+                      <div className="flex items-center gap-2">
+                        <Badge className="bg-gray-100 text-gray-700 text-xs">1</Badge>
+                        Enviar a este local
+                      </div>
                     </SelectItem>
-                    <SelectItem value="all">Enviar a todos los locales ({stores.length} locales)</SelectItem>
+                    <SelectItem value="autoservicio">
+                      <div className="flex items-center gap-2">
+                        <Badge className="bg-blue-100 text-blue-700 text-xs">
+                          {stores.filter(s => s.balances_autoservicio > 0).length}
+                        </Badge>
+                        Locales con autoservicio
+                      </div>
+                    </SelectItem>
+                    <SelectItem value="all">
+                      <div className="flex items-center gap-2">
+                        <Badge className="bg-green-100 text-green-700 text-xs">{stores.length}</Badge>
+                        Todos los locales
+                      </div>
+                    </SelectItem>
                   </SelectContent>
                 </Select>
               </div>
 
               {isDeploying ? (
-                <div className="space-y-4">
-                  <div className="flex items-center gap-2 text-blue-600">
-                    <Loader2 className="w-5 h-5 animate-spin" />
-                    <span>Conectando con locales... {deploymentProgress}/{getTargetStoresCount()}</span>
+                <div className="p-4 bg-white rounded-lg border shadow-sm space-y-4">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2 text-blue-600">
+                      <Loader2 className="w-5 h-5 animate-spin" />
+                      <span className="font-medium">Procesando despliegue...</span>
+                    </div>
+                    <Badge className="bg-blue-100 text-blue-700 animate-pulse">
+                      {deploymentProgress}/{getTargetStoresCount()}
+                    </Badge>
                   </div>
-                  <div className="w-full bg-gray-200 rounded-full h-3">
+                  <div className="w-full bg-gray-200 rounded-full h-4 overflow-hidden">
                     <div 
-                      className="bg-blue-600 h-3 rounded-full transition-all duration-300 relative overflow-hidden"
+                      className="bg-gradient-to-r from-blue-500 to-blue-600 h-4 rounded-full transition-all duration-500 relative"
                       style={{ width: `${(deploymentProgress / getTargetStoresCount()) * 100}%` }}
                     >
-                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent animate-pulse" />
+                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent animate-pulse" />
                     </div>
                   </div>
+                  <p className="text-xs text-gray-600 text-center">
+                    Conectando con locales y enviando configuraciones...
+                  </p>
                 </div>
               ) : (
-                <Button
-                  onClick={deployFlow}
-                  disabled={!validateConfiguration()}
-                  className="w-full"
-                  style={{ backgroundColor: '#0071CE' }}
-                >
-                  <Send className="w-4 h-4 mr-2" />
-                  Paquetizar y enviar
-                </Button>
+                <div className="p-4 bg-white rounded-lg border shadow-sm">
+                  <Button
+                    onClick={deployFlow}
+                    disabled={!validateConfiguration()}
+                    className="w-full h-12 text-base font-semibold shadow-lg hover:shadow-xl transition-all"
+                    style={{ backgroundColor: validateConfiguration() ? '#0071CE' : '#9ca3af' }}
+                  >
+                    <Send className="w-5 h-5 mr-2" />
+                    {validateConfiguration() ? 'Paquetizar y enviar' : 'Completar configuración'}
+                    <Badge className="ml-2 bg-white/20 text-white text-xs">
+                      {getTargetStoresCount()} locales
+                    </Badge>
+                  </Button>
+                </div>
               )}
             </div>
 
