@@ -611,8 +611,8 @@ async def initialize_data_fixed():
             end_date="2024-12-31",
             status="expired",
             wallpaper_url="https://images.unsplash.com/photo-1512389142860-9c449e58a543?w=800",
-            deployed_count=40,
-            total_balances=40
+            deployed_count=20,
+            total_balances=20
         ),
         Campaign(
             name="Verano Saludable 2025",
@@ -620,9 +620,9 @@ async def initialize_data_fixed():
             end_date="2025-03-15",
             status="active",
             wallpaper_url="https://images.unsplash.com/photo-1610832958506-aa56368176cf?w=800",
-            deployed_count=38,
-            total_balances=40,
-            stores_applied=[s["id"] for s in stores[:38]]
+            deployed_count=18,
+            total_balances=20,
+            stores_applied=[s["id"] for s in stores[:18]]
         ),
         Campaign(
             name="Otoño Promociones",
@@ -631,7 +631,7 @@ async def initialize_data_fixed():
             status="scheduled",
             wallpaper_url="https://images.unsplash.com/photo-1542838132-92c53300491e?w=800",
             deployed_count=0,
-            total_balances=40
+            total_balances=20
         )
     ]
     await db.campaigns.insert_many([c.dict() for c in campaigns])
