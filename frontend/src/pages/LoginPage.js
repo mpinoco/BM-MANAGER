@@ -96,7 +96,7 @@ const LoginPage = ({ onLogin }) => {
                 <Input
                   id="password"
                   type="password"
-                  defaultValue="••••••••"
+                  defaultValue="4227"
                   className="mt-1 h-8 text-xs backdrop-blur-md bg-white/90 border-white/50"
                 />
               </div>
