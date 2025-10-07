@@ -410,93 +410,145 @@ const SelfServicePage = ({ onLogout }) => {
             </div>
 
             {/* Status Panel */}
-            <div className="space-y-4">
-              <h4 className="text-lg font-semibold text-gray-800 flex items-center gap-2">
-                <Settings className="w-5 h-5" />
-                Estado del Despliegue
-              </h4>
+            <div className="p-4 bg-white rounded-lg border shadow-sm space-y-4">
+              <div className="flex items-center justify-between">
+                <h4 className="text-lg font-semibold text-gray-800 flex items-center gap-2">
+                  <div className="w-6 h-6 rounded bg-gradient-to-r from-blue-500 to-indigo-600 flex items-center justify-center">
+                    <Eye className="w-3 h-3 text-white" />
+                  </div>
+                  Monitor de Despliegue
+                </h4>
+                <Badge 
+                  className={`text-xs px-2 py-1 ${
+                    isDeploying ? 'bg-blue-100 text-blue-700 animate-pulse' : 
+                    deploymentProgress === getTargetStoresCount() && deploymentProgress > 0 ? 'bg-green-100 text-green-700' :
+                    'bg-gray-100 text-gray-700'
+                  }`}
+                >
+                  {isDeploying ? 'En Proceso' : 
+                   deploymentProgress === getTargetStoresCount() && deploymentProgress > 0 ? 'Completado' : 'Esperando'}
+                </Badge>
+              </div>
               
               <div className="space-y-3">
                 {/* Locales Entregados */}
-                <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                  <div className="flex items-center gap-2">
-                    <div className={`w-8 h-8 rounded-full flex items-center justify-center ${
+                <div className="flex items-center justify-between p-3 bg-gradient-to-r from-blue-50 to-blue-100 rounded-lg border border-blue-200">
+                  <div className="flex items-center gap-3">
+                    <div className={`w-10 h-10 rounded-full flex items-center justify-center shadow-sm ${
                       deploymentProgress === getTargetStoresCount() && deploymentProgress > 0 
-                        ? 'bg-green-100' 
-                        : 'bg-gray-100'
+                        ? 'bg-green-500' 
+                        : 'bg-blue-500'
                     }`}>
                       {deploymentProgress === getTargetStoresCount() && deploymentProgress > 0 ? (
-                        <CheckCircle2 className="w-5 h-5 text-green-600" />
+                        <CheckCircle2 className="w-5 h-5 text-white" />
                       ) : (
-                        <Package className="w-5 h-5 text-gray-600" />
+                        <Package className="w-5 h-5 text-white" />
                       )}
                     </div>
-                    <span className="text-sm font-medium">Locales entregados</span>
+                    <div>
+                      <span className="text-sm font-medium text-gray-700">Locales Procesados</span>
+                      <div className="text-xs text-gray-600">Instalaciones completadas</div>
+                    </div>
                   </div>
-                  <span className="text-lg font-bold" style={{ color: '#0071CE' }}>
-                    {deploymentProgress}/{getTargetStoresCount()}
-                  </span>
+                  <div className="text-right">
+                    <div className="text-2xl font-bold" style={{ color: '#0071CE' }}>
+                      {deploymentProgress}
+                    </div>
+                    <div className="text-sm text-gray-600">/ {getTargetStoresCount()}</div>
+                  </div>
                 </div>
 
                 {/* Tiempo Total */}
-                <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                  <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 rounded-full bg-orange-100 flex items-center justify-center">
-                      <Clock className="w-5 h-5 text-orange-600" />
+                <div className="flex items-center justify-between p-3 bg-gradient-to-r from-orange-50 to-orange-100 rounded-lg border border-orange-200">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-full bg-orange-500 flex items-center justify-center shadow-sm">
+                      <Clock className="w-5 h-5 text-white" />
                     </div>
-                    <span className="text-sm font-medium">Duración</span>
+                    <div>
+                      <span className="text-sm font-medium text-gray-700">Tiempo Transcurrido</span>
+                      <div className="text-xs text-gray-600">Duración del proceso</div>
+                    </div>
                   </div>
-                  <span className="text-lg font-bold text-orange-600">
-                    {isDeploying ? formatDuration(deploymentDuration) : '00:00'}
-                  </span>
+                  <div className="text-right">
+                    <div className="text-2xl font-bold text-orange-600 font-mono">
+                      {isDeploying ? formatDuration(deploymentDuration) : '00:00'}
+                    </div>
+                    <Badge className="bg-orange-200 text-orange-800 text-xs mt-1">
+                      {isDeploying ? 'Activo' : 'Inactivo'}
+                    </Badge>
+                  </div>
                 </div>
 
                 {/* Tamaño del Paquete */}
-                <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                  <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 rounded-full bg-purple-100 flex items-center justify-center">
-                      <Image className="w-5 h-5 text-purple-600" />
+                <div className="flex items-center justify-between p-3 bg-gradient-to-r from-purple-50 to-purple-100 rounded-lg border border-purple-200">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-full bg-purple-500 flex items-center justify-center shadow-sm">
+                      <Image className="w-5 h-5 text-white" />
                     </div>
-                    <span className="text-sm font-medium">Tamaño</span>
+                    <div>
+                      <span className="text-sm font-medium text-gray-700">Tamaño del Paquete</span>
+                      <div className="text-xs text-gray-600">Imágenes y configuración</div>
+                    </div>
                   </div>
-                  <span className="text-lg font-bold text-purple-600">
-                    {packageSize > 0 ? `${packageSize.toFixed(1)} MB` : '- MB'}
-                  </span>
+                  <div className="text-right">
+                    <div className="text-2xl font-bold text-purple-600">
+                      {packageSize > 0 ? `${packageSize.toFixed(1)}` : '-'}
+                    </div>
+                    <div className="text-sm text-gray-600">MB</div>
+                  </div>
                 </div>
 
                 {/* Observaciones */}
                 {(isDeploying || deploymentErrors.length > 0 || (deploymentProgress === getTargetStoresCount() && deploymentProgress > 0)) && (
-                  <div className="p-3 rounded-lg border-l-4" 
-                       style={{ 
-                         borderColor: deploymentErrors.length > 0 ? '#ef4444' : '#10b981',
-                         backgroundColor: deploymentErrors.length > 0 ? '#fef2f2' : '#f0fdf4'
-                       }}>
-                    <div className="flex items-start gap-2">
-                      {deploymentErrors.length > 0 ? (
-                        <AlertCircle className="w-5 h-5 text-red-600 mt-0.5" />
-                      ) : (
-                        <CheckCircle className="w-5 h-5 text-green-600 mt-0.5" />
-                      )}
-                      <div className="flex-1">
-                        <h5 className="font-medium text-sm mb-1">
-                          {deploymentErrors.length > 0 ? 'Observaciones' : 'Estado'}
-                        </h5>
+                  <div className={`p-4 rounded-lg border-2 ${
+                    deploymentErrors.length > 0 
+                      ? 'border-red-200 bg-red-50' 
+                      : 'border-green-200 bg-green-50'
+                  }`}>
+                    <div className="flex items-start gap-3">
+                      <div className={`w-8 h-8 rounded-full flex items-center justify-center ${
+                        deploymentErrors.length > 0 ? 'bg-red-500' : 'bg-green-500'
+                      }`}>
                         {deploymentErrors.length > 0 ? (
-                          <div className="text-xs text-red-700 space-y-1">
+                          <AlertCircle className="w-4 h-4 text-white" />
+                        ) : (
+                          <CheckCircle className="w-4 h-4 text-white" />
+                        )}
+                      </div>
+                      <div className="flex-1">
+                        <div className="flex items-center gap-2 mb-2">
+                          <h5 className="font-semibold text-sm">
+                            {deploymentErrors.length > 0 ? 'Observaciones del Proceso' : 'Estado del Despliegue'}
+                          </h5>
+                          <Badge className={`text-xs ${
+                            deploymentErrors.length > 0 
+                              ? 'bg-red-100 text-red-700' 
+                              : 'bg-green-100 text-green-700'
+                          }`}>
+                            {deploymentErrors.length > 0 ? `${deploymentErrors.length} errores` : 'Sin errores'}
+                          </Badge>
+                        </div>
+                        {deploymentErrors.length > 0 ? (
+                          <div className="text-sm text-red-700 space-y-1">
                             {deploymentErrors.slice(0, 3).map((error, idx) => (
-                              <div key={idx}>• {error}</div>
+                              <div key={idx} className="flex items-center gap-2">
+                                <span className="w-1 h-1 bg-red-500 rounded-full"></span>
+                                {error}
+                              </div>
                             ))}
                             {deploymentErrors.length > 3 && (
-                              <div className="text-red-600">+ {deploymentErrors.length - 3} errores más</div>
+                              <Badge className="bg-red-200 text-red-800 text-xs">
+                                + {deploymentErrors.length - 3} errores adicionales
+                              </Badge>
                             )}
                           </div>
                         ) : deploymentProgress === getTargetStoresCount() && deploymentProgress > 0 ? (
-                          <div className="text-xs text-green-700">
+                          <div className="text-sm text-green-700 font-medium">
                             ✅ Flujo desplegado satisfactoriamente en todos los locales
                           </div>
                         ) : (
-                          <div className="text-xs text-gray-600">
-                            {isDeploying ? 'Enviando configuraciones...' : 'Listo para desplegar'}
+                          <div className="text-sm text-gray-600">
+                            {isDeploying ? '🔄 Enviando configuraciones a los locales...' : '⏱ Esperando inicio del despliegue'}
                           </div>
                         )}
                       </div>
