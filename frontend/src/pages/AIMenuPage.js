@@ -9,7 +9,7 @@ import { Input } from '@/components/ui/input';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Label } from '@/components/ui/label';
-import { MessageCircle, AlertTriangle, Phone, User, Shield, Plus, Trash2 } from 'lucide-react';
+import { MessageCircle, AlertTriangle, Phone, User, Shield, Plus, Trash2, TrendingUp, CheckCircle, Target, Wrench } from 'lucide-react';
 import { toast } from 'sonner';
 
 const AIMenuPage = ({ onLogout }) => {
