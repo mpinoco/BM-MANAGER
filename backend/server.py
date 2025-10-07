@@ -179,7 +179,7 @@ async def initialize_data():
     for i, comuna_data in enumerate(SANTIAGO_COMUNAS[:20]):  # Limit to 20 stores
         bms_count = random.randint(2, 4)  # Reduced range
         auto_count = random.randint(1, 3)  # Reduced range
-        ia_count = random.randint(1, 4)
+        ia_count = random.randint(1, 2)    # Reduced range
         
         devices = []
         for _ in range(bms_count):
@@ -562,7 +562,7 @@ async def initialize_data_fixed():
     for i, comuna_data in enumerate(SANTIAGO_COMUNAS[:20]):  # Limit to 20 stores
         bms_count = random.randint(2, 4)  # Reduced range
         auto_count = random.randint(1, 3)  # Reduced range
-        ia_count = random.randint(1, 4)
+        ia_count = random.randint(1, 2)    # Reduced range
         
         devices = []
         for _ in range(bms_count):
