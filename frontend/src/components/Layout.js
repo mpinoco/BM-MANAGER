@@ -81,8 +81,8 @@ const Layout = ({ children, onLogout }) => {
                     : 'text-white/90 hover:text-white hover:bg-white/10'
                 }`}
               >
-                <Icon size={19} />
-                {sidebarOpen && <span className="text-sm">{item.label}</span>}
+                <Icon size={18} />
+                {sidebarOpen && <span className="text-sm font-medium">{item.label}</span>}
               </button>
             );
           })}
