@@ -343,6 +343,122 @@ Por favor atender a la brevedad.`;
           </TabsContent>
         </Tabs>
 
+        {/* Detección de Productos Fraudulentos con IA */}
+        <Card className="p-6 shadow-lg bg-gradient-to-r from-purple-50 to-indigo-50 border-l-4 border-purple-500">
+          <h3 className="text-xl font-semibold mb-4 text-gray-800 flex items-center gap-2">
+            <div className="w-8 h-8 rounded-full bg-purple-600 flex items-center justify-center">
+              🔍
+            </div>
+            Detección de Fraudes con IA
+          </h3>
+          
+          <div className="mb-6">
+            <h4 className="text-lg font-medium mb-3 text-gray-700">Productos Detectados como Fraude</h4>
+            <p className="text-sm text-gray-600 mb-4">
+              La IA ha identificado estos productos que frecuentemente se intentan usar para fraude en autoservicio:
+            </p>
+            
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+              {[
+                { name: 'Lata de Coca-Cola', weight: '335g', image: 'https://images.unsplash.com/photo-1581636625402-29b2a704ef13?w=150&h=150&fit=crop', frequency: '89 detecciones/mes', risk: 'Alto' },
+                { name: 'Botella de Agua', weight: '500ml', image: 'https://images.unsplash.com/photo-1523362628745-0c100150b504?w=150&h=150&fit=crop', frequency: '67 detecciones/mes', risk: 'Alto' },
+                { name: 'Chocolate Snickers', weight: '50g', image: 'https://images.unsplash.com/photo-1606312619070-d48b4c652a52?w=150&h=150&fit=crop', frequency: '45 detecciones/mes', risk: 'Medio' },
+                { name: 'Chicle Trident', weight: '15g', image: 'https://images.unsplash.com/photo-1582212449665-0b315e6d596d?w=150&h=150&fit=crop', frequency: '34 detecciones/mes', risk: 'Medio' },
+                { name: 'Lata de Atún', weight: '185g', image: 'https://images.unsplash.com/photo-1544787219-7f47ccb76574?w=150&h=150&fit=crop', frequency: '29 detecciones/mes', risk: 'Medio' },
+                { name: 'Yogurt Individual', weight: '125g', image: 'https://images.unsplash.com/photo-1571212515416-4fc787d8bf1f?w=150&h=150&fit=crop', frequency: '23 detecciones/mes', risk: 'Bajo' },
+                { name: 'Paquete de Galletas', weight: '200g', image: 'https://images.unsplash.com/photo-1486893732792-ab0085cb2d43?w=150&h=150&fit=crop', frequency: '18 detecciones/mes', risk: 'Bajo' },
+                { name: 'Jabón en Barra', weight: '90g', image: 'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=150&h=150&fit=crop', frequency: '12 detecciones/mes', risk: 'Bajo' }
+              ].map((product, index) => (
+                <div key={index} className="bg-white rounded-lg p-4 shadow-sm border border-purple-200">
+                  <img 
+                    src={product.image} 
+                    alt={product.name}
+                    className="w-full h-24 object-cover rounded-lg mb-3"
+                  />
+                  <div className="space-y-2">
+                    <h5 className="font-medium text-sm text-gray-800 truncate">{product.name}</h5>
+                    <p className="text-xs text-gray-600">Peso: {product.weight}</p>
+                    <p className="text-xs text-purple-600 font-medium">{product.frequency}</p>
+                    <Badge className={`text-xs ${
+                      product.risk === 'Alto' ? 'bg-red-100 text-red-700' :
+                      product.risk === 'Medio' ? 'bg-yellow-100 text-yellow-700' :
+                      'bg-green-100 text-green-700'
+                    }`}>
+                      Riesgo {product.risk}
+                    </Badge>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="mb-6">
+            <h4 className="text-lg font-medium mb-3 text-gray-700">Análisis de Patrones de Fraude</h4>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="bg-white p-4 rounded-lg border border-purple-200">
+                <div className="flex items-center gap-3 mb-2">
+                  <div className="w-8 h-8 rounded-full bg-red-100 flex items-center justify-center">
+                    ⚠️
+                  </div>
+                  <h5 className="font-medium text-gray-800">Patrón Crítico</h5>
+                </div>
+                <p className="text-sm text-gray-600 mb-2">
+                  <strong>Local Recoleta:</strong> 47 detecciones de latas de 335g en los últimos 7 días
+                </p>
+                <p className="text-xs text-red-600 font-medium">Pérdida estimada: $1,250,000 CLP</p>
+              </div>
+              
+              <div className="bg-white p-4 rounded-lg border border-purple-200">
+                <div className="flex items-center gap-3 mb-2">
+                  <div className="w-8 h-8 rounded-full bg-yellow-100 flex items-center justify-center">
+                    📊
+                  </div>
+                  <h5 className="font-medium text-gray-800">Tendencia Semanal</h5>
+                </div>
+                <p className="text-sm text-gray-600 mb-2">
+                  Incremento del 23% en intentos de fraude vs. semana anterior
+                </p>
+                <p className="text-xs text-yellow-600 font-medium">289 detecciones totales</p>
+              </div>
+              
+              <div className="bg-white p-4 rounded-lg border border-purple-200">
+                <div className="flex items-center gap-3 mb-2">
+                  <div className="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center">
+                    🎯
+                  </div>
+                  <h5 className="font-medium text-gray-800">Precisión IA</h5>
+                </div>
+                <p className="text-sm text-gray-600 mb-2">
+                  94.7% de precisión en detección de fraudes
+                </p>
+                <p className="text-xs text-green-600 font-medium">2.1% falsos positivos</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-white p-4 rounded-lg border border-purple-200">
+            <h4 className="text-lg font-medium mb-3 text-gray-700">Acciones Recomendadas</h4>
+            <div className="space-y-2">
+              <div className="flex items-center gap-3 text-sm">
+                <div className="w-2 h-2 bg-purple-600 rounded-full"></div>
+                <span className="text-gray-700">Reforzar supervisión en Locales Recoleta y Santiago Centro</span>
+              </div>
+              <div className="flex items-center gap-3 text-sm">
+                <div className="w-2 h-2 bg-purple-600 rounded-full"></div>
+                <span className="text-gray-700">Actualizar algoritmo de detección para nuevos productos identificados</span>
+              </div>
+              <div className="flex items-center gap-3 text-sm">
+                <div className="w-2 h-2 bg-purple-600 rounded-full"></div>
+                <span className="text-gray-700">Implementar alertas automáticas para patrones de >30 detecciones/día</span>
+              </div>
+              <div className="flex items-center gap-3 text-sm">
+                <div className="w-2 h-2 bg-purple-600 rounded-full"></div>
+                <span className="text-gray-700">Capacitar personal en identificación de productos fraudulentos más comunes</span>
+              </div>
+            </div>
+          </div>
+        </Card>
+
         {/* Add Contact Dialog */}
         <Dialog open={showAddUser} onOpenChange={setShowAddUser}>
           <DialogContent>
