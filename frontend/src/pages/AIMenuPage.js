@@ -343,6 +343,58 @@ Por favor atender a la brevedad.`;
           </TabsContent>
         </Tabs>
 
+        {/* WhatsApp Support */}
+        <Card className="p-6 shadow-lg bg-gradient-to-r from-green-50 to-emerald-50 border-l-4 border-green-500">
+          <div className="mb-6">
+            <h3 className="text-xl font-semibold text-gray-800 flex items-center gap-3 mb-2">
+              <div className="w-10 h-10 rounded-lg flex items-center justify-center" style={{ backgroundColor: '#25D366' }}>
+                <MessageSquare className="w-5 h-5 text-white" />
+              </div>
+              <div>
+                <span>WhatsApp - Soporte Técnico IA</span>
+                <p className="text-sm font-normal text-gray-600 mt-0.5">Chat inteligente con técnicos especializados</p>
+              </div>
+            </h3>
+            
+            <div className="bg-white p-4 rounded-lg border border-green-200 mb-4">
+              <div className="flex items-start gap-3">
+                <div className="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center">
+                  <Settings className="w-4 h-4 text-white" />
+                </div>
+                <div className="flex-1">
+                  <h4 className="font-semibold text-gray-800 mb-2">🚀 Funcionalidades del Sistema</h4>
+                  <div className="space-y-2 text-sm text-gray-700">
+                    <div className="flex items-center gap-2">
+                      <div className="w-2 h-2 rounded-full" style={{ backgroundColor: '#25D366' }}></div>
+                      <span><strong>Chat en tiempo real</strong> con técnicos especializados vía WhatsApp</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <div className="w-2 h-2 rounded-full" style={{ backgroundColor: '#0071CE' }}></div>
+                      <span><strong>Consultas con IA</strong> - Respuestas automáticas 24/7 sobre balanzas</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <div className="w-2 h-2 rounded-full" style={{ backgroundColor: '#f47421' }}></div>
+                      <span><strong>Envío automático</strong> de tickets con datos técnicos de la balanza</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <div className="w-2 h-2 rounded-full bg-green-500"></div>
+                      <span><strong>Historial de conversaciones</strong> y seguimiento de casos</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div className="bg-gradient-to-r from-blue-50 to-indigo-50 p-3 rounded-lg border border-blue-200">
+              <p className="text-sm text-gray-700 text-center">
+                <span className="font-semibold" style={{ color: '#0071CE' }}>💬 Modo Demo:</span> 
+                <span className="ml-1">Esta funcionalidad muestra la integración con WhatsApp y chat IA para soporte técnico. 
+                En producción, conecta directamente con los sistemas de mensajería.</span>
+              </p>
+            </div>
+          </div>
+        </Card>
+
         {/* Detección de Productos Fraudulentos con IA */}
         <Card className="p-6 shadow-lg bg-gradient-to-r from-red-50 to-orange-50 border-l-4" style={{ borderLeftColor: '#f47421' }}>
           <h3 className="text-xl font-semibold mb-4 text-gray-800 flex items-center gap-3">
