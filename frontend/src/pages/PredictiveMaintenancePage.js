@@ -412,12 +412,28 @@ Por favor programar mantenimiento.`;
                       </td>
                       <td className="p-3">
                         <div className="flex items-center gap-2">
-                          <Progress value={device.maintenanceRisk} className="w-16" />
+                          <div className="w-16 bg-gray-200 rounded-full h-2">
+                            <div 
+                              className={`h-2 rounded-full transition-all ${
+                                device.maintenanceRisk >= 70 ? 'bg-gradient-to-r from-red-500 to-red-600' :
+                                device.maintenanceRisk >= 40 ? 'bg-gradient-to-r from-yellow-500 to-orange-500' :
+                                'bg-gradient-to-r from-blue-500 to-blue-600'
+                              }`}
+                              style={{ 
+                                width: `${device.maintenanceRisk}%`,
+                                backgroundColor: device.maintenanceRisk >= 70 ? '#ef4444' :
+                                               device.maintenanceRisk >= 40 ? '#f47421' : '#0071CE'
+                              }}
+                            />
+                          </div>
                           <span className={`text-sm font-medium ${
                             device.maintenanceRisk >= 70 ? 'text-red-600' :
-                            device.maintenanceRisk >= 40 ? 'text-yellow-600' :
-                            'text-green-600'
-                          }`}>
+                            device.maintenanceRisk >= 40 ? '' :
+                            'text-blue-600'
+                          }`}
+                          style={{
+                            color: device.maintenanceRisk >= 40 && device.maintenanceRisk < 70 ? '#f47421' : undefined
+                          }}>
                             {device.maintenanceRisk}%
                           </span>
                         </div>
