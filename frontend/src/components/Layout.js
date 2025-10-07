@@ -34,26 +34,26 @@ const Layout = ({ children, onLogout }) => {
           boxShadow: '4px 0 20px rgba(0, 0, 0, 0.1)'
         }}
       >
-        {/* Header with Walmart Logo */}
-        <div className="p-5 border-b border-white/10">
+        {/* Header with Walmart Logo - Compacted */}
+        <div className="p-3 border-b border-white/10">
           {sidebarOpen ? (
             <div>
-              <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center justify-between mb-2">
                 <img 
                   src="/images/logowalmart.png" 
                   alt="Walmart Logo" 
-                  className="h-12 w-auto"
+                  className="h-8 w-auto"
                 />
                 <button 
                   onClick={() => setSidebarOpen(!sidebarOpen)}
-                  className="text-white/90 hover:text-white hover:bg-white/10 p-2 rounded-lg transition-all"
+                  className="text-white/90 hover:text-white hover:bg-white/10 p-1.5 rounded-lg transition-all"
                 >
-                  <X size={20} />
+                  <X size={18} />
                 </button>
               </div>
-              <div className="space-y-1">
-                <h2 className="text-white text-lg font-bold tracking-tight">BM MANAGER</h2>
-                <p className="text-xs text-white/70">Sistema de Gestión de Balanzas</p>
+              <div className="space-y-0.5">
+                <h2 className="text-white text-base font-bold tracking-tight">BM MANAGER</h2>
+                <p className="text-xs text-white/70 hidden">Sistema de Gestión de Balanzas</p>
               </div>
             </div>
           ) : (
