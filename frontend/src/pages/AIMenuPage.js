@@ -556,48 +556,79 @@ Por favor atender a la brevedad.`;
             </div>
           </div>
 
-          <Card className="p-6 border-l-4 bg-gradient-to-r from-blue-50 to-indigo-50" style={{ borderLeftColor: '#0071CE' }}>
-            <h4 className="text-lg font-semibold mb-4 text-gray-800 flex items-center gap-2">
-              <Wrench className="w-5 h-5" style={{ color: '#0071CE' }} />
-              Acciones Recomendadas por IA
-            </h4>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="space-y-3">
-                <div className="flex items-center gap-3 p-3 bg-white rounded-lg border border-blue-200">
-                  <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ backgroundColor: '#f47421' }}>
-                    <span className="text-white font-bold text-sm">1</span>
-                  </div>
-                  <span className="text-sm font-medium text-gray-800">Reforzar supervisión en Locales Recoleta y Santiago Centro</span>
+          <Card className="p-6 border-l-4" style={{ borderLeftColor: '#0071CE', background: 'linear-gradient(to right, #f0f9ff, #e0f2fe)' }}>
+            <div className="flex items-center justify-between mb-6">
+              <h4 className="text-lg font-bold text-gray-800 flex items-center gap-3">
+                <div className="w-10 h-10 rounded-lg flex items-center justify-center" style={{ backgroundColor: '#0071CE' }}>
+                  <Wrench className="w-5 h-5 text-white" />
                 </div>
-                <div className="flex items-center gap-3 p-3 bg-white rounded-lg border border-blue-200">
-                  <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ backgroundColor: '#f47421' }}>
-                    <span className="text-white font-bold text-sm">2</span>
+                Acciones Recomendadas por IA
+              </h4>
+              <Badge style={{ backgroundColor: '#f47421', color: 'white' }} className="px-3 py-1">
+                Implementación Inmediata
+              </Badge>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+              <div className="space-y-3">
+                <div className="flex items-center gap-3 p-4 bg-white rounded-lg shadow-sm border-2" style={{ borderColor: '#f47421' }}>
+                  <div className="w-10 h-10 rounded-lg flex items-center justify-center" style={{ backgroundColor: '#f47421' }}>
+                    <span className="text-white font-bold">1</span>
                   </div>
-                  <span className="text-sm font-medium text-gray-800">Actualizar algoritmo de detección para nuevos productos</span>
+                  <div>
+                    <p className="text-sm font-semibold text-gray-800">Reforzar Supervisión</p>
+                    <p className="text-xs text-gray-600">Locales Recoleta y Santiago Centro</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-3 p-4 bg-white rounded-lg shadow-sm border-2" style={{ borderColor: '#f47421' }}>
+                  <div className="w-10 h-10 rounded-lg flex items-center justify-center" style={{ backgroundColor: '#f47421' }}>
+                    <span className="text-white font-bold">2</span>
+                  </div>
+                  <div>
+                    <p className="text-sm font-semibold text-gray-800">Actualizar Algoritmo IA</p>
+                    <p className="text-xs text-gray-600">Nuevos patrones de detección</p>
+                  </div>
                 </div>
               </div>
               <div className="space-y-3">
-                <div className="flex items-center gap-3 p-3 bg-white rounded-lg border border-blue-200">
-                  <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ backgroundColor: '#0071CE' }}>
-                    <span className="text-white font-bold text-sm">3</span>
+                <div className="flex items-center gap-3 p-4 bg-white rounded-lg shadow-sm border-2" style={{ borderColor: '#0071CE' }}>
+                  <div className="w-10 h-10 rounded-lg flex items-center justify-center" style={{ backgroundColor: '#0071CE' }}>
+                    <span className="text-white font-bold">3</span>
                   </div>
-                  <span className="text-sm font-medium text-gray-800">Implementar alertas automáticas >30 detecciones/día</span>
+                  <div>
+                    <p className="text-sm font-semibold text-gray-800">Alertas Automáticas</p>
+                    <p className="text-xs text-gray-600">>30 detecciones diarias</p>
+                  </div>
                 </div>
-                <div className="flex items-center gap-3 p-3 bg-white rounded-lg border border-blue-200">
-                  <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ backgroundColor: '#0071CE' }}>
-                    <span className="text-white font-bold text-sm">4</span>
+                <div className="flex items-center gap-3 p-4 bg-white rounded-lg shadow-sm border-2" style={{ borderColor: '#0071CE' }}>
+                  <div className="w-10 h-10 rounded-lg flex items-center justify-center" style={{ backgroundColor: '#0071CE' }}>
+                    <span className="text-white font-bold">4</span>
                   </div>
-                  <span className="text-sm font-medium text-gray-800">Capacitar personal en productos fraudulentos comunes</span>
+                  <div>
+                    <p className="text-sm font-semibold text-gray-800">Capacitación Personal</p>
+                    <p className="text-xs text-gray-600">Productos fraudulentos comunes</p>
+                  </div>
                 </div>
               </div>
             </div>
             
-            <div className="mt-4 p-4 rounded-lg" style={{ backgroundColor: '#f47421', opacity: '0.1' }}>
-              <div className="flex items-center gap-2 mb-2">
-                <Target className="w-4 h-4" style={{ color: '#f47421' }} />
-                <span className="text-sm font-semibold" style={{ color: '#f47421' }}>Meta de Reducción de Fraude</span>
+            <div className="p-4 rounded-lg border-2" style={{ borderColor: '#f47421', backgroundColor: '#fef7f0' }}>
+              <div className="flex items-center gap-3 mb-3">
+                <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ backgroundColor: '#f47421' }}>
+                  <Target className="w-4 h-4 text-white" />
+                </div>
+                <h5 className="font-bold" style={{ color: '#f47421' }}>Meta de Reducción de Fraude 2025</h5>
               </div>
-              <p className="text-xs text-gray-700">Objetivo: Reducir las detecciones de fraude en un 35% durante los próximos 30 días mediante estas acciones.</p>
+              <div className="grid grid-cols-2 gap-4 text-center">
+                <div className="p-3 bg-white rounded border">
+                  <p className="text-2xl font-bold" style={{ color: '#f47421' }}>35%</p>
+                  <p className="text-xs text-gray-600">Reducción objetivo</p>
+                </div>
+                <div className="p-3 bg-white rounded border">
+                  <p className="text-2xl font-bold" style={{ color: '#0071CE' }}>30 días</p>
+                  <p className="text-xs text-gray-600">Plazo implementación</p>
+                </div>
+              </div>
             </div>
           </Card>
         </Card>
