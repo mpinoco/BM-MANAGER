@@ -36,7 +36,7 @@ const LoginPage = ({ onLogin }) => {
             {/* Logo Walmart */}
             <div className="mb-12">
               <img 
-                src="/images/logowalmart.png" 
+                src="https://customer-assets.emergentagent.com/job_scale-manager-2/artifacts/82tx75n1_logowalmart.png" 
                 alt="Walmart Logo" 
                 className="h-16 w-auto"
               />
