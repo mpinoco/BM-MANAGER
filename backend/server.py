@@ -249,6 +249,15 @@ async def initialize_data():
             wallpaper_url="https://images.unsplash.com/photo-1542838132-92c53300491e?w=800",
             deployed_count=0,
             total_balances=40
+        ),
+        Campaign(
+            name="Modo Fiesta 18 de Septiembre",
+            start_date="2025-09-15",
+            end_date="2025-09-20",
+            status="scheduled",
+            wallpaper_url="https://images.unsplash.com/photo-1568213816046-0ee1c42bd559?w=800",
+            deployed_count=0,
+            total_balances=40
         )
     ]
     await db.campaigns.insert_many([c.dict() for c in campaigns])
