@@ -363,31 +363,46 @@ Por favor atender a la brevedad.`;
             
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
               {[
-                { name: 'Lata de Coca-Cola', weight: '335g', image: 'https://images.unsplash.com/photo-1581636625402-29b2a704ef13?w=150&h=150&fit=crop', frequency: '89 detecciones/mes', risk: 'Alto' },
-                { name: 'Botella de Agua', weight: '500ml', image: 'https://images.unsplash.com/photo-1523362628745-0c100150b504?w=150&h=150&fit=crop', frequency: '67 detecciones/mes', risk: 'Alto' },
-                { name: 'Chocolate Snickers', weight: '50g', image: 'https://images.unsplash.com/photo-1606312619070-d48b4c652a52?w=150&h=150&fit=crop', frequency: '45 detecciones/mes', risk: 'Medio' },
-                { name: 'Chicle Trident', weight: '15g', image: 'https://images.unsplash.com/photo-1582212449665-0b315e6d596d?w=150&h=150&fit=crop', frequency: '34 detecciones/mes', risk: 'Medio' },
-                { name: 'Lata de Atún', weight: '185g', image: 'https://images.unsplash.com/photo-1544787219-7f47ccb76574?w=150&h=150&fit=crop', frequency: '29 detecciones/mes', risk: 'Medio' },
-                { name: 'Yogurt Individual', weight: '125g', image: 'https://images.unsplash.com/photo-1571212515416-4fc787d8bf1f?w=150&h=150&fit=crop', frequency: '23 detecciones/mes', risk: 'Bajo' },
-                { name: 'Paquete de Galletas', weight: '200g', image: 'https://images.unsplash.com/photo-1486893732792-ab0085cb2d43?w=150&h=150&fit=crop', frequency: '18 detecciones/mes', risk: 'Bajo' },
-                { name: 'Jabón en Barra', weight: '90g', image: 'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=150&h=150&fit=crop', frequency: '12 detecciones/mes', risk: 'Bajo' }
-              ].map((product, index) => (
-                <div key={index} className="bg-white rounded-lg p-4 shadow-sm border border-purple-200">
-                  <img 
-                    src={product.image} 
-                    alt={product.name}
-                    className="w-full h-24 object-cover rounded-lg mb-3"
-                  />
+                { name: 'Lata de Coca-Cola', weight: '335g', image: 'https://images.unsplash.com/photo-1629203851122-3726ecdf080e?w=200&h=200&fit=crop', frequency: '89 detecciones/mes', risk: 'Alto' },
+                { name: 'Botella de Agua', weight: '500ml', image: 'https://images.unsplash.com/photo-1625772452859-1c03d5bf1137?w=200&h=200&fit=crop', frequency: '67 detecciones/mes', risk: 'Alto' },
+                { name: 'Chocolate', weight: '50g', image: 'https://images.unsplash.com/photo-1549007994-cb92caebd54b?w=200&h=200&fit=crop', frequency: '45 detecciones/mes', risk: 'Medio' },
+                { name: 'Chicle', weight: '15g', image: 'https://images.unsplash.com/photo-1621939514649-280e2ee25f60?w=200&h=200&fit=crop', frequency: '34 detecciones/mes', risk: 'Medio' },
+                { name: 'Lata de Conserva', weight: '185g', image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=200&h=200&fit=crop', frequency: '29 detecciones/mes', risk: 'Medio' },
+                { name: 'Yogurt', weight: '125g', image: 'https://images.unsplash.com/photo-1488477181946-6428a0291777?w=200&h=200&fit=crop', frequency: '23 detecciones/mes', risk: 'Bajo' },
+                { name: 'Galletas', weight: '200g', image: 'https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=200&h=200&fit=crop', frequency: '18 detecciones/mes', risk: 'Bajo' },
+                { name: 'Jabón', weight: '90g', image: 'https://images.unsplash.com/photo-1556228720-195a672e8a03?w=200&h=200&fit=crop', frequency: '12 detecciones/mes', risk: 'Bajo' }
+              ]
+              .sort((a, b) => {
+                const riskOrder = { 'Alto': 3, 'Medio': 2, 'Bajo': 1 };
+                return riskOrder[b.risk] - riskOrder[a.risk];
+              })
+              .map((product, index) => (
+                <div key={index} className="bg-white rounded-lg p-4 shadow-sm border-2 border-gray-200 hover:border-blue-300 transition-all">
+                  <div className="relative mb-3">
+                    <img 
+                      src={product.image} 
+                      alt={product.name}
+                      className="w-full h-24 object-cover rounded-lg"
+                      onError={(e) => {
+                        e.target.src = 'https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=200&h=200&fit=crop';
+                      }}
+                    />
+                    <div className={`absolute top-2 right-2 w-3 h-3 rounded-full ${
+                      product.risk === 'Alto' ? 'bg-red-500' :
+                      product.risk === 'Medio' ? 'bg-yellow-500' :
+                      'bg-green-500'
+                    }`}></div>
+                  </div>
                   <div className="space-y-2">
-                    <h5 className="font-medium text-sm text-gray-800 truncate">{product.name}</h5>
-                    <p className="text-xs text-gray-600">Peso: {product.weight}</p>
-                    <p className="text-xs text-purple-600 font-medium">{product.frequency}</p>
-                    <Badge className={`text-xs ${
-                      product.risk === 'Alto' ? 'bg-red-100 text-red-700' :
-                      product.risk === 'Medio' ? 'bg-yellow-100 text-yellow-700' :
-                      'bg-green-100 text-green-700'
+                    <h5 className="font-semibold text-sm text-gray-800 truncate">{product.name}</h5>
+                    <p className="text-xs font-medium" style={{ color: '#0071CE' }}>Peso típico: {product.weight}</p>
+                    <p className="text-xs font-medium" style={{ color: '#f47421' }}>{product.frequency}</p>
+                    <Badge className={`text-xs font-medium ${
+                      product.risk === 'Alto' ? 'bg-red-100 text-red-800 border-red-300' :
+                      product.risk === 'Medio' ? 'bg-yellow-100 text-yellow-800 border-yellow-300' :
+                      'bg-green-100 text-green-800 border-green-300'
                     }`}>
-                      Riesgo {product.risk}
+                      🚨 Riesgo {product.risk}
                     </Badge>
                   </div>
                 </div>
