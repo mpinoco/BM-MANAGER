@@ -57,24 +57,24 @@ const SelfServicePage = ({ onLogout }) => {
 
   const demoImages = {
     bienvenido: [
-      { name: "Frutas Frescas Bienvenida", url: "https://images.unsplash.com/photo-1542838132-92c53300491e?w=400&h=300&fit=crop" },
-      { name: "Verduras Variadas", url: "https://images.unsplash.com/photo-1540420773420-3366772f4999?w=400&h=300&fit=crop" },
-      { name: "Mercado Fresco", url: "https://images.unsplash.com/photo-1488459716781-31db52582fe9?w=400&h=300&fit=crop" }
+      { name: "Frutas y Verduras Organizadas", url: "https://images.unsplash.com/photo-1542838132-92c53300491e?w=400&h=300&fit=crop" },
+      { name: "Verduras Frescas Variadas", url: "https://images.unsplash.com/photo-1540420773420-3366772f4999?w=400&h=300&fit=crop" },
+      { name: "Mercado de Productos Frescos", url: "https://images.unsplash.com/photo-1488459716781-31db52582fe9?w=400&h=300&fit=crop" }
     ],
     pesar: [
-      { name: "Manzanas en Autoservicio", url: "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?w=400&h=300&fit=crop" },
-      { name: "Tomates Frescos", url: "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?w=400&h=300&fit=crop" },
-      { name: "Pimientos Variados", url: "https://images.unsplash.com/photo-1563565375-f3c8de43e1de?w=400&h=300&fit=crop" }
+      { name: "Frutas y Verduras Organizadas", url: "https://images.unsplash.com/photo-1542838132-92c53300491e?w=400&h=300&fit=crop" },
+      { name: "Verduras Frescas Variadas", url: "https://images.unsplash.com/photo-1540420773420-3366772f4999?w=400&h=300&fit=crop" },
+      { name: "Mercado de Productos Frescos", url: "https://images.unsplash.com/photo-1488459716781-31db52582fe9?w=400&h=300&fit=crop" }
     ],
     retirar: [
-      { name: "Bananas Frescas", url: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=300&fit=crop" },
-      { name: "Naranjas Organizadas", url: "https://images.unsplash.com/photo-1547514701-42782101795e?w=400&h=300&fit=crop" },
-      { name: "Limones Frescos", url: "https://images.unsplash.com/photo-1590005354167-6da97870c757?w=400&h=300&fit=crop" }
+      { name: "Frutas y Verduras Organizadas", url: "https://images.unsplash.com/photo-1542838132-92c53300491e?w=400&h=300&fit=crop" },
+      { name: "Verduras Frescas Variadas", url: "https://images.unsplash.com/photo-1540420773420-3366772f4999?w=400&h=300&fit=crop" },
+      { name: "Mercado de Productos Frescos", url: "https://images.unsplash.com/photo-1488459716781-31db52582fe9?w=400&h=300&fit=crop" }
     ],
     finalizar: [
-      { name: "Verduras Verdes", url: "https://images.unsplash.com/photo-1576045057995-568f588f82fb?w=400&h=300&fit=crop" },
-      { name: "Apio y Verduras", url: "https://images.unsplash.com/photo-1590736969955-71cc94901144?w=400&h=300&fit=crop" },
-      { name: "Brócoli y Coliflor", url: "https://images.unsplash.com/photo-1459411552884-841db9b3cc2a?w=400&h=300&fit=crop" }
+      { name: "Frutas y Verduras Organizadas", url: "https://images.unsplash.com/photo-1542838132-92c53300491e?w=400&h=300&fit=crop" },
+      { name: "Verduras Frescas Variadas", url: "https://images.unsplash.com/photo-1540420773420-3366772f4999?w=400&h=300&fit=crop" },
+      { name: "Mercado de Productos Frescos", url: "https://images.unsplash.com/photo-1488459716781-31db52582fe9?w=400&h=300&fit=crop" }
     ]
   };
 
