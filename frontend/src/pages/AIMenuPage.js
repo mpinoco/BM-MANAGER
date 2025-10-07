@@ -396,9 +396,9 @@ Por favor atender a la brevedad.`;
         </Card>
 
         {/* Detección de Productos Fraudulentos con IA */}
-        <Card className="p-6 shadow-lg bg-gradient-to-r from-red-50 to-orange-50 border-l-4" style={{ borderLeftColor: '#f47421' }}>
+        <Card className="p-6 shadow-lg border-l-4" style={{ borderLeftColor: '#f47421', background: 'linear-gradient(to right, #fef7f0, #fff7ed)' }}>
           <h3 className="text-xl font-semibold mb-4 text-gray-800 flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg flex items-center justify-center" style={{ backgroundColor: '#0071CE' }}>
+            <div className="w-10 h-10 rounded-lg flex items-center justify-center" style={{ backgroundColor: '#f47421' }}>
               <AlertTriangle className="w-5 h-5 text-white" />
             </div>
             <div>
