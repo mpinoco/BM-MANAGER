@@ -13,6 +13,10 @@ import ConsumptionPage from "@/pages/ConsumptionPage";
 import SuppliesPage from "@/pages/SuppliesPage";
 import AssetPage from "@/pages/AssetPage";
 import AIMenuPage from "@/pages/AIMenuPage";
+import SustainabilityPage from "@/pages/SustainabilityPage";
+import ObsolescencePage from "@/pages/ObsolescencePage";
+import SalesAnalysisPage from "@/pages/SalesAnalysisPage";
+import PredictiveMaintenancePage from "@/pages/PredictiveMaintenancePage";
 import { Toaster } from "@/components/ui/sonner";
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
