@@ -472,7 +472,7 @@ Por favor atender a la brevedad.`;
             </div>
           </div>
 
-          <Card className="p-6 border-l-4" style={{ borderLeftColor: '#0071CE' }} className="bg-gradient-to-r from-blue-50 to-indigo-50">
+          <Card className="p-6 border-l-4 bg-gradient-to-r from-blue-50 to-indigo-50" style={{ borderLeftColor: '#0071CE' }}>
             <h4 className="text-lg font-semibold mb-4 text-gray-800 flex items-center gap-2">
               <Wrench className="w-5 h-5" style={{ color: '#0071CE' }} />
               Acciones Recomendadas por IA
