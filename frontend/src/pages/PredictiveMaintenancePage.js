@@ -15,6 +15,8 @@ const PredictiveMaintenancePage = ({ onLogout }) => {
   const [maintenanceData, setMaintenanceData] = useState({});
   const [loading, setLoading] = useState(true);
   const [selectedDate, setSelectedDate] = useState(new Date());
+  const [sortBy, setSortBy] = useState('risk'); // risk, date, priority
+  const [filterPriority, setFilterPriority] = useState('all'); // all, high, medium, low
 
   useEffect(() => {
     loadMaintenanceData();
