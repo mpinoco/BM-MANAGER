@@ -88,24 +88,31 @@ const Layout = ({ children, onLogout }) => {
           })}
         </nav>
 
-        {/* Allcom Text and Logout */}
-        <div className="border-t border-white/10">
-          {sidebarOpen && (
-            <div className="p-4 text-center bg-white/5">
-              <p className="text-white text-xs font-semibold tracking-wide">ALLCOM IA Technologies 2025</p>
-              <p className="text-white/60 text-[10px] mt-0.5">Versión 1.1 2025</p>
+        {/* Footer Section - Ultra Compacted */}
+        <div className="p-2 border-t border-white/10">
+          {sidebarOpen ? (
+            <div className="space-y-1">
+              <p className="text-white text-xs font-medium text-center">ALLCOM IA Technologies 2025 - v1.1</p>
+              <Button 
+                onClick={onLogout}
+                variant="outline"
+                size="sm"
+                className="w-full border-white/20 text-white hover:bg-white/10 hover:text-white text-xs py-1.5 h-7"
+              >
+                <LogOut className="w-3 h-3 mr-1" />
+                Salir
+              </Button>
             </div>
-          )}
-          <div className="p-3">
-            <Button
+          ) : (
+            <Button 
               onClick={onLogout}
-              variant="ghost"
-              className="w-full flex items-center gap-3 text-white/90 hover:text-white hover:bg-white/10 justify-start px-4 py-2.5 rounded-xl transition-all"
+              variant="outline"
+              size="sm"
+              className="w-full border-white/20 text-white hover:bg-white/10 hover:text-white p-1.5 h-7"
             >
-              <LogOut size={19} />
-              {sidebarOpen && <span className="text-sm">Cerrar Sesión</span>}
+              <LogOut size={14} />
             </Button>
-          </div>
+          )}
         </div>
       </aside>
 
