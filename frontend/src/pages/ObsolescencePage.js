@@ -85,9 +85,9 @@ const ObsolescencePage = ({ onLogout }) => {
         });
       });
       
-      // Sort by obsolescence score (highest first)
+      // Sort by obsolescence score (highest first) and limit to top 30 for performance
       obsoleteList.sort((a, b) => b.obsolescenceScore - a.obsolescenceScore);
-      setObsoleteDevices(obsoleteList);
+      setObsoleteDevices(obsoleteList.slice(0, 30));
       
     } catch (error) {
       console.error('Error loading obsolescence data:', error);
