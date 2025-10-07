@@ -289,6 +289,45 @@ Por favor programar mantenimiento.`;
           </Card>
         </div>
 
+        {/* Filters and Sorting */}
+        <Card className="p-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-4">
+              <div>
+                <Label className="text-sm font-medium">Ordenar por:</Label>
+                <select 
+                  value={sortBy} 
+                  onChange={(e) => setSortBy(e.target.value)}
+                  className="ml-2 px-3 py-1 border border-gray-300 rounded-lg text-sm"
+                >
+                  <option value="risk">Riesgo (Mayor a Menor)</option>
+                  <option value="date">Próximo Mantenimiento</option>
+                  <option value="priority">Prioridad</option>
+                  <option value="cost">Costo Estimado</option>
+                </select>
+              </div>
+              <div>
+                <Label className="text-sm font-medium">Filtrar prioridad:</Label>
+                <select 
+                  value={filterPriority} 
+                  onChange={(e) => setFilterPriority(e.target.value)}
+                  className="ml-2 px-3 py-1 border border-gray-300 rounded-lg text-sm"
+                >
+                  <option value="all">Todas las prioridades</option>
+                  <option value="high">Alta prioridad</option>
+                  <option value="medium">Media prioridad</option>
+                  <option value="low">Baja prioridad</option>
+                </select>
+              </div>
+            </div>
+            <Badge style={{ backgroundColor: '#0071CE', color: 'white' }}>
+              {Object.values(maintenanceData).filter(device => 
+                filterPriority === 'all' || device.priority === filterPriority
+              ).length} dispositivos
+            </Badge>
+          </div>
+        </Card>
+
         {/* Upcoming Maintenance */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <Card className="p-6">
