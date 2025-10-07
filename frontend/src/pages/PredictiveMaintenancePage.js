@@ -472,7 +472,7 @@ Por favor programar mantenimiento.`;
                 <div className="w-3 h-3 bg-yellow-500 rounded-full ml-4"></div>
                 <span>60-79% Programar cambio</span>
                 <div className="w-3 h-3 bg-blue-500 rounded-full ml-4"></div>
-                <span><60% Estado óptimo</span>
+                <span>&lt;60% Estado óptimo</span>
               </div>
             </div>
           </Card>
