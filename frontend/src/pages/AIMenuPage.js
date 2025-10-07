@@ -411,46 +411,64 @@ Por favor atender a la brevedad.`;
           </div>
 
           <div className="mb-6">
-            <h4 className="text-lg font-medium mb-3 text-gray-700">Análisis de Patrones de Fraude</h4>
+            <h4 className="text-lg font-semibold mb-4 text-gray-800 flex items-center gap-2">
+              <TrendingUp className="w-5 h-5" style={{ color: '#f47421' }} />
+              Análisis de Patrones de Fraude
+            </h4>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div className="bg-white p-4 rounded-lg border border-purple-200">
-                <div className="flex items-center gap-3 mb-2">
-                  <div className="w-8 h-8 rounded-full bg-red-100 flex items-center justify-center">
-                    ⚠️
+              <Card className="p-4 border-l-4 border-red-500 bg-gradient-to-r from-red-50 to-red-100">
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="w-10 h-10 rounded-lg bg-red-500 flex items-center justify-center">
+                    <AlertTriangle className="w-5 h-5 text-white" />
                   </div>
-                  <h5 className="font-medium text-gray-800">Patrón Crítico</h5>
+                  <h5 className="font-semibold text-gray-800">Patrón Crítico</h5>
                 </div>
-                <p className="text-sm text-gray-600 mb-2">
-                  <strong>Local Recoleta:</strong> 47 detecciones de latas de 335g en los últimos 7 días
-                </p>
-                <p className="text-xs text-red-600 font-medium">Pérdida estimada: $1,250,000 CLP</p>
-              </div>
+                <div className="space-y-2">
+                  <p className="text-sm text-gray-700">
+                    <strong style={{ color: '#0071CE' }}>Local Recoleta:</strong> 47 detecciones de productos de 335g en los últimos 7 días
+                  </p>
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs text-red-700 font-semibold">Pérdida estimada:</span>
+                    <span className="text-sm font-bold text-red-600">$1,250,000 CLP</span>
+                  </div>
+                </div>
+              </Card>
               
-              <div className="bg-white p-4 rounded-lg border border-purple-200">
-                <div className="flex items-center gap-3 mb-2">
-                  <div className="w-8 h-8 rounded-full bg-yellow-100 flex items-center justify-center">
-                    📊
+              <Card className="p-4 border-l-4" style={{ borderLeftColor: '#f47421' }} className="bg-gradient-to-r from-orange-50 to-yellow-50">
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="w-10 h-10 rounded-lg flex items-center justify-center" style={{ backgroundColor: '#f47421' }}>
+                    <TrendingUp className="w-5 h-5 text-white" />
                   </div>
-                  <h5 className="font-medium text-gray-800">Tendencia Semanal</h5>
+                  <h5 className="font-semibold text-gray-800">Tendencia Semanal</h5>
                 </div>
-                <p className="text-sm text-gray-600 mb-2">
-                  Incremento del 23% en intentos de fraude vs. semana anterior
-                </p>
-                <p className="text-xs text-yellow-600 font-medium">289 detecciones totales</p>
-              </div>
+                <div className="space-y-2">
+                  <p className="text-sm text-gray-700">
+                    Incremento del <strong style={{ color: '#f47421' }}>23%</strong> en intentos de fraude vs. semana anterior
+                  </p>
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs text-orange-700 font-semibold">Total detectado:</span>
+                    <span className="text-sm font-bold" style={{ color: '#f47421' }}>289 casos</span>
+                  </div>
+                </div>
+              </Card>
               
-              <div className="bg-white p-4 rounded-lg border border-purple-200">
-                <div className="flex items-center gap-3 mb-2">
-                  <div className="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center">
-                    🎯
+              <Card className="p-4 border-l-4 border-green-500 bg-gradient-to-r from-green-50 to-blue-50">
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="w-10 h-10 rounded-lg flex items-center justify-center" style={{ backgroundColor: '#0071CE' }}>
+                    <CheckCircle className="w-5 h-5 text-white" />
                   </div>
-                  <h5 className="font-medium text-gray-800">Precisión IA</h5>
+                  <h5 className="font-semibold text-gray-800">Precisión del Sistema</h5>
                 </div>
-                <p className="text-sm text-gray-600 mb-2">
-                  94.7% de precisión en detección de fraudes
-                </p>
-                <p className="text-xs text-green-600 font-medium">2.1% falsos positivos</p>
-              </div>
+                <div className="space-y-2">
+                  <p className="text-sm text-gray-700">
+                    <strong style={{ color: '#0071CE' }}>94.7%</strong> de precisión en detección automática
+                  </p>
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs text-green-700 font-semibold">Falsos positivos:</span>
+                    <span className="text-sm font-bold text-green-600">2.1%</span>
+                  </div>
+                </div>
+              </Card>
             </div>
           </div>
 
