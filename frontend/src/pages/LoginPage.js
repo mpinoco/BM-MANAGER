@@ -83,7 +83,7 @@ const LoginPage = ({ onLogin }) => {
                 <Input
                   id="email"
                   type="email"
-                  defaultValue="admin@walmart.cl"
+                  defaultValue="mpino@allcom.cl"
                   className="mt-1 h-8 text-xs backdrop-blur-md bg-white/90 border-white/50"
                 />
               </div>
