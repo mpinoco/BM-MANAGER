@@ -60,7 +60,7 @@ const ObsolescencePage = ({ onLogout }) => {
           const priority = obsolescenceScore >= 70 ? 'high' :
                           obsolescenceScore >= 40 ? 'medium' : 'low';
           
-          if (obsolescenceScore > 30 || ageInYears > 4 || monthlyFailures > 2) {
+          if (obsolescenceScore > 50 || ageInYears > 4.5 || monthlyFailures > 3) {
             obsoleteList.push({
               id: device.id,
               storeId: store.id,
