@@ -472,27 +472,50 @@ Por favor atender a la brevedad.`;
             </div>
           </div>
 
-          <div className="bg-white p-4 rounded-lg border border-purple-200">
-            <h4 className="text-lg font-medium mb-3 text-gray-700">Acciones Recomendadas</h4>
-            <div className="space-y-2">
-              <div className="flex items-center gap-3 text-sm">
-                <div className="w-2 h-2 bg-purple-600 rounded-full"></div>
-                <span className="text-gray-700">Reforzar supervisión en Locales Recoleta y Santiago Centro</span>
+          <Card className="p-6 border-l-4" style={{ borderLeftColor: '#0071CE' }} className="bg-gradient-to-r from-blue-50 to-indigo-50">
+            <h4 className="text-lg font-semibold mb-4 text-gray-800 flex items-center gap-2">
+              <Wrench className="w-5 h-5" style={{ color: '#0071CE' }} />
+              Acciones Recomendadas por IA
+            </h4>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-3">
+                <div className="flex items-center gap-3 p-3 bg-white rounded-lg border border-blue-200">
+                  <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ backgroundColor: '#f47421' }}>
+                    <span className="text-white font-bold text-sm">1</span>
+                  </div>
+                  <span className="text-sm font-medium text-gray-800">Reforzar supervisión en Locales Recoleta y Santiago Centro</span>
+                </div>
+                <div className="flex items-center gap-3 p-3 bg-white rounded-lg border border-blue-200">
+                  <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ backgroundColor: '#f47421' }}>
+                    <span className="text-white font-bold text-sm">2</span>
+                  </div>
+                  <span className="text-sm font-medium text-gray-800">Actualizar algoritmo de detección para nuevos productos</span>
+                </div>
               </div>
-              <div className="flex items-center gap-3 text-sm">
-                <div className="w-2 h-2 bg-purple-600 rounded-full"></div>
-                <span className="text-gray-700">Actualizar algoritmo de detección para nuevos productos identificados</span>
-              </div>
-              <div className="flex items-center gap-3 text-sm">
-                <div className="w-2 h-2 bg-purple-600 rounded-full"></div>
-                <span className="text-gray-700">Implementar alertas automáticas para patrones de >30 detecciones/día</span>
-              </div>
-              <div className="flex items-center gap-3 text-sm">
-                <div className="w-2 h-2 bg-purple-600 rounded-full"></div>
-                <span className="text-gray-700">Capacitar personal en identificación de productos fraudulentos más comunes</span>
+              <div className="space-y-3">
+                <div className="flex items-center gap-3 p-3 bg-white rounded-lg border border-blue-200">
+                  <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ backgroundColor: '#0071CE' }}>
+                    <span className="text-white font-bold text-sm">3</span>
+                  </div>
+                  <span className="text-sm font-medium text-gray-800">Implementar alertas automáticas >30 detecciones/día</span>
+                </div>
+                <div className="flex items-center gap-3 p-3 bg-white rounded-lg border border-blue-200">
+                  <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ backgroundColor: '#0071CE' }}>
+                    <span className="text-white font-bold text-sm">4</span>
+                  </div>
+                  <span className="text-sm font-medium text-gray-800">Capacitar personal en productos fraudulentos comunes</span>
+                </div>
               </div>
             </div>
-          </div>
+            
+            <div className="mt-4 p-4 rounded-lg" style={{ backgroundColor: '#f47421', opacity: '0.1' }}>
+              <div className="flex items-center gap-2 mb-2">
+                <Target className="w-4 h-4" style={{ color: '#f47421' }} />
+                <span className="text-sm font-semibold" style={{ color: '#f47421' }}>Meta de Reducción de Fraude</span>
+              </div>
+              <p className="text-xs text-gray-700">Objetivo: Reducir las detecciones de fraude en un 35% durante los próximos 30 días mediante estas acciones.</p>
+            </div>
+          </Card>
         </Card>
 
         {/* Add Contact Dialog */}
