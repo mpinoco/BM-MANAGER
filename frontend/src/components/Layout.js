@@ -75,7 +75,7 @@ const Layout = ({ children, onLogout }) => {
               <button
                 key={item.path}
                 onClick={() => navigate(item.path)}
-                className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-xl transition-all ${
+                className={`w-full flex items-center gap-3 px-3 py-2 rounded-xl transition-all ${
                   isActive 
                     ? 'bg-white text-blue-600 shadow-lg font-semibold' 
                     : 'text-white/90 hover:text-white hover:bg-white/10'
