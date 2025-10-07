@@ -6,7 +6,7 @@ import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
-import { Calendar, datePicker } from '@/components/ui/calendar';
+import { Label } from '@/components/ui/label';
 import { Recycle, Calendar as CalendarIcon, AlertTriangle, Wrench, Clock, TrendingUp, CheckCircle, MessageSquare } from 'lucide-react';
 import { toast } from 'sonner';
 
