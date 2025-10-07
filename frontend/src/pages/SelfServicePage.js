@@ -26,21 +26,21 @@ const SelfServicePage = ({ onLogout }) => {
       id: 2,
       title: "Paso 2 - Pese su producto",
       description: "Foto de balanza con producto",
-      currentImage: "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?w=400&h=300&fit=crop",
+      currentImage: "https://images.unsplash.com/photo-1542838132-92c53300491e?w=400&h=300&fit=crop",
       selectedDemo: "pesar"
     },
     {
       id: 3,
       title: "Paso 3 - Retire la etiqueta",
       description: "Foto de mano tomando etiqueta",
-      currentImage: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=300&fit=crop",
+      currentImage: "https://images.unsplash.com/photo-1542838132-92c53300491e?w=400&h=300&fit=crop",
       selectedDemo: "retirar"
     },
     {
       id: 4,
       title: "Paso 4 - Pegue la etiqueta",
       description: "Imagen amistosa de finalización",
-      currentImage: "https://images.unsplash.com/photo-1576045057995-568f588f82fb?w=400&h=300&fit=crop",
+      currentImage: "https://images.unsplash.com/photo-1542838132-92c53300491e?w=400&h=300&fit=crop",
       selectedDemo: "finalizar"
     }
   ]);
