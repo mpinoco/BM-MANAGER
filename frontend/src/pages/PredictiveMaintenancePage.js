@@ -498,7 +498,23 @@ Por favor programar mantenimiento.`;
               </thead>
               <tbody>
                 {Object.values(maintenanceData)
-                  .sort((a, b) => b.maintenanceRisk - a.maintenanceRisk)
+                  .filter(device => filterPriority === 'all' || device.priority === filterPriority)
+                  .sort((a, b) => {
+                    switch (sortBy) {
+                      case 'risk':
+                        return b.maintenanceRisk - a.maintenanceRisk;
+                      case 'date':
+                        return a.daysUntilMaintenance - b.daysUntilMaintenance;
+                      case 'priority':
+                        const priorityOrder = { high: 3, medium: 2, low: 1 };
+                        return priorityOrder[b.priority] - priorityOrder[a.priority];
+                      case 'cost':
+                        return b.estimatedCost - a.estimatedCost;
+                      default:
+                        return b.maintenanceRisk - a.maintenanceRisk;
+                    }
+                  })
+                  .slice(0, 15) // Limit to 15 devices for better performance
                   .map(device => (
                     <tr key={device.serialNumber} className="border-b hover:bg-gray-50">
                       <td className="p-3">
