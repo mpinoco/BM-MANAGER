@@ -374,46 +374,106 @@ Por favor programar mantenimiento.`;
           </Card>
 
           <Card className="p-6">
-            <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
-              <CheckCircle className="w-5 h-5 text-green-600" />
-              Estado de Componentes Críticos
-            </h3>
-            <div className="space-y-4">
-              {Object.values(maintenanceData)
-                .filter(device => device.maintenanceRisk >= 50)
-                .slice(0, 5)
-                .map(device => (
-                  <div key={device.serialNumber} className="p-4 bg-gray-50 rounded-lg border">
-                    <div className="mb-3">
-                      <p className="font-medium text-gray-900">{device.storeName}</p>
-                      <p className="text-sm text-gray-600">{device.serialNumber}</p>
-                    </div>
-                    
-                    <div className="space-y-2">
-                      {Object.entries(device.components).map(([component, wear]) => (
-                        <div key={component} className="flex items-center justify-between">
-                          <span className="text-sm text-gray-600 capitalize">
-                            {component === 'printHead' ? 'Cabezal' :
-                             component === 'loadCell' ? 'Celda de Carga' :
-                             component === 'display' ? 'Pantalla' :
-                             component === 'keyboard' ? 'Teclado' :
-                             'Impresora'}
-                          </span>
-                          <div className="flex items-center gap-2">
-                            <Progress value={wear} className="w-20" />
-                            <span className={`text-xs font-medium ${
-                              wear >= 80 ? 'text-red-600' :
-                              wear >= 60 ? 'text-yellow-600' :
-                              'text-green-600'
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-lg font-semibold flex items-center gap-2">
+                <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ backgroundColor: '#f47421' }}>
+                  <Wrench className="w-4 h-4 text-white" />
+                </div>
+                Estado de Componentes Críticos
+              </h3>
+              <Badge style={{ backgroundColor: '#0071CE', color: 'white' }}>
+                Top 5 más críticos
+              </Badge>
+            </div>
+            
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="border-b-2" style={{ borderColor: '#0071CE' }}>
+                    <th className="text-left p-3 font-semibold">Balanza</th>
+                    <th className="text-left p-3 font-semibold">Cabezal</th>
+                    <th className="text-left p-3 font-semibold">Celda</th>
+                    <th className="text-left p-3 font-semibold">Pantalla</th>
+                    <th className="text-left p-3 font-semibold">Teclado</th>
+                    <th className="text-left p-3 font-semibold">Impresora</th>
+                    <th className="text-left p-3 font-semibold">Estado</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {Object.values(maintenanceData)
+                    .filter(device => device.maintenanceRisk >= 50)
+                    .sort((a, b) => b.maintenanceRisk - a.maintenanceRisk)
+                    .slice(0, 8)
+                    .map(device => (
+                      <tr key={device.serialNumber} className="border-b hover:bg-gray-50 transition-colors">
+                        <td className="p-3">
+                          <div>
+                            <p className="font-medium text-gray-900">{device.storeName}</p>
+                            <p className="text-xs text-gray-600">{device.serialNumber}</p>
+                            <Badge className={`text-xs mt-1 ${
+                              device.priority === 'high' ? 'bg-red-100 text-red-700' :
+                              device.priority === 'medium' ? 'bg-yellow-100 text-yellow-700' :
+                              'bg-green-100 text-green-700'
                             }`}>
-                              {Math.floor(wear)}%
+                              {device.priority === 'high' ? 'Alta' : device.priority === 'medium' ? 'Media' : 'Baja'}
+                            </Badge>
+                          </div>
+                        </td>
+                        {Object.entries(device.components).map(([component, wear]) => (
+                          <td key={component} className="p-3">
+                            <div className="flex flex-col items-center">
+                              <div className="w-12 bg-gray-200 rounded-full h-2 mb-1">
+                                <div 
+                                  className={`h-2 rounded-full transition-all ${
+                                    wear >= 80 ? 'bg-red-500' :
+                                    wear >= 60 ? 'bg-yellow-500' :
+                                    'bg-blue-500'
+                                  }`}
+                                  style={{ 
+                                    width: `${Math.min(wear, 100)}%`,
+                                    backgroundColor: wear >= 80 ? '#ef4444' :
+                                                   wear >= 60 ? '#f47421' : '#0071CE'
+                                  }}
+                                />
+                              </div>
+                              <span className={`text-xs font-medium ${
+                                wear >= 80 ? 'text-red-600' :
+                                wear >= 60 ? 'text-orange-600' :
+                                'text-blue-600'
+                              }`}>
+                                {Math.floor(wear)}%
+                              </span>
+                            </div>
+                          </td>
+                        ))}
+                        <td className="p-3">
+                          <div className="flex items-center gap-2">
+                            <div className={`w-3 h-3 rounded-full ${
+                              device.maintenanceRisk >= 70 ? 'bg-red-500' :
+                              device.maintenanceRisk >= 40 ? 'bg-yellow-500' :
+                              'bg-green-500'
+                            }`}></div>
+                            <span className="text-xs font-medium">
+                              {device.maintenanceRisk >= 70 ? 'Crítico' :
+                               device.maintenanceRisk >= 40 ? 'Atención' : 'Bien'}
                             </span>
                           </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                ))}
+                        </td>
+                      </tr>
+                    ))}
+                </tbody>
+              </table>
+            </div>
+            
+            <div className="mt-4 p-3 rounded-lg" style={{ backgroundColor: '#f47421', opacity: '0.1' }}>
+              <div className="flex items-center gap-2 text-sm">
+                <div className="w-3 h-3 bg-red-500 rounded-full"></div>
+                <span>≥80% Reemplazar inmediato</span>
+                <div className="w-3 h-3 bg-yellow-500 rounded-full ml-4"></div>
+                <span>60-79% Programar cambio</span>
+                <div className="w-3 h-3 bg-blue-500 rounded-full ml-4"></div>
+                <span><60% Estado óptimo</span>
+              </div>
             </div>
           </Card>
         </div>
