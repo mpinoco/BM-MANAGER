@@ -436,7 +436,7 @@ Por favor atender a la brevedad.`;
                 return riskOrder[b.risk] - riskOrder[a.risk];
               })
               .map((product, index) => (
-                <div key={index} className="bg-white rounded-lg p-4 shadow-sm border-2 border-gray-200 hover:border-blue-300 transition-all">
+                <div key={index} className="bg-white rounded-lg p-4 shadow-sm border-2 border-gray-200 hover:shadow-lg transition-all" style={{ borderColor: product.risk === 'Alto' ? '#ef4444' : product.risk === 'Medio' ? '#f47421' : '#0071CE' }}>
                   <div className="relative mb-3">
                     <img 
                       src={product.image} 
@@ -446,22 +446,36 @@ Por favor atender a la brevedad.`;
                         e.target.src = 'https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=200&h=200&fit=crop';
                       }}
                     />
-                    <div className={`absolute top-2 right-2 w-3 h-3 rounded-full ${
-                      product.risk === 'Alto' ? 'bg-red-500' :
-                      product.risk === 'Medio' ? 'bg-yellow-500' :
-                      'bg-green-500'
-                    }`}></div>
+                    <div className="absolute top-2 right-2 w-6 h-6 rounded-full flex items-center justify-center text-white text-xs font-bold" style={{
+                      backgroundColor: product.risk === 'Alto' ? '#ef4444' :
+                                     product.risk === 'Medio' ? '#f47421' : '#0071CE'
+                    }}>
+                      {product.risk === 'Alto' ? '!' : product.risk === 'Medio' ? '⚠' : '✓'}
+                    </div>
                   </div>
                   <div className="space-y-2">
                     <h5 className="font-semibold text-sm text-gray-800 truncate">{product.name}</h5>
-                    <p className="text-xs font-medium" style={{ color: '#0071CE' }}>Peso típico: {product.weight}</p>
-                    <p className="text-xs font-medium" style={{ color: '#f47421' }}>{product.frequency}</p>
-                    <Badge className={`text-xs font-medium ${
-                      product.risk === 'Alto' ? 'bg-red-100 text-red-800 border-red-300' :
-                      product.risk === 'Medio' ? 'bg-yellow-100 text-yellow-800 border-yellow-300' :
-                      'bg-green-100 text-green-800 border-green-300'
-                    }`}>
-                      🚨 Riesgo {product.risk}
+                    <div className="flex items-center gap-1">
+                      <span className="text-xs text-gray-600">Peso:</span>
+                      <span className="text-xs font-semibold" style={{ color: '#0071CE' }}>{product.weight}</span>
+                    </div>
+                    <div className="flex items-center gap-1">
+                      <span className="text-xs text-gray-600">Frecuencia:</span>
+                      <span className="text-xs font-semibold" style={{ color: '#f47421' }}>{product.frequency}</span>
+                    </div>
+                    <Badge 
+                      className="text-xs font-semibold border"
+                      style={{
+                        backgroundColor: product.risk === 'Alto' ? '#fef2f2' :
+                                        product.risk === 'Medio' ? '#fef7f0' : '#f0f9ff',
+                        color: product.risk === 'Alto' ? '#dc2626' :
+                               product.risk === 'Medio' ? '#ea580c' : '#0071CE',
+                        borderColor: product.risk === 'Alto' ? '#fecaca' :
+                                    product.risk === 'Medio' ? '#fed7aa' : '#bfdbfe'
+                      }}
+                    >
+                      {product.risk === 'Alto' ? '🔴 RIESGO ALTO' :
+                       product.risk === 'Medio' ? '🟡 RIESGO MEDIO' : '🔵 RIESGO BAJO'}
                     </Badge>
                   </div>
                 </div>
