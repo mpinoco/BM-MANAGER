@@ -176,7 +176,7 @@ async def initialize_data():
         return
     
     stores = []
-    for i, comuna_data in enumerate(SANTIAGO_COMUNAS[:40]):
+    for i, comuna_data in enumerate(SANTIAGO_COMUNAS[:20]):  # Limit to 20 stores
         bms_count = random.randint(3, 8)
         auto_count = random.randint(2, 6)
         ia_count = random.randint(1, 4)
@@ -559,7 +559,7 @@ async def initialize_data_fixed():
         return
     
     stores = []
-    for i, comuna_data in enumerate(SANTIAGO_COMUNAS[:40]):
+    for i, comuna_data in enumerate(SANTIAGO_COMUNAS[:20]):  # Limit to 20 stores
         bms_count = random.randint(3, 8)
         auto_count = random.randint(2, 6)
         ia_count = random.randint(1, 4)
