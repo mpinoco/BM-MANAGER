@@ -856,82 +856,105 @@ const AIServicesPage = ({ onLogout }) => {
             <Card className="p-6">
               <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
                 <MessageSquare className="w-5 h-5 text-green-600" />
-                Soporte WhatsApp - IA Integrada
+                WhatsApp - Soporte Técnico IA 24/7
               </h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 <div className="space-y-4">
                   <div className="p-4 bg-green-50 border border-green-200 rounded-lg">
-                    <h4 className="font-semibold text-green-800 mb-2">🤖 Chat IA Disponible 24/7</h4>
+                    <h4 className="font-medium text-green-800 mb-2">🤖 Asistente IA Integrado</h4>
                     <p className="text-sm text-green-700 mb-3">
-                      Asistente inteligente para consultas técnicas sobre balanzas y sistemas de fraude.
+                      Sistema de soporte inteligente que responde automáticamente consultas técnicas sobre balanzas y detecta problemas en tiempo real.
                     </p>
-                    <Button 
-                      className="w-full"
-                      style={{ backgroundColor: '#25D366' }}
-                    >
-                      <MessageCircle className="w-4 h-4 mr-2" />
-                      Iniciar Chat con IA
-                    </Button>
+                    <div className="space-y-2 text-xs">
+                      <div className="flex justify-between">
+                        <span>Precisión respuestas:</span>
+                        <span className="font-bold">94.7%</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>Tiempo respuesta promedio:</span>
+                        <span className="font-bold">&lt;2 minutos</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>Resolución automática:</span>
+                        <span className="font-bold">78%</span>
+                      </div>
+                    </div>
                   </div>
-                  
+
                   <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
-                    <h4 className="font-semibold text-blue-800 mb-2">👨‍💻 Soporte Técnico Especializado</h4>
-                    <p className="text-sm text-blue-700 mb-3">
-                      Conexión directa con técnicos especializados en sistemas IA y detección de fraude.
-                    </p>
-                    <Button 
-                      className="w-full"
-                      style={{ backgroundColor: '#0071CE' }}
-                    >
-                      <Phone className="w-4 h-4 mr-2" />
-                      Contactar Especialista
-                    </Button>
+                    <h4 className="font-medium text-blue-800 mb-2">📱 Funciones Disponibles</h4>
+                    <ul className="text-sm text-blue-700 space-y-1">
+                      <li>• Diagnóstico automático de balanzas</li>
+                      <li>• Generación de tickets de soporte</li>
+                      <li>• Alertas proactivas de mantenimiento</li>
+                      <li>• Guías de resolución paso a paso</li>
+                      <li>• Escalamiento automático a técnicos</li>
+                      <li>• Reportes de incidencias en PDF</li>
+                    </ul>
                   </div>
                 </div>
 
                 <div className="space-y-4">
-                  <div className="p-4 bg-gray-50 border border-gray-200 rounded-lg">
-                    <h4 className="font-semibold text-gray-800 mb-3">📊 Estadísticas de Soporte</h4>
-                    <div className="space-y-2 text-sm">
-                      <div className="flex justify-between">
-                        <span>Consultas resueltas por IA:</span>
-                        <span className="font-bold text-green-600">87%</span>
+                  <div className="border rounded-lg p-4 bg-gray-50">
+                    <h4 className="font-medium mb-3">📊 Estadísticas de Soporte</h4>
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className="text-center">
+                        <p className="text-2xl font-bold text-green-600">342</p>
+                        <p className="text-xs text-gray-600">Consultas resueltas</p>
                       </div>
-                      <div className="flex justify-between">
-                        <span>Tiempo promedio respuesta:</span>
-                        <span className="font-bold text-blue-600">< 2 min</span>
+                      <div className="text-center">
+                        <p className="text-2xl font-bold text-blue-600">28</p>
+                        <p className="text-xs text-gray-600">Tickets generados</p>
                       </div>
-                      <div className="flex justify-between">
-                        <span>Satisfacción usuario:</span>
-                        <span className="font-bold text-purple-600">4.8/5</span>
+                      <div className="text-center">
+                        <p className="text-2xl font-bold text-purple-600">4.8/5</p>
+                        <p className="text-xs text-gray-600">Satisfacción promedio</p>
+                      </div>
+                      <div className="text-center">
+                        <p className="text-2xl font-bold text-orange-600">1.7min</p>
+                        <p className="text-xs text-gray-600">Tiempo respuesta</p>
                       </div>
                     </div>
                   </div>
 
-                  <div className="p-4 bg-orange-50 border border-orange-200 rounded-lg">
-                    <h4 className="font-semibold text-orange-800 mb-2">🚨 Reportes Automáticos</h4>
-                    <p className="text-sm text-orange-700 mb-3">
-                      Sistema automático de tickets para problemas críticos detectados por IA.
+                  <Button 
+                    className="w-full h-12 text-white font-medium" 
+                    style={{ backgroundColor: '#25D366' }}
+                    onClick={() => toast.success('Redirigiendo a WhatsApp Business...')}
+                  >
+                    <MessageSquare className="w-5 h-5 mr-2" />
+                    Abrir WhatsApp Business
+                  </Button>
+
+                  <div className="p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
+                    <p className="text-sm text-yellow-800">
+                      <strong>💡 Consejo:</strong> Para activar notificaciones automáticas de fraudes por WhatsApp, 
+                      configure los umbrales en el Panel Avanzado de Conectores IA.
                     </p>
-                    <div className="flex gap-2">
-                      <Button size="sm" variant="outline">
-                        Ver Tickets
-                      </Button>
-                      <Button size="sm" variant="outline">
-                        Configurar Alertas
-                      </Button>
-                    </div>
                   </div>
                 </div>
               </div>
 
-              {/* Demo Notice */}
-              <div className="mt-6 p-4 bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-lg">
-                <p className="text-sm text-gray-700 text-center">
-                  <span className="font-semibold text-blue-600">💬 Modo Demo:</span> 
-                  <span className="ml-1">Esta funcionalidad muestra la integración con WhatsApp y chat IA para soporte técnico. 
-                  En producción, conecta directamente con los sistemas de mensajería.</span>
-                </p>
+              {/* Recent Activity */}
+              <div className="mt-6">
+                <h4 className="font-medium mb-3">📝 Actividad Reciente</h4>
+                <div className="space-y-2 max-h-40 overflow-y-auto">
+                  {[
+                    { time: '10:34', message: 'Ticket #2847 generado: Local Las Condes - Balanza desconectada', status: 'success' },
+                    { time: '09:15', message: 'Alerta automática enviada: 15 fraudes detectados en 1 hora', status: 'warning' },
+                    { time: '08:42', message: 'Consulta resuelta: Calibración balanza BMS-445', status: 'info' },
+                    { time: '07:58', message: 'Mantenimiento preventivo programado: Local Providencia', status: 'success' }
+                  ].map((activity, index) => (
+                    <div key={index} className="flex items-center gap-3 p-2 border-l-4 border-gray-200 bg-gray-50 rounded-r">
+                      <span className="text-xs text-gray-600 w-12">{activity.time}</span>
+                      <span className="text-sm flex-1">{activity.message}</span>
+                      <div className={`w-2 h-2 rounded-full ${
+                        activity.status === 'success' ? 'bg-green-500' :
+                        activity.status === 'warning' ? 'bg-yellow-500' : 'bg-blue-500'
+                      }`}></div>
+                    </div>
+                  ))}
+                </div>
               </div>
             </Card>
           </TabsContent>
