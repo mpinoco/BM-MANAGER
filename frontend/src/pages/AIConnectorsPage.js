@@ -1272,9 +1272,19 @@ const AIConnectorsPage = ({ onLogout }) => {
                         color: 'green'
                       }
                     ].map((rec, index) => (
-                      <div key={index} className={`p-3 border-l-4 border-${rec.color}-500 bg-${rec.color}-50 rounded-r`}>
+                      <div key={index} className={`p-3 border-l-4 rounded-r ${
+                        rec.color === 'red' ? 'border-red-500 bg-red-50' :
+                        rec.color === 'orange' ? 'border-orange-500 bg-orange-50' :
+                        rec.color === 'yellow' ? 'border-yellow-500 bg-yellow-50' :
+                        'border-green-500 bg-green-50'
+                      }`}>
                         <div className="flex items-center justify-between mb-1">
-                          <Badge className={`bg-${rec.color}-100 text-${rec.color}-800`}>
+                          <Badge className={`${
+                            rec.color === 'red' ? 'bg-red-100 text-red-800' :
+                            rec.color === 'orange' ? 'bg-orange-100 text-orange-800' :
+                            rec.color === 'yellow' ? 'bg-yellow-100 text-yellow-800' :
+                            'bg-green-100 text-green-800'
+                          }`}>
                             {rec.priority}
                           </Badge>
                           <span className="text-xs text-gray-600">{rec.impact}</span>
