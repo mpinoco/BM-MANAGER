@@ -795,4 +795,4 @@ Por favor atender a la brevedad.`;
   );
 };
 
-export default AIMenuPage;
+export default AIProvidersPage;
