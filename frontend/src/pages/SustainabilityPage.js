@@ -23,26 +23,45 @@ const SustainabilityPage = ({ onLogout }) => {
       const response = await axios.get(`${API}/stores`);
       setStores(response.data);
       
-      // Calculate sustainability metrics for each store
+      // Calculate sustainability metrics for each store based on real data
+      // Energy: 35W per scale × 24h × 30 days = 25.2 kWh/month per scale
+      // Paper: 3.5 rolls/day × 50m/roll × 30 days = 5,250m/month per autoservice scale
+      // CO2: 0.5 kg CO2e per kWh for energy + 0.006 kg CO2e per meter of paper
+      const MONTHLY_ENERGY_PER_SCALE = 25.2; // kWh per month
+      const MONTHLY_PAPER_PER_AUTOSERVICE_SCALE = 5250; // meters per month
+      const CO2_PER_KWH = 0.5; // kg CO2e per kWh
+      const CO2_PER_METER_PAPER = 0.006; // kg CO2e per meter of thermal paper
+
       const sustainability = {};
       response.data.forEach(store => {
         const devices = store.devices || [];
-        const energyConsumption = devices.length * 24 * 30 * 0.15; // kWh per month (estimated)
-        const paperConsumption = devices.length * 50 * 30; // sheets per month (estimated)
+        const autoserviceBalances = store.balances_autoservicio || 0;
         
-        // CO2 emissions calculation (kg CO2)
-        const carbonFootprint = (energyConsumption * 0.5) + (paperConsumption * 0.006);
+        // Energy consumption based on actual device count (kWh per month)
+        const energyConsumption = devices.length * MONTHLY_ENERGY_PER_SCALE;
+        
+        // Paper consumption for autoservice balances (meters per month)
+        const paperConsumption = autoserviceBalances * MONTHLY_PAPER_PER_AUTOSERVICE_SCALE;
+        
+        // CO2 emissions calculation (kg CO2e per month)
+        const energyCO2 = energyConsumption * CO2_PER_KWH;
+        const paperCO2 = paperConsumption * CO2_PER_METER_PAPER;
+        const carbonFootprint = energyCO2 + paperCO2;
         
         // Sustainability score (0-100, where 100 is best)
-        const score = Math.max(0, 100 - (carbonFootprint / devices.length) * 10);
+        // Based on CO2 per device - lower is better
+        const co2PerDevice = devices.length > 0 ? carbonFootprint / devices.length : 0;
+        const score = Math.max(0, 100 - (co2PerDevice * 3)); // Adjusted scale
         
         sustainability[store.id] = {
           energyConsumption,
           paperConsumption,
           carbonFootprint,
+          energyCO2,
+          paperCO2,
           score,
           category: score >= 70 ? 'green' : score >= 40 ? 'orange' : 'red',
-          recommendations: generateRecommendations(score, energyConsumption, paperConsumption)
+          recommendations: generateRecommendations(score, energyConsumption, paperConsumption, autoserviceBalances)
         };
       });
       
