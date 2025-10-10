@@ -129,10 +129,10 @@ function App() {
             } 
           />
           <Route 
-            path="/ai-menu" 
+            path="/ai-providers" 
             element={
               isAuthenticated ? 
-              <AIMenuPage onLogout={handleLogout} /> : 
+              <AIProvidersPage onLogout={handleLogout} /> : 
               <Navigate to="/login" replace />
             } 
           />
