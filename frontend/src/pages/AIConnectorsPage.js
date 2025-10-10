@@ -1097,8 +1097,8 @@ const AIConnectorsPage = ({ onLogout }) => {
                     <ul className="text-sm text-purple-700 space-y-1">
                       <li>• Operadores novatos: 2.3x más incidencias no detectadas</li>
                       <li>• Localización: centros comerciales +67% vs locales de calle</li>
-                      <li>• Tiempo respuesta: detección <2s reduce fraude exitoso en 89%</li>
-                      <li>• Precisión mejora 12% con datos históricos >6 meses</li>
+                      <li>• Tiempo respuesta: detección &lt;2s reduce fraude exitoso en 89%</li>
+                      <li>• Precisión mejora 12% con datos históricos &gt;6 meses</li>
                     </ul>
                   </div>
                 </div>
