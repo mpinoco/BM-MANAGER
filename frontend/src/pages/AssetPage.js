@@ -68,15 +68,21 @@ const AssetPage = ({ onLogout }) => {
         serialNumber: newBalance.serialNumber,
         storeName: newBalance.storeName,
         storeComuna: newBalance.storeComuna,
+        brand: newBalance.brand,
         type: newBalance.type,
+        paperType: newBalance.paperType,
         installation_date: newBalance.installationDate,
         provider: newBalance.provider,
+        ipAddress: newBalance.ipAddress,
+        macAddress: newBalance.macAddress,
+        providerKey: newBalance.providerKey,
+        jsonIAKey: newBalance.jsonIAKey,
         licenseStatus: 'active',
         warrantyExpiry: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]
       };
 
       setAllDevices([device, ...allDevices]);
-      toast.success('Balanza configurada exitosamente');
+      toast.success(`Balanza ${newBalance.brand} configurada exitosamente`);
       setShowNewBalanceForm(false);
       
       // Here you would normally save to backend
