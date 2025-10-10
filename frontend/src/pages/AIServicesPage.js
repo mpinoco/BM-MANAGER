@@ -25,12 +25,102 @@ const AIServicesPage = ({ onLogout }) => {
   const [activeTab, setActiveTab] = useState('overview');
   const [dateRange, setDateRange] = useState('30'); // days
 
-  const [contacts, setContacts] = useState([
-    { id: 1, name: 'Juan Pérez', phone: '+56 9 8765 4321', role: 'Supervisor Plataforma', permissions: 'admin' },
-    { id: 2, name: 'María González', phone: '+56 9 8765 4322', role: 'Operador Tienda - Las Condes', permissions: 'user' },
-    { id: 3, name: 'Carlos Silva', phone: '+56 9 8765 4323', role: 'Operador Tienda - Providencia', permissions: 'user' },
-    { id: 4, name: 'Ana Rojas', phone: '+56 9 8765 4324', role: 'Técnico Allcom', permissions: 'admin' },
-  ]);
+  // AI Services Data
+  const [aiMetrics, setAiMetrics] = useState({
+    totalSavings: 162000000, // CLP per year
+    fraudsDetected: 1847,
+    fraudsPrevented: 1592,
+    preventionRate: 86.2,
+    roiAnnual: 285,
+    gravitPrecision: 98.3,
+    edgifyPrecision: 97.1,
+    monthlyCost: 85000000,
+    monthlyFrauds: 154
+  });
+
+  // High-value fraud products with real imagery
+  const fraudProducts = [
+    {
+      name: 'iPhone 15 Pro Max',
+      image: 'https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=400&h=300&fit=crop',
+      attempts: 89,
+      avgValue: 1200000,
+      totalLoss: 106800000,
+      riskLevel: 'Crítico'
+    },
+    {
+      name: 'Whisky Premium Johnnie Walker',
+      image: 'https://images.unsplash.com/photo-1569529465841-dfecdab7503b?w=400&h=300&fit=crop',
+      attempts: 67,
+      avgValue: 89000,
+      totalLoss: 5963000,
+      riskLevel: 'Alto'
+    },
+    {
+      name: 'Reloj Apple Watch Ultra',
+      image: 'https://images.unsplash.com/photo-1434493789847-2f02dc6ca35d?w=400&h=300&fit=crop',
+      attempts: 45,
+      avgValue: 650000,
+      totalLoss: 29250000,
+      riskLevel: 'Alto'
+    },
+    {
+      name: 'Perfume Chanel No.5',
+      image: 'https://images.unsplash.com/photo-1588405748880-12d1d2a59db9?w=400&h=300&fit=crop',
+      attempts: 34,
+      avgValue: 125000,
+      totalLoss: 4250000,
+      riskLevel: 'Medio'
+    }
+  ];
+
+  // Santiago communes fraud analysis
+  const comunaFraudData = [
+    { comuna: 'Las Condes', frauds: 156, value: 89500000, riskScore: 18.7, percentage: 34 },
+    { comuna: 'Providencia', frauds: 98, value: 45200000, riskScore: 12.1, percentage: 22 },
+    { comuna: 'Santiago Centro', frauds: 76, value: 28900000, riskScore: 9.8, percentage: 17 },
+    { comuna: 'Vitacura', frauds: 54, value: 67300000, riskScore: 14.2, percentage: 12 },
+    { comuna: 'Ñuñoa', frauds: 43, value: 18700000, riskScore: 7.3, percentage: 9 },
+    { comuna: 'Recoleta', frauds: 28, value: 12400000, riskScore: 4.9, percentage: 6 }
+  ];
+
+  // Predictive indicators for stores
+  const storeRiskPredictions = [
+    { 
+      store: 'Local Las Condes Plaza', 
+      currentFrauds: 23, 
+      predictedNext7Days: 28, 
+      riskTrend: '+21%', 
+      recommendation: 'Reforzar supervisión IA',
+      comuna: 'Las Condes'
+    },
+    { 
+      store: 'Local Costanera Center', 
+      currentFrauds: 19, 
+      predictedNext7Days: 24, 
+      riskTrend: '+26%', 
+      recommendation: 'Aumentar alertas SCO',
+      comuna: 'Providencia'
+    },
+    { 
+      store: 'Local Plaza de Armas', 
+      currentFrauds: 15, 
+      predictedNext7Days: 18, 
+      riskTrend: '+20%', 
+      recommendation: 'Capacitar operadores',
+      comuna: 'Santiago Centro'
+    }
+  ];
+
+  // Monthly trend data
+  const monthlyTrendData = [
+    { month: 'Jul', gravitSavings: 12.5, edgifySavings: 9.8, totalFrauds: 142 },
+    { month: 'Ago', gravitSavings: 14.2, edgifySavings: 11.3, totalFrauds: 156 },
+    { month: 'Sep', gravitSavings: 16.8, edgifySavings: 13.7, totalFrauds: 167 },
+    { month: 'Oct', gravitSavings: 18.9, edgifySavings: 15.2, totalFrauds: 154 }
+  ];
+
+  const COLORS = ['#0071CE', '#FFC220', '#1B4D89', '#FF6B6B', '#4ECDC4'];
 
   useEffect(() => {
     loadData();
