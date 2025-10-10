@@ -438,6 +438,213 @@ const AIServicesPage = ({ onLogout }) => {
             <Card className="p-6">
               <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
                 <AlertTriangle className="w-5 h-5 text-red-600" />
+                Productos Más Utilizados para Fraude (Con Imágenes)
+              </h3>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                {fraudProducts.map((product, index) => (
+                  <Card key={index} className="overflow-hidden hover:shadow-lg transition-shadow">
+                    <div className="aspect-[4/3] w-full overflow-hidden">
+                      <img 
+                        src={product.image} 
+                        alt={product.name}
+                        className="w-full h-full object-cover transition-transform hover:scale-105"
+                        onError={(e) => {
+                          e.target.style.display = 'none';
+                          e.target.nextSibling.style.display = 'flex';
+                        }}
+                      />
+                      <div className="w-full h-full bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center text-gray-400 text-sm" style={{ display: 'none' }}>
+                        Imagen del producto
+                      </div>
+                    </div>
+                    <div className="p-4">
+                      <h4 className="font-semibold text-sm mb-2 line-clamp-2">{product.name}</h4>
+                      <div className="space-y-2 text-xs">
+                        <div className="flex justify-between">
+                          <span className="text-gray-600">Intentos fraude:</span>
+                          <span className="font-bold text-red-600">{product.attempts}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-600">Valor promedio:</span>
+                          <span className="font-bold text-green-600">
+                            ${product.avgValue.toLocaleString('es-CL')}
+                          </span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-600">Pérdida potencial:</span>
+                          <span className="font-bold text-orange-600">
+                            ${product.totalLoss.toLocaleString('es-CL')}
+                          </span>
+                        </div>
+                      </div>
+                      <div className="mt-3">
+                        <Badge className={`w-full text-center justify-center ${
+                          product.riskLevel === 'Crítico' ? 'bg-red-100 text-red-800' :
+                          product.riskLevel === 'Alto' ? 'bg-orange-100 text-orange-800' :
+                          'bg-yellow-100 text-yellow-800'
+                        }`}>
+                          Riesgo {product.riskLevel}
+                        </Badge>
+                      </div>
+                    </div>
+                  </Card>
+                ))}
+              </div>
+              
+              <div className="mt-6 p-4 bg-red-50 border border-red-200 rounded-lg">
+                <h4 className="font-medium text-red-800 mb-2">🔍 Análisis de Patrones</h4>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                  <div>
+                    <p><strong>Productos electrónicos:</strong> 67% mayor probabilidad de fraude</p>
+                    <p><strong>Horario crítico:</strong> 18:00-20:00 hrs (peak de intentos)</p>
+                  </div>
+                  <div>
+                    <p><strong>Valor promedio fraude:</strong> $456,000 CLP</p>
+                    <p><strong>Tasa detección:</strong> 97.7% con IA dual</p>
+                  </div>
+                </div>
+              </div>
+            </Card>
+          </TabsContent>
+
+          {/* Geographic Analysis Tab */}
+          <TabsContent value="geographic" className="space-y-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <Card className="p-6">
+                <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
+                  <MapPin className="w-5 h-5 text-red-600" />
+                  Comunas de Santiago con Mayor Fraude
+                </h3>
+                <ResponsiveContainer width="100%" height={350}>
+                  <BarChart data={comunaFraudData} layout="horizontal">
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis type="number" />
+                    <YAxis dataKey="comuna" type="category" width={100} />
+                    <Tooltip formatter={(value, name) => [
+                      name === 'frauds' ? `${value} fraudes` : `$${(value / 1000000).toFixed(1)}M CLP`,
+                      name === 'frauds' ? 'Fraudes Detectados' : 'Valor Total'
+                    ]} />
+                    <Bar dataKey="frauds" fill="#EF4444" radius={[0, 4, 4, 0]} />
+                  </BarChart>
+                </ResponsiveContainer>
+                
+                <div className="mt-4 p-3 bg-red-50 border border-red-200 rounded-lg">
+                  <p className="text-sm text-red-800">
+                    <strong>Zona crítica:</strong> Las Condes y Providencia concentran el 56% del total de fraudes detectados.
+                  </p>
+                </div>
+              </Card>
+
+              <Card className="p-6">
+                <h3 className="text-lg font-semibold mb-4">Análisis de Riesgo por Comuna</h3>
+                <div className="space-y-3 max-h-96 overflow-y-auto">
+                  {comunaFraudData.map((comuna, index) => (
+                    <div key={index} className="flex items-center justify-between p-3 border rounded-lg hover:bg-gray-50">
+                      <div className="flex items-center gap-3">
+                        <div className={`w-8 h-8 rounded-full flex items-center justify-center text-white font-bold text-sm ${
+                          index === 0 ? 'bg-red-600' :
+                          index === 1 ? 'bg-orange-500' :
+                          index === 2 ? 'bg-yellow-500' : 'bg-gray-400'
+                        }`}>
+                          {index + 1}
+                        </div>
+                        <div>
+                          <p className="font-medium">{comuna.comuna}</p>
+                          <p className="text-xs text-gray-600">
+                            {comuna.frauds} fraudes • {comuna.percentage}% del total
+                          </p>
+                        </div>
+                      </div>
+                      <div className="text-right">
+                        <p className="font-bold text-red-600">
+                          ${(comuna.value / 1000000).toFixed(1)}M
+                        </p>
+                        <div className="flex items-center gap-2">
+                          <div className={`w-2 h-2 rounded-full ${
+                            comuna.riskScore > 15 ? 'bg-red-500' :
+                            comuna.riskScore > 10 ? 'bg-yellow-500' : 'bg-green-500'
+                          }`}></div>
+                          <span className="text-xs">
+                            Score: {comuna.riskScore}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </Card>
+            </div>
+          </TabsContent>
+
+          {/* Predictions Tab */}
+          <TabsContent value="predictions" className="space-y-6">
+            <Card className="p-6">
+              <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
+                <Brain className="w-5 h-5 text-purple-600" />
+                Indicadores Predictivos de Locales con Mayor Riesgo
+              </h3>
+              <div className="overflow-x-auto">
+                <table className="w-full text-sm">
+                  <thead>
+                    <tr className="border-b">
+                      <th className="text-left p-3">Local</th>
+                      <th className="text-center p-3">Fraudes Actuales</th>
+                      <th className="text-center p-3">Predicción 7 días</th>
+                      <th className="text-center p-3">Tendencia</th>
+                      <th className="text-left p-3">Recomendación IA</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {storeRiskPredictions.map((store, index) => (
+                      <tr key={index} className="border-b hover:bg-gray-50">
+                        <td className="p-3">
+                          <div>
+                            <p className="font-medium">{store.store}</p>
+                            <p className="text-xs text-gray-600">{store.comuna}</p>
+                          </div>
+                        </td>
+                        <td className="p-3 text-center font-bold">{store.currentFrauds}</td>
+                        <td className="p-3 text-center">
+                          <div className="flex items-center justify-center gap-1">
+                            <span className="text-red-600 font-bold">{store.predictedNext7Days}</span>
+                            <TrendingUp className="w-3 h-3 text-red-600" />
+                          </div>
+                        </td>
+                        <td className="p-3 text-center">
+                          <Badge className="bg-red-100 text-red-800">
+                            {store.riskTrend}
+                          </Badge>
+                        </td>
+                        <td className="p-3 text-sm">{store.recommendation}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+
+              <div className="mt-6 p-4 bg-purple-50 border border-purple-200 rounded-lg">
+                <h4 className="font-medium text-purple-800 mb-2">🤖 Recomendaciones Automáticas IA</h4>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                  <ul className="space-y-1">
+                    <li>• Intensificar supervisión en horario 18:00-20:00</li>
+                    <li>• Implementar alertas automáticas para productos &gt;$500K</li>
+                    <li>• Capacitar personal en locales de alto riesgo</li>
+                  </ul>
+                  <ul className="space-y-1">
+                    <li>• Activar modo alta sensibilidad en SCO</li>
+                    <li>• Revisar calibración de balanzas mensualmente</li>
+                    <li>• Análisis predictivo cada 48 horas</li>
+                  </ul>
+                </div>
+              </div>
+            </Card>
+          </TabsContent>
+
+          {/* WhatsApp Support Tab */}
+          <TabsContent value="products" className="space-y-6">
+            <Card className="p-6">
+              <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
+                <AlertTriangle className="w-5 h-5 text-red-600" />
                 Productos de Alto Riesgo Detectados por IA
               </h3>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
