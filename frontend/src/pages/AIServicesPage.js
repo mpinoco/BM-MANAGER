@@ -148,7 +148,7 @@ Por favor atender a la brevedad.`;
             <div className="w-10 h-10 rounded-lg bg-gradient-to-r from-blue-600 to-purple-600 flex items-center justify-center">
               <Settings className="w-6 h-6 text-white" />
             </div>
-            Proveedores de IA - Allcom Technologies
+            Servicios IA - Allcom Technologies
           </h1>
           <p className="text-gray-600 mt-1">Integración y gestión de proveedores de inteligencia artificial</p>
         </div>
