@@ -225,8 +225,8 @@ const SustainabilityPage = ({ onLogout }) => {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm font-medium text-gray-600">Consumo de Papel</p>
-                <p className="text-2xl font-bold text-gray-900">{metrics.totalPaper}</p>
-                <p className="text-xs text-gray-600">hojas/mes</p>
+                <p className="text-2xl font-bold text-gray-900">{(metrics.totalPaper / 1000).toFixed(1)} km</p>
+                <p className="text-xs text-gray-600">metros/mes</p>
               </div>
               <div className="w-12 h-12 rounded-full bg-orange-100 flex items-center justify-center">
                 <FileText className="w-6 h-6 text-orange-600" />
