@@ -138,68 +138,11 @@ const AIServicesPage = ({ onLogout }) => {
     }
   };
 
-  const sendWhatsAppTicket = async (device, reportTo) => {
-    try {
-      const ticketData = {
-        device_id: device.id,
-        store_name: device.storeName,
-        store_comuna: device.storeComuna,
-        store_address: device.storeAddress,
-        sap_code: device.sapCode,
-        issue: device.issue,
-        description: `Problema detectado en balanza ${device.type} - Estado: ${device.status}`,
-        reported_to: reportTo,
-        assigned_to: contacts.find(c => c.role.includes(reportTo === 'Allcom' ? 'Allcom' : 'Operador'))?.name
-      };
-
-      const response = await axios.post(`${API}/tickets`, ticketData);
-      
-      const message = `🚨 TICKET #${response.data.id} - BM MANAGER
-
-Local: ${device.storeName} - ${device.storeComuna}
-Dirección: ${device.storeAddress}
-Código SAP: ${device.sapCode}
-
-Balanza con Problema:
-- Tipo: ${device.type}
-- ID: ${device.id.slice(0, 8)}
-- Problema: ${device.issue}
-- Estado: ${device.status}
-
-Reportar a: ${reportTo}
-Asignado a: ${ticketData.assigned_to || 'Por asignar'}
-
-Por favor atender a la brevedad.`;
-      
-      // Simulate WhatsApp integration
-      console.log('WhatsApp Message:', message);
-      
-      toast.success(`Ticket #${response.data.id} generado y enviado por WhatsApp a ${reportTo}`);
-      
-      // Refresh data to show new ticket
-      loadData();
-      
-    } catch (error) {
-      console.error('Error creating ticket:', error);
-      toast.error('Error al generar ticket');
-    }
-  };
-
-  const addContact = () => {
-    toast.success('Contacto agregado exitosamente');
-    setShowAddUser(false);
-  };
-
-  const deleteContact = (id) => {
-    setContacts(contacts.filter(c => c.id !== id));
-    toast.success('Contacto eliminado');
-  };
-
   if (loading) {
     return (
       <Layout onLogout={onLogout}>
         <div className="flex items-center justify-center h-full">
-          <div className="w-16 h-16 border-4 border-blue-600 border-t-transparent rounded-full animate-spin" />
+          <div className="w-8 h-8 border-4 border-blue-600 border-t-transparent rounded-full animate-spin" />
         </div>
       </Layout>
     );
