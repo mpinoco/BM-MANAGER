@@ -31,12 +31,49 @@ const NewBalanceForm = ({ stores, onSave, onCancel }) => {
     jsonIAKey: ''
   });
 
+  // Scale brands
+  const scaleBrands = [
+    'Marques',
+    'Dibal',
+    'Digi',
+    'Bizerba',
+    'Mettler Toledo',
+    'Covitel'
+  ];
+
+  // Scale types
+  const scaleTypes = [
+    'Asistida',
+    'Autoservicio',
+    'Balanza IA'
+  ];
+
+  // Paper types  
+  const paperTypes = [
+    'Liner',
+    'Linerless'
+  ];
+
+  // Providers
   const providers = [
+    'Allcom Chile',
     'Balanzas Chile S.A.',
-    'Allcom IA Systems',
     'TechScale Ltda.',
     'Precision Systems'
   ];
+
+  // Pre-loaded JSON/IA key examples
+  const exampleKeys = [
+    'A1B2C3D4E5F6',
+    '9FA0BCD12345', 
+    '12AB34CD56EF',
+    '0FAB1C2D3E4F'
+  ];
+
+  // Get random example key
+  const getRandomExampleKey = () => {
+    return exampleKeys[Math.floor(Math.random() * exampleKeys.length)];
+  };
 
   const handleLocalChange = (sapCode) => {
     const selectedStore = stores.find(s => s.sap_code === sapCode);
