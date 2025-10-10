@@ -12,7 +12,7 @@ import { Label } from '@/components/ui/label';
 import { MessageCircle, AlertTriangle, Phone, User, Shield, Plus, Trash2, TrendingUp, CheckCircle, Target, Wrench, Settings, MessageSquare, Brain, DollarSign } from 'lucide-react';
 import { toast } from 'sonner';
 
-const AIProvidersPage = ({ onLogout }) => {
+const AIServicesPage = ({ onLogout }) => {
   const [stores, setStores] = useState([]);
   const [problemBalances, setProblemBalances] = useState([]);
   const [loading, setLoading] = useState(true);
