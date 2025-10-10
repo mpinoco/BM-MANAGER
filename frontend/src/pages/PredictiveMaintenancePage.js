@@ -88,7 +88,9 @@ const PredictiveMaintenancePage = ({ onLogout }) => {
             estimatedCost,
             recommendations: generateMaintenanceRecommendations(maintenanceRisk, components, daysSinceCalibration),
             serialNumber: `BMCL-${Math.random().toString(36).substr(2, 8).toUpperCase()}`,
-            status: device.status
+            status: device.status,
+            monthlyEnergyConsumption,
+            monthlyCO2Emissions
           };
         });
       });
