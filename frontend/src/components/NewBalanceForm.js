@@ -234,6 +234,23 @@ const NewBalanceForm = ({ stores, onSave, onCancel }) => {
           </h3>
           <div className="space-y-4">
             <div>
+              <Label htmlFor="brand" className="text-sm font-medium">
+                Marca de la Balanza <span className="text-red-500">*</span>
+              </Label>
+              <select
+                id="brand"
+                className="w-full mt-1 px-3 py-2 border rounded-lg text-sm"
+                value={formData.brand}
+                onChange={(e) => setFormData({...formData, brand: e.target.value})}
+              >
+                <option value="">Seleccione una marca...</option>
+                {scaleBrands.map(brand => (
+                  <option key={brand} value={brand}>{brand}</option>
+                ))}
+              </select>
+            </div>
+
+            <div>
               <Label htmlFor="type" className="text-sm font-medium">
                 Tipo de Balanza <span className="text-red-500">*</span>
               </Label>
@@ -243,9 +260,25 @@ const NewBalanceForm = ({ stores, onSave, onCancel }) => {
                 value={formData.type}
                 onChange={(e) => setFormData({...formData, type: e.target.value})}
               >
-                <option value="AUTOSERVICIO">Autoservicio</option>
-                <option value="BMS_ASISTIDA">Modo Asistida</option>
-                <option value="IA">Balanza IA</option>
+                {scaleTypes.map(type => (
+                  <option key={type} value={type}>{type}</option>
+                ))}
+              </select>
+            </div>
+
+            <div>
+              <Label htmlFor="paperType" className="text-sm font-medium">
+                Tipo de Papel <span className="text-red-500">*</span>
+              </Label>
+              <select
+                id="paperType"
+                className="w-full mt-1 px-3 py-2 border rounded-lg text-sm"
+                value={formData.paperType}
+                onChange={(e) => setFormData({...formData, paperType: e.target.value})}
+              >
+                {paperTypes.map(type => (
+                  <option key={type} value={type}>{type}</option>
+                ))}
               </select>
             </div>
 
@@ -266,7 +299,7 @@ const NewBalanceForm = ({ stores, onSave, onCancel }) => {
 
             <div>
               <Label htmlFor="installationDate" className="text-sm font-medium">
-                Fecha de Instalación
+                Fecha de Instalación <span className="text-red-500">*</span>
               </Label>
               <Input
                 id="installationDate"
