@@ -480,7 +480,6 @@ const NewBalanceForm = ({ stores, onSave, onCancel }) => {
           </div>
         </Card>
       )}
-      </div>
 
       {/* Action Buttons */}
       <Card className="p-6 shadow-lg">
