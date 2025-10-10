@@ -887,6 +887,60 @@ const AIConnectorsPage = ({ onLogout }) => {
                 </table>
               </div>
             </Card>
+
+          {/* Financial Analysis Tab */}
+          <TabsContent value="financial" className="space-y-6">
+            {/* ROI Analysis */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <Card className="p-6">
+                <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
+                  <DollarSign className="w-5 h-5 text-green-600" />
+                  Análisis de Retorno de Inversión
+                </h3>
+                <div className="space-y-4">
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="p-4 bg-green-50 border border-green-200 rounded-lg">
+                      <p className="text-sm text-green-700">Ahorro Mensual</p>
+                      <p className="text-2xl font-bold text-green-800">
+                        ${((fraudStats.monthlySavings || 0) / 1000000).toFixed(1)}M
+                      </p>
+                      <p className="text-xs text-green-600">CLP por mes</p>
+                    </div>
+                    <div className="p-4 bg-red-50 border border-red-200 rounded-lg">
+                      <p className="text-sm text-red-700">Costo Suscripción</p>
+                      <p className="text-2xl font-bold text-red-800">
+                        ${((fraudStats.monthlySubscriptionCost || 0) / 1000000).toFixed(1)}M
+                      </p>
+                      <p className="text-xs text-red-600">CLP por mes</p>
+                    </div>
+                  </div>
+                  
+                  <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                    <p className="text-sm text-blue-700">Impacto Neto Mensual</p>
+                    <p className="text-3xl font-bold text-blue-800">
+                      ${((fraudStats.netImpact || 0) / 1000000).toFixed(1)}M CLP
+                    </p>
+                    <p className="text-sm text-blue-600 mt-2">
+                      ROI: <span className="font-bold">{fraudStats.roi}%</span> • 
+                      Payback: <span className="font-bold">4.2 meses</span>
+                    </p>
+                  </div>
+                </div>
+              </Card>
+
+              <Card className="p-6">
+                <h3 className="text-lg font-semibold mb-4">ROI Ejecutivo</h3>
+                <div className="space-y-4">
+                  <div className="p-4 bg-gradient-to-r from-green-50 to-blue-50 border border-green-200 rounded-lg">
+                    <h4 className="font-medium text-green-800 mb-2">Resumen Ejecutivo</h4>
+                    <p className="text-sm text-gray-700">
+                      La inversión en sistemas de IA para detección de fraudes genera un retorno del{' '}
+                      <span className="font-bold text-blue-600">{fraudStats.roi}%</span> anual.
+                    </p>
+                  </div>
+                </div>
+              </Card>
+            </div>
           </TabsContent>
 
           {/* Products & Fraud Tab */}
