@@ -332,8 +332,8 @@ const SustainabilityPage = ({ onLogout }) => {
                   <th className="text-left p-3">Local</th>
                   <th className="text-left p-3">Puntuación</th>
                   <th className="text-left p-3">CO₂ (kg/mes)</th>
-                  <th className="text-left p-3">Energía (kWh)</th>
-                  <th className="text-left p-3">Papel (hojas)</th>
+                  <th className="text-left p-3">Energía (kWh/mes)</th>
+                  <th className="text-left p-3">Papel (km/mes)</th>
                   <th className="text-left p-3">Recomendaciones</th>
                 </tr>
               </thead>
