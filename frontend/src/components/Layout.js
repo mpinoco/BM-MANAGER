@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { LayoutDashboard, Map, Megaphone, Workflow, FileText, LogOut, Menu, X, Zap, Package, HardDrive, BrainCircuit, Leaf, AlertTriangle, TrendingUp, Recycle, ShoppingCart } from 'lucide-react';
+import { LayoutDashboard, Map, Megaphone, Workflow, FileText, LogOut, Menu, X, Zap, Package, HardDrive, Settings, Leaf, AlertTriangle, TrendingUp, Recycle, ShoppingCart } from 'lucide-react';
 
 const Layout = ({ children, onLogout }) => {
   const navigate = useNavigate();
