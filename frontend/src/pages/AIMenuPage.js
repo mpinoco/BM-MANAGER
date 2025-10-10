@@ -633,6 +633,127 @@ Por favor atender a la brevedad.`;
           </Card>
         </Card>
 
+        {/* Conectores IA (Gravit & Edgify) */}
+        <Card className="p-6 shadow-lg border-l-4 border-purple-500 bg-gradient-to-r from-purple-50 to-indigo-50 hover:shadow-xl transition-all cursor-pointer" 
+              onClick={() => window.location.href = '/ai-connectors'}>
+          <div className="flex justify-between items-start mb-4">
+            <div>
+              <h3 className="text-xl font-semibold text-gray-800 flex items-center gap-3">
+                <div className="w-10 h-10 rounded-lg bg-gradient-to-r from-blue-600 to-purple-600 flex items-center justify-center">
+                  <Brain className="w-5 h-5 text-white" />
+                </div>
+                <div>
+                  <span>Conectores IA (Gravit & Edgify)</span>
+                  <p className="text-sm font-normal text-gray-600 mt-0.5">Detección avanzada de fraude en tiempo real</p>
+                </div>
+              </h3>
+            </div>
+            <Button 
+              className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-6"
+              onClick={(e) => {
+                e.stopPropagation();
+                window.location.href = '/ai-connectors';
+              }}
+            >
+              Acceder al Módulo
+            </Button>
+          </div>
+
+          {/* Key Metrics Preview */}
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+            <div className="bg-white p-4 rounded-lg border border-red-200 shadow-sm">
+              <div className="flex items-center gap-2 mb-2">
+                <Shield className="w-4 h-4 text-red-600" />
+                <span className="text-xs font-medium text-gray-600">Fraudes Detectados</span>
+              </div>
+              <p className="text-2xl font-bold text-red-600">132</p>
+              <p className="text-xs text-green-600">+15% vs mes anterior</p>
+            </div>
+            
+            <div className="bg-white p-4 rounded-lg border border-green-200 shadow-sm">
+              <div className="flex items-center gap-2 mb-2">
+                <DollarSign className="w-4 h-4 text-green-600" />
+                <span className="text-xs font-medium text-gray-600">Ahorro Total</span>
+              </div>
+              <p className="text-lg font-bold text-green-600">$4.5M</p>
+              <p className="text-xs text-gray-600">CLP en 30 días</p>
+            </div>
+            
+            <div className="bg-white p-4 rounded-lg border border-blue-200 shadow-sm">
+              <div className="flex items-center gap-2 mb-2">
+                <Target className="w-4 h-4 text-blue-600" />
+                <span className="text-xs font-medium text-gray-600">Precisión IA</span>
+              </div>
+              <p className="text-2xl font-bold text-blue-600">98.3%</p>
+              <p className="text-xs text-gray-600">Detección exitosa</p>
+            </div>
+            
+            <div className="bg-white p-4 rounded-lg border border-purple-200 shadow-sm">
+              <div className="flex items-center gap-2 mb-2">
+                <TrendingUp className="w-4 h-4 text-purple-600" />
+                <span className="text-xs font-medium text-gray-600">ROI</span>
+              </div>
+              <p className="text-2xl font-bold text-purple-600">285%</p>
+              <p className="text-xs text-gray-600">Retorno anual</p>
+            </div>
+          </div>
+
+          {/* Features Overview */}
+          <div className="bg-white p-4 rounded-lg border border-gray-200 mb-4">
+            <h4 className="font-semibold text-gray-800 mb-3 flex items-center gap-2">
+              <Brain className="w-4 h-4 text-purple-600" />
+              Capacidades del Sistema
+            </h4>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 rounded-full bg-blue-600"></div>
+                <span className="text-sm text-gray-700"><strong>Detección en tiempo real</strong> de fraudes en balanzas, SCO y POS</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 rounded-full bg-green-600"></div>
+                <span className="text-sm text-gray-700"><strong>Análisis predictivo</strong> con machine learning avanzado</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 rounded-full bg-purple-600"></div>
+                <span className="text-sm text-gray-700"><strong>Integración dual</strong> Gravit + Edgify para máxima cobertura</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 rounded-full bg-orange-600"></div>
+                <span className="text-sm text-gray-700"><strong>ROI tracking</strong> y reportes automáticos de ahorro</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Status Indicators */}
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-4">
+              <div className="flex items-center gap-2">
+                <div className="w-3 h-3 rounded-full bg-green-500 animate-pulse"></div>
+                <span className="text-sm text-gray-600">Gravit: Conectado</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-3 h-3 rounded-full bg-green-500 animate-pulse"></div>
+                <span className="text-sm text-gray-600">Edgify: Conectado</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-3 h-3 rounded-full bg-blue-500"></div>
+                <span className="text-sm text-gray-600">40 locales monitoreados</span>
+              </div>
+            </div>
+            <Badge className="bg-gradient-to-r from-green-100 to-blue-100 text-gray-800 px-3 py-1">
+              Sistema Activo 24/7
+            </Badge>
+          </div>
+
+          {/* Quick Action */}
+          <div className="mt-4 p-3 bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg border border-blue-200">
+            <p className="text-sm text-gray-700 text-center">
+              <span className="font-semibold text-purple-600">💡 Acceso rápido:</span> 
+              <span className="ml-1">Dashboard en tiempo real, análisis predictivo, configuración de conectores y reportes de ROI.</span>
+            </p>
+          </div>
+        </Card>
+
         {/* Add Contact Dialog */}
         <Dialog open={showAddUser} onOpenChange={setShowAddUser}>
           <DialogContent>
