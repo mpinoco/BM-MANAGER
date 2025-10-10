@@ -17,6 +17,14 @@ const AssetPage = ({ onLogout }) => {
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [showNewBalanceForm, setShowNewBalanceForm] = useState(false);
+  
+  // AI Vendor states
+  const [grabitEnabled, setGrabitEnabled] = useState(false);
+  const [edgifyEnabled, setEdgifyEnabled] = useState(false);
+  const [grabitProgress, setGrabitProgress] = useState([]);
+  const [edgifyProgress, setEdgifyProgress] = useState([]);
+  const [grabitStatus, setGrabitStatus] = useState('inactive');
+  const [edgifyStatus, setEdgifyStatus] = useState('inactive');
 
   useEffect(() => {
     loadData();
