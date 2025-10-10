@@ -181,6 +181,12 @@ const SustainabilityPage = ({ onLogout }) => {
               Indicadores de Sostenibilidad
             </h1>
             <p className="text-gray-600 mt-1">Monitoreo de huella de carbono y eficiencia ambiental</p>
+            <div className="mt-2 p-3 bg-green-50 border border-green-200 rounded-lg">
+              <p className="text-sm text-green-800">
+                <strong>Cálculo de huella de carbono:</strong> 0,5 kg CO₂e por kWh de energía • 
+                0,006 kg CO₂e por metro de papel térmico • 12,6 kg CO₂e/mes por balanza (25,2 kWh/mes)
+              </p>
+            </div>
           </div>
           <Badge className="bg-green-100 text-green-800 px-4 py-2">
             Sistema Verde Activo
