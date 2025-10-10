@@ -57,9 +57,9 @@ const NewBalanceForm = ({ stores, onSave, onCancel }) => {
   // Providers
   const providers = [
     'Allcom Chile',
-    'Balanzas Chile S.A.',
-    'TechScale Ltda.',
-    'Precision Systems'
+    'MEGARETAIL',
+    'HOBART',
+    'DIBAL'
   ];
 
   // Pre-loaded JSON/IA key examples
