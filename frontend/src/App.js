@@ -17,6 +17,7 @@ import SustainabilityPage from "@/pages/SustainabilityPage";
 import ObsolescencePage from "@/pages/ObsolescencePage";
 import SalesAnalysisPage from "@/pages/SalesAnalysisPage";
 import PredictiveMaintenancePage from "@/pages/PredictiveMaintenancePage";
+import AIConnectorsPage from "@/pages/AIConnectorsPage";
 import { Toaster } from "@/components/ui/sonner";
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
