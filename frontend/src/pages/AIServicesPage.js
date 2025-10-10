@@ -130,38 +130,8 @@ const AIServicesPage = ({ onLogout }) => {
     try {
       const response = await axios.get(`${API}/stores`);
       setStores(response.data);
-      
-      // Find problematic balances
-      const problems = [];
-      response.data.forEach(store => {
-        store.devices?.forEach(device => {
-          if (device.status === 'offline' || device.status === 'maintenance' || device.label_status === 'replace') {
-            problems.push({
-              ...device,
-              storeName: store.name,
-              storeComuna: store.comuna,
-              storeAddress: store.address,
-              sapCode: store.sap_code,
-              issue: device.status === 'offline' ? 'Desconectada' : 
-                     device.status === 'maintenance' ? 'En Mantenimiento' :
-                     'Etiqueta necesita reemplazo'
-            });
-          }
-        });
-      });
-      setProblemBalances(problems);
-      
-      // Generate sample tickets
-      setTickets(problems.slice(0, 10).map((p, idx) => ({
-        id: `TKT-${Date.now()}-${idx}`,
-        deviceId: p.id,
-        storeName: p.storeName,
-        issue: p.issue,
-        status: Math.random() > 0.5 ? 'Pendiente' : 'En Proceso',
-        createdAt: new Date(Date.now() - Math.random() * 86400000).toISOString(),
-        assignedTo: contacts[Math.floor(Math.random() * contacts.length)].name
-      })));
     } catch (error) {
+      console.error('Error loading data:', error);
       toast.error('Error al cargar datos');
     } finally {
       setLoading(false);
