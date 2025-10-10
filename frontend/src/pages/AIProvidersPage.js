@@ -144,10 +144,13 @@ Por favor atender a la brevedad.`;
       <div className="p-8 space-y-6">
         {/* Header */}
         <div>
-          <h1 className="text-3xl font-bold text-gray-800" style={{ fontFamily: 'Inter, sans-serif' }}>
-            Menú IA - Soporte Inteligente
+          <h1 className="text-3xl font-bold text-gray-800 flex items-center gap-3" style={{ fontFamily: 'Inter, sans-serif' }}>
+            <div className="w-10 h-10 rounded-lg bg-gradient-to-r from-blue-600 to-purple-600 flex items-center justify-center">
+              <Settings className="w-6 h-6 text-white" />
+            </div>
+            Proveedores de IA - Allcom Technologies
           </h1>
-          <p className="text-gray-600 mt-1">Gestión de tickets y soporte en tiempo real</p>
+          <p className="text-gray-600 mt-1">Integración y gestión de proveedores de inteligencia artificial</p>
         </div>
 
         {/* Summary */}
