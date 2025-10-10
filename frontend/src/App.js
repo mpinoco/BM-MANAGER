@@ -12,7 +12,7 @@ import ReportsPage from "@/pages/ReportsPage";
 import ConsumptionPage from "@/pages/ConsumptionPage";
 import SuppliesPage from "@/pages/SuppliesPage";
 import AssetPage from "@/pages/AssetPage";
-import AIMenuPage from "@/pages/AIMenuPage";
+import AIProvidersPage from "@/pages/AIProvidersPage";
 import SustainabilityPage from "@/pages/SustainabilityPage";
 import ObsolescencePage from "@/pages/ObsolescencePage";
 import SalesAnalysisPage from "@/pages/SalesAnalysisPage";
