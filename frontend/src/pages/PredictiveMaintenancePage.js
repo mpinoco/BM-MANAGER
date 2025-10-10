@@ -231,6 +231,12 @@ Por favor programar mantenimiento.`;
               Mantenimiento Predictivo
             </h1>
             <p className="text-gray-600 mt-1">Predicción y programación inteligente de mantenimientos</p>
+            <div className="mt-2 p-3 bg-purple-50 border border-purple-200 rounded-lg">
+              <p className="text-sm text-purple-800">
+                <strong>Datos de consumo por balanza:</strong> 35W continuo (25,2 kWh/mes) • 
+                Huella de carbono: 12,6 kg CO₂e/mes • Papel térmico: 5,25 km/mes (autoservicio)
+              </p>
+            </div>
           </div>
           <Badge className="bg-blue-100 text-blue-800 px-4 py-2">
             IA Predictiva Activa
