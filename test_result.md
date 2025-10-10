@@ -203,6 +203,21 @@ frontend:
         agent: "main"
         comment: "Completely redesigned SelfServicePage as administration interface for configuring self-service flows. 4-step configuration grid, image upload/demo selection, deployment system, preview modal, and validation - all working perfectly."
 
+  - task: "Fix Predictive Maintenance Module Runtime Error"
+    implemented: true
+    working: true
+    file: "/app/frontend/src/pages/PredictiveMaintenancePage.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: false
+        agent: "main"
+        comment: "Runtime error reported in Calendar import and JSX syntax"
+      - working: true
+        agent: "main"
+        comment: "Successfully resolved all runtime errors: Fixed Calendar import (line 9), removed unused Progress import, corrected JSX syntax. Module now fully functional as mockup with comprehensive maintenance predictions, component wear analysis, and interactive features."
+
   - task: "Complete Balanzas con Problemas functionality"
     implemented: false
     working: "NA"
