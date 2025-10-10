@@ -7,9 +7,16 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import { Label } from '@/components/ui/label';
-import { MessageCircle, AlertTriangle, Phone, User, Shield, Plus, Trash2, TrendingUp, CheckCircle, Target, Wrench, Settings, MessageSquare, Brain, DollarSign } from 'lucide-react';
+import { Progress } from '@/components/ui/progress';
+import { 
+  BarChart, Bar, LineChart, Line, PieChart, Pie, Cell, XAxis, YAxis, 
+  CartesianGrid, Tooltip, Legend, ResponsiveContainer, AreaChart, Area 
+} from 'recharts';
+import { 
+  MessageCircle, AlertTriangle, Phone, User, Shield, Plus, Trash2, TrendingUp, 
+  CheckCircle, Target, Wrench, Settings, MessageSquare, Brain, DollarSign, 
+  MapPin, Activity, Eye, RefreshCw, Calendar, Download, Zap
+} from 'lucide-react';
 import { toast } from 'sonner';
 
 const AIServicesPage = ({ onLogout }) => {
