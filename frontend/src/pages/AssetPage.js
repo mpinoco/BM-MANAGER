@@ -145,7 +145,10 @@ const AssetPage = ({ onLogout }) => {
                       Configurar Nueva Balanza
                     </h2>
                     <p className="text-gray-600 text-lg">
-                      Registre un nuevo equipo Marques en el sistema con toda su información técnica
+                      Registre un nuevo equipo multimarca en el sistema con toda su información técnica
+                    </p>
+                    <p className="text-sm text-gray-500 mt-1">
+                      Compatible con: Marques, Dibal, Digi, Bizerba, Mettler Toledo, Covitel
                     </p>
                   </div>
                 </div>
