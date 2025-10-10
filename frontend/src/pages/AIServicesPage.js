@@ -150,7 +150,7 @@ Por favor atender a la brevedad.`;
             </div>
             Servicios IA - Allcom Technologies
           </h1>
-          <p className="text-gray-600 mt-1">Integración y gestión de proveedores de inteligencia artificial</p>
+          <p className="text-gray-600 mt-1">Gestión y monitoreo de servicios de inteligencia artificial</p>
         </div>
 
         {/* Summary */}
