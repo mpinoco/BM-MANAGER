@@ -106,6 +106,12 @@ const ConsumptionPage = ({ onLogout }) => {
             Recursos
           </h1>
           <p className="text-gray-600 mt-1">Monitoreo de energía y consumibles</p>
+          <div className="mt-2 p-3 bg-blue-50 border border-blue-200 rounded-lg">
+            <p className="text-sm text-blue-800">
+              <strong>Base de cálculo:</strong> Consumo energético de 35W por balanza (0,84 kWh/día) • 
+              Papel térmico: 3,5 rollos/día por balanza autoservicio (175 m/día = 5,25 km/mes)
+            </p>
+          </div>
         </div>
 
         {/* Summary Cards */}
