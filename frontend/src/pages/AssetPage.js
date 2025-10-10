@@ -102,6 +102,51 @@ const AssetPage = ({ onLogout }) => {
     }
   };
 
+  const simulateConnection = async (vendor, setProgress, setStatus) => {
+    const steps = [
+      { icon: Zap, text: `Conectando con ${vendor}...`, delay: 2000 },
+      { icon: Package, text: 'Descargando y activando servicios...', delay: 2000 },
+      { icon: Network, text: 'Distribuyendo a assets Walmart...', delay: 2000 },
+      { icon: CheckCircle2, text: 'Concluido - Servicios activos', delay: 1500, final: true }
+    ];
+
+    setProgress([]);
+    setStatus('connecting');
+
+    for (let i = 0; i < steps.length; i++) {
+      await new Promise(resolve => setTimeout(resolve, i === 0 ? 300 : steps[i - 1].delay));
+      setProgress(prev => [...prev, steps[i]]);
+      
+      if (steps[i].final) {
+        setStatus('connected');
+      }
+    }
+  };
+
+  const handleGrabitToggle = async (checked) => {
+    setGrabitEnabled(checked);
+    if (checked) {
+      await simulateConnection('GRABIT', setGrabitProgress, setGrabitStatus);
+      toast.success('GRABIT conectado exitosamente');
+    } else {
+      setGrabitProgress([]);
+      setGrabitStatus('inactive');
+      toast.info('GRABIT desconectado');
+    }
+  };
+
+  const handleEdgifyToggle = async (checked) => {
+    setEdgifyEnabled(checked);
+    if (checked) {
+      await simulateConnection('EDGIFY', setEdgifyProgress, setEdgifyStatus);
+      toast.success('EDGIFY conectado exitosamente');
+    } else {
+      setEdgifyProgress([]);
+      setEdgifyStatus('inactive');
+      toast.info('EDGIFY desconectado');
+    }
+  };
+
   if (loading) {
     return (
       <Layout onLogout={onLogout}>
