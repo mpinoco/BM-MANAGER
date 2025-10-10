@@ -257,84 +257,312 @@ const AIServicesPage = ({ onLogout }) => {
           </Card>
         </div>
 
-        {/* Tabs */}
-        <Tabs defaultValue="whatsapp" className="w-full">
-          <TabsList className="grid w-full grid-cols-2">
-            <TabsTrigger value="whatsapp">WhatsApp - Soporte</TabsTrigger>
-            <TabsTrigger value="problems">Balanzas con Problemas</TabsTrigger>
+        {/* Professional Tabs */}
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
+          <TabsList className="grid w-full grid-cols-5">
+            <TabsTrigger value="overview">Resumen Ejecutivo</TabsTrigger>
+            <TabsTrigger value="products">Productos Fraude</TabsTrigger>
+            <TabsTrigger value="geographic">Análisis Geográfico</TabsTrigger>
+            <TabsTrigger value="predictions">Predicciones</TabsTrigger>
+            <TabsTrigger value="whatsapp">Soporte WhatsApp</TabsTrigger>
           </TabsList>
 
-          {/* WhatsApp Tab */}
-          <TabsContent value="whatsapp" className="space-y-4">
-            <Card className="p-6 shadow-lg">
-              <div className="flex justify-between items-center mb-4">
-                <h3 className="text-xl font-semibold text-gray-800">Contactos de Soporte</h3>
-                <Button 
-                  style={{ backgroundColor: '#25D366' }}
-                  onClick={() => setShowAddUser(true)}
-                >
-                  <Plus size={18} className="mr-2" />
-                  Agregar Contacto
-                </Button>
-              </div>
+          {/* Overview Tab */}
+          <TabsContent value="overview" className="space-y-6">
+            {/* Financial Impact Charts */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <Card className="p-6">
+                <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
+                  <DollarSign className="w-5 h-5 text-green-600" />
+                  Ahorro Mensual por Proveedor IA
+                </h3>
+                <ResponsiveContainer width="100%" height={300}>
+                  <LineChart data={monthlyTrendData}>
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="month" />
+                    <YAxis />
+                    <Tooltip formatter={(value) => [`$${value}M CLP`, '']} />
+                    <Legend />
+                    <Line 
+                      type="monotone" 
+                      dataKey="gravitSavings" 
+                      stroke="#0071CE" 
+                      strokeWidth={3}
+                      name="Gravit AI"
+                    />
+                    <Line 
+                      type="monotone" 
+                      dataKey="edgifySavings" 
+                      stroke="#9333EA" 
+                      strokeWidth={3}
+                      name="Edgify Analytics"
+                    />
+                  </LineChart>
+                </ResponsiveContainer>
+                <div className="mt-4 p-3 bg-green-50 border border-green-200 rounded-lg">
+                  <p className="text-sm text-green-800">
+                    <strong>Tendencia:</strong> Crecimiento del 34% en ahorro acumulado durante los últimos 4 meses.
+                  </p>
+                </div>
+              </Card>
 
-              <div className="space-y-3">
-                {contacts.map(contact => (
-                  <div key={contact.id} className="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
-                    <div className="flex items-center gap-4">
-                      <div className="w-12 h-12 rounded-full flex items-center justify-center" style={{ backgroundColor: '#25D366' }}>
-                        <MessageCircle className="w-6 h-6 text-white" />
+              <Card className="p-6">
+                <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
+                  <TrendingUp className="w-5 h-5 text-blue-600" />
+                  Detección de Fraudes vs Ahorro
+                </h3>
+                <ResponsiveContainer width="100%" height={300}>
+                  <AreaChart data={monthlyTrendData}>
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="month" />
+                    <YAxis />
+                    <Tooltip />
+                    <Area 
+                      type="monotone" 
+                      dataKey="totalFrauds" 
+                      stroke="#EF4444" 
+                      fill="#EF4444" 
+                      fillOpacity={0.3}
+                      name="Fraudes Detectados"
+                    />
+                  </AreaChart>
+                </ResponsiveContainer>
+                <div className="mt-4 grid grid-cols-2 gap-4 text-center">
+                  <div className="p-3 bg-red-50 border border-red-200 rounded-lg">
+                    <p className="text-sm text-red-700">Fraudes Oct</p>
+                    <p className="text-2xl font-bold text-red-800">{aiMetrics.monthlyFrauds}</p>
+                  </div>
+                  <div className="p-3 bg-green-50 border border-green-200 rounded-lg">
+                    <p className="text-sm text-green-700">Ahorro Oct</p>
+                    <p className="text-2xl font-bold text-green-800">$34.1M</p>
+                  </div>
+                </div>
+              </Card>
+            </div>
+
+            {/* ROI Breakdown */}
+            <Card className="p-6">
+              <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
+                <Target className="w-5 h-5 text-purple-600" />
+                Análisis de Retorno de Inversión (ROI)
+              </h3>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div className="space-y-4">
+                  <div className="p-4 border-l-4 border-blue-500 bg-blue-50">
+                    <h4 className="font-medium text-blue-800 mb-2">Gravit AI</h4>
+                    <div className="space-y-2 text-sm">
+                      <div className="flex justify-between">
+                        <span>Costo mensual:</span>
+                        <span className="font-medium">$45M CLP</span>
                       </div>
-                      <div>
-                        <p className="font-semibold text-gray-800">{contact.name}</p>
-                        <p className="text-sm text-gray-600">{contact.role}</p>
-                        <div className="flex items-center gap-2 mt-1">
-                          <Phone size={14} className="text-gray-500" />
-                          <span className="text-sm text-gray-600">{contact.phone}</span>
+                      <div className="flex justify-between">
+                        <span>Ahorro generado:</span>
+                        <span className="font-medium text-green-600">$67M CLP</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>ROI individual:</span>
+                        <span className="font-bold text-blue-600">312%</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="p-4 border-l-4 border-purple-500 bg-purple-50">
+                    <h4 className="font-medium text-purple-800 mb-2">Edgify Analytics</h4>
+                    <div className="space-y-2 text-sm">
+                      <div className="flex justify-between">
+                        <span>Costo mensual:</span>
+                        <span className="font-medium">$40M CLP</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>Ahorro generado:</span>
+                        <span className="font-medium text-green-600">$58M CLP</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>ROI individual:</span>
+                        <span className="font-bold text-purple-600">258%</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div>
+                  <h4 className="font-medium mb-3">Impacto Consolidado</h4>
+                  <ResponsiveContainer width="100%" height={200}>
+                    <PieChart>
+                      <Pie
+                        data={[
+                          { name: 'Ahorro Neto', value: 125, color: '#10B981' },
+                          { name: 'Costo IA', value: 85, color: '#EF4444' }
+                        ]}
+                        cx="50%"
+                        cy="50%"
+                        outerRadius={80}
+                        dataKey="value"
+                        label={({ name, value }) => `${name}: $${value}M`}
+                      >
+                        {[
+                          { name: 'Ahorro Neto', value: 125, color: '#10B981' },
+                          { name: 'Costo IA', value: 85, color: '#EF4444' }
+                        ].map((entry, index) => (
+                          <Cell key={`cell-${index}`} fill={entry.color} />
+                        ))}
+                      </Pie>
+                      <Tooltip />
+                    </PieChart>
+                  </ResponsiveContainer>
+                </div>
+
+                <div>
+                  <h4 className="font-medium mb-3">Proyección Anual</h4>
+                  <div className="space-y-4">
+                    <div className="p-4 bg-gradient-to-r from-green-50 to-blue-50 border border-green-200 rounded-lg">
+                      <p className="text-sm text-green-700">Ahorro proyectado 2025</p>
+                      <p className="text-2xl font-bold text-green-800">$1.5B CLP</p>
+                    </div>
+                    <div className="p-4 bg-gray-50 border border-gray-200 rounded-lg">
+                      <p className="text-sm text-gray-700">Costo total anual</p>
+                      <p className="text-2xl font-bold text-gray-800">$1.02B CLP</p>
+                    </div>
+                    <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                      <p className="text-sm text-blue-700">Beneficio neto</p>
+                      <p className="text-2xl font-bold text-blue-800">$480M CLP</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </Card>
+          </TabsContent>
+
+          {/* Products Fraud Tab */}
+          <TabsContent value="products" className="space-y-6">
+            <Card className="p-6">
+              <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
+                <AlertTriangle className="w-5 h-5 text-red-600" />
+                Productos de Alto Riesgo Detectados por IA
+              </h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                {fraudProducts.map((product, index) => (
+                  <Card key={index} className="p-4 border-2" style={{ 
+                    borderColor: product.riskLevel === 'Crítico' ? '#EF4444' : 
+                                product.riskLevel === 'Alto' ? '#F59E0B' : '#10B981' 
+                  }}>
+                    <div className="relative mb-3">
+                      <img 
+                        src={product.image} 
+                        alt={product.name}
+                        className="w-full h-32 object-cover rounded-lg"
+                        onError={(e) => {
+                          e.target.src = 'https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=400&h=300&fit=crop';
+                        }}
+                      />
+                      <Badge 
+                        className="absolute top-2 right-2"
+                        style={{
+                          backgroundColor: product.riskLevel === 'Crítico' ? '#EF4444' : 
+                                          product.riskLevel === 'Alto' ? '#F59E0B' : '#10B981',
+                          color: 'white'
+                        }}
+                      >
+                        {product.riskLevel}
+                      </Badge>
+                    </div>
+                    <div className="space-y-2">
+                      <h4 className="font-semibold text-gray-800">{product.name}</h4>
+                      <div className="text-sm space-y-1">
+                        <div className="flex justify-between">
+                          <span className="text-gray-600">Intentos:</span>
+                          <span className="font-medium text-red-600">{product.attempts}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-600">Valor promedio:</span>
+                          <span className="font-medium">${(product.avgValue / 1000).toFixed(0)}K</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-600">Pérdida total:</span>
+                          <span className="font-bold text-red-700">${(product.totalLoss / 1000000).toFixed(1)}M</span>
                         </div>
                       </div>
                     </div>
-                    <div className="flex items-center gap-3">
-                      <Badge 
-                        style={{
-                          backgroundColor: contact.permissions === 'admin' ? '#0071CE' : '#10b981',
-                          color: 'white'
-                        }}
-                      >
-                        <Shield size={14} className="mr-1" />
-                        {contact.permissions === 'admin' ? 'Admin' : 'Usuario'}
-                      </Badge>
-                      <Button
-                        size="sm"
-                        variant="destructive"
-                        onClick={() => deleteContact(contact.id)}
-                      >
-                        <Trash2 size={16} />
-                      </Button>
-                    </div>
-                  </div>
+                  </Card>
                 ))}
               </div>
+            </Card>
 
-              {/* Recent Tickets */}
-              <div className="mt-6">
-                <h4 className="text-lg font-semibold text-gray-800 mb-3">Tickets Recientes</h4>
-                <div className="space-y-2">
-                  {tickets.slice(0, 5).map(ticket => (
-                    <div key={ticket.id} className="flex items-center justify-between p-3 bg-blue-50 border border-blue-200 rounded-lg">
-                      <div>
-                        <p className="font-semibold text-gray-800">#{ticket.id}</p>
-                        <p className="text-sm text-gray-600">{ticket.storeName} - {ticket.issue}</p>
-                        <p className="text-xs text-gray-500 mt-1">Asignado a: {ticket.assignedTo}</p>
+            {/* Fraud Patterns Analysis */}
+            <Card className="p-6">
+              <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
+                <TrendingUp className="w-5 h-5 text-blue-600" />
+                Análisis de Patrones de Fraude
+              </h3>
+              <ResponsiveContainer width="100%" height={400}>
+                <BarChart data={fraudProducts}>
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis 
+                    dataKey="name" 
+                    angle={-45}
+                    textAnchor="end"
+                    height={100}
+                    fontSize={12}
+                  />
+                  <YAxis />
+                  <Tooltip formatter={(value) => [`${value}`, 'Intentos de fraude']} />
+                  <Bar dataKey="attempts" fill="#EF4444" />
+                </BarChart>
+              </ResponsiveContainer>
+            </Card>
+          </TabsContent>
+
+          {/* Geographic Analysis Tab */}
+          <TabsContent value="geographic" className="space-y-6">
+            <Card className="p-6">
+              <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
+                <MapPin className="w-5 h-5 text-green-600" />
+                Análisis de Fraude por Comuna - Santiago
+              </h3>
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div>
+                  <ResponsiveContainer width="100%" height={350}>
+                    <BarChart data={comunaFraudData} layout="horizontal">
+                      <CartesianGrid strokeDasharray="3 3" />
+                      <XAxis type="number" />
+                      <YAxis dataKey="comuna" type="category" width={100} fontSize={12} />
+                      <Tooltip formatter={(value) => [`${value}`, 'Fraudes detectados']} />
+                      <Bar dataKey="frauds" fill="#EF4444" />
+                    </BarChart>
+                  </ResponsiveContainer>
+                </div>
+                <div className="space-y-4">
+                  {comunaFraudData.map((comuna, index) => (
+                    <div key={index} className="p-4 border rounded-lg bg-gray-50">
+                      <div className="flex justify-between items-center mb-2">
+                        <h4 className="font-semibold text-gray-800">{comuna.comuna}</h4>
+                        <Badge 
+                          style={{
+                            backgroundColor: comuna.riskScore > 15 ? '#EF4444' : 
+                                           comuna.riskScore > 10 ? '#F59E0B' : '#10B981',
+                            color: 'white'
+                          }}
+                        >
+                          Riesgo: {comuna.riskScore}
+                        </Badge>
                       </div>
-                      <Badge 
-                        style={{
-                          backgroundColor: ticket.status === 'Pendiente' ? '#f59e0b' : '#0071CE',
-                          color: 'white'
-                        }}
-                      >
-                        {ticket.status}
-                      </Badge>
+                      <div className="grid grid-cols-2 gap-2 text-sm">
+                        <div>
+                          <span className="text-gray-600">Fraudes:</span>
+                          <span className="font-bold text-red-600 ml-1">{comuna.frauds}</span>
+                        </div>
+                        <div>
+                          <span className="text-gray-600">Valor:</span>
+                          <span className="font-bold ml-1">${(comuna.value / 1000000).toFixed(1)}M</span>
+                        </div>
+                      </div>
+                      <div className="mt-2">
+                        <div className="flex justify-between text-xs text-gray-600 mb-1">
+                          <span>Participación</span>
+                          <span>{comuna.percentage}%</span>
+                        </div>
+                        <Progress value={comuna.percentage} className="h-2" />
+                      </div>
                     </div>
                   ))}
                 </div>
@@ -342,70 +570,161 @@ const AIServicesPage = ({ onLogout }) => {
             </Card>
           </TabsContent>
 
-          {/* Problems Tab */}
-          <TabsContent value="problems" className="space-y-4">
-            <Card className="p-6 shadow-lg">
-              <h3 className="text-xl font-semibold mb-4 text-gray-800">Listado de Balanzas con Problemas</h3>
-              <div className="space-y-3">
-                {problemBalances.slice(0, 15).map(device => (
-                  <div key={device.id} className="p-4 bg-red-50 border border-red-200 rounded-lg">
+          {/* Predictions Tab */}
+          <TabsContent value="predictions" className="space-y-6">
+            <Card className="p-6">
+              <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
+                <Eye className="w-5 h-5 text-purple-600" />
+                Predicciones de Riesgo por Local
+              </h3>
+              <div className="space-y-4">
+                {storeRiskPredictions.map((store, index) => (
+                  <div key={index} className="p-4 border-l-4 border-purple-500 bg-purple-50 rounded-lg">
                     <div className="flex justify-between items-start mb-3">
                       <div>
-                        <p className="font-semibold text-gray-800">{device.storeName} - {device.storeComuna}</p>
-                        <p className="text-sm text-gray-600">{device.storeAddress}</p>
-                        <p className="text-xs text-gray-500 mt-1">Código SAP: {device.sapCode}</p>
+                        <h4 className="font-semibold text-gray-800">{store.store}</h4>
+                        <p className="text-sm text-gray-600">{store.comuna}</p>
                       </div>
                       <Badge 
                         style={{
-                          backgroundColor: device.status === 'offline' ? '#ef4444' : '#f59e0b',
+                          backgroundColor: store.riskTrend.includes('+') ? '#EF4444' : '#10B981',
                           color: 'white'
                         }}
                       >
-                        {device.issue}
+                        {store.riskTrend}
                       </Badge>
                     </div>
-                    
-                    <div className="grid grid-cols-2 gap-2 text-sm mb-3">
-                      <div>
-                        <span className="text-gray-600">Tipo: </span>
-                        <span className="font-semibold">{device.type}</span>
+                    <div className="grid grid-cols-3 gap-4 mb-3">
+                      <div className="text-center">
+                        <p className="text-sm text-gray-600">Fraudes Actuales</p>
+                        <p className="text-xl font-bold text-red-600">{store.currentFrauds}</p>
                       </div>
-                      <div>
-                        <span className="text-gray-600">ID: </span>
-                        <span className="font-mono text-xs">{device.id.slice(0, 12)}</span>
+                      <div className="text-center">
+                        <p className="text-sm text-gray-600">Predicción 7 días</p>
+                        <p className="text-xl font-bold text-orange-600">{store.predictedNext7Days}</p>
                       </div>
-                      <div>
-                        <span className="text-gray-600">Firmware: </span>
-                        <span className="font-semibold">{device.firmware_version}</span>
-                      </div>
-                      <div>
-                        <span className="text-gray-600">Estado: </span>
-                        <span className="font-semibold capitalize">{device.status}</span>
+                      <div className="text-center">
+                        <p className="text-sm text-gray-600">Tendencia</p>
+                        <p className="text-lg font-bold text-purple-600">{store.riskTrend}</p>
                       </div>
                     </div>
-
-                    <div className="flex gap-2">
-                      <Button
-                        size="sm"
-                        className="flex-1"
-                        style={{ backgroundColor: '#0071CE' }}
-                        onClick={() => sendWhatsAppTicket(device, 'Allcom')}
-                      >
-                        <MessageCircle size={16} className="mr-2" />
-                        Reportar a Allcom
-                      </Button>
-                      <Button
-                        size="sm"
-                        className="flex-1"
-                        style={{ backgroundColor: '#FFC220', color: '#000' }}
-                        onClick={() => sendWhatsAppTicket(device, 'Servicio Técnico')}
-                      >
-                        <MessageCircle size={16} className="mr-2" />
-                        Reportar a Servicio Técnico
-                      </Button>
+                    <div className="p-3 bg-white rounded border border-purple-200">
+                      <p className="text-sm font-medium text-purple-800">
+                        <span className="text-purple-600">💡 Recomendación:</span> {store.recommendation}
+                      </p>
                     </div>
                   </div>
                 ))}
+              </div>
+            </Card>
+
+            {/* Predictive Model Performance */}
+            <Card className="p-6">
+              <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
+                <Activity className="w-5 h-5 text-blue-600" />
+                Rendimiento del Modelo Predictivo
+              </h3>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg text-center">
+                  <h4 className="font-semibold text-blue-800 mb-2">Precisión</h4>
+                  <p className="text-3xl font-bold text-blue-600">94.7%</p>
+                  <p className="text-sm text-blue-700">Predicciones correctas</p>
+                </div>
+                <div className="p-4 bg-green-50 border border-green-200 rounded-lg text-center">
+                  <h4 className="font-semibold text-green-800 mb-2">Recall</h4>
+                  <p className="text-3xl font-bold text-green-600">91.3%</p>
+                  <p className="text-sm text-green-700">Fraudes detectados</p>
+                </div>
+                <div className="p-4 bg-purple-50 border border-purple-200 rounded-lg text-center">
+                  <h4 className="font-semibold text-purple-800 mb-2">F1-Score</h4>
+                  <p className="text-3xl font-bold text-purple-600">92.9%</p>
+                  <p className="text-sm text-purple-700">Rendimiento general</p>
+                </div>
+              </div>
+            </Card>
+          </TabsContent>
+
+          {/* WhatsApp Support Tab */}
+          <TabsContent value="whatsapp" className="space-y-6">
+            <Card className="p-6">
+              <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
+                <MessageSquare className="w-5 h-5 text-green-600" />
+                Soporte WhatsApp - IA Integrada
+              </h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="space-y-4">
+                  <div className="p-4 bg-green-50 border border-green-200 rounded-lg">
+                    <h4 className="font-semibold text-green-800 mb-2">🤖 Chat IA Disponible 24/7</h4>
+                    <p className="text-sm text-green-700 mb-3">
+                      Asistente inteligente para consultas técnicas sobre balanzas y sistemas de fraude.
+                    </p>
+                    <Button 
+                      className="w-full"
+                      style={{ backgroundColor: '#25D366' }}
+                    >
+                      <MessageCircle className="w-4 h-4 mr-2" />
+                      Iniciar Chat con IA
+                    </Button>
+                  </div>
+                  
+                  <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                    <h4 className="font-semibold text-blue-800 mb-2">👨‍💻 Soporte Técnico Especializado</h4>
+                    <p className="text-sm text-blue-700 mb-3">
+                      Conexión directa con técnicos especializados en sistemas IA y detección de fraude.
+                    </p>
+                    <Button 
+                      className="w-full"
+                      style={{ backgroundColor: '#0071CE' }}
+                    >
+                      <Phone className="w-4 h-4 mr-2" />
+                      Contactar Especialista
+                    </Button>
+                  </div>
+                </div>
+
+                <div className="space-y-4">
+                  <div className="p-4 bg-gray-50 border border-gray-200 rounded-lg">
+                    <h4 className="font-semibold text-gray-800 mb-3">📊 Estadísticas de Soporte</h4>
+                    <div className="space-y-2 text-sm">
+                      <div className="flex justify-between">
+                        <span>Consultas resueltas por IA:</span>
+                        <span className="font-bold text-green-600">87%</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>Tiempo promedio respuesta:</span>
+                        <span className="font-bold text-blue-600">< 2 min</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>Satisfacción usuario:</span>
+                        <span className="font-bold text-purple-600">4.8/5</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="p-4 bg-orange-50 border border-orange-200 rounded-lg">
+                    <h4 className="font-semibold text-orange-800 mb-2">🚨 Reportes Automáticos</h4>
+                    <p className="text-sm text-orange-700 mb-3">
+                      Sistema automático de tickets para problemas críticos detectados por IA.
+                    </p>
+                    <div className="flex gap-2">
+                      <Button size="sm" variant="outline">
+                        Ver Tickets
+                      </Button>
+                      <Button size="sm" variant="outline">
+                        Configurar Alertas
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Demo Notice */}
+              <div className="mt-6 p-4 bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-lg">
+                <p className="text-sm text-gray-700 text-center">
+                  <span className="font-semibold text-blue-600">💬 Modo Demo:</span> 
+                  <span className="ml-1">Esta funcionalidad muestra la integración con WhatsApp y chat IA para soporte técnico. 
+                  En producción, conecta directamente con los sistemas de mensajería.</span>
+                </p>
               </div>
             </Card>
           </TabsContent>
