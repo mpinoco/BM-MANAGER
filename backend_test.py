@@ -11,7 +11,7 @@ from datetime import datetime
 import uuid
 
 # Backend URL from environment
-BACKEND_URL = "https://walmart-balance.preview.emergentagent.com/api"
+BACKEND_URL = "https://bm-intelligence.preview.emergentagent.com/api"
 
 class BackendTester:
     def __init__(self):
