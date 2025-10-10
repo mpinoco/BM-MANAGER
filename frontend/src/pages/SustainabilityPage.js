@@ -74,36 +74,52 @@ const SustainabilityPage = ({ onLogout }) => {
     }
   };
 
-  const generateRecommendations = (score, energy, paper) => {
+  const generateRecommendations = (score, energy, paper, autoserviceBalances) => {
     const recommendations = [];
     
-    if (paper > 2000) {
+    // Paper consumption recommendations based on autoservice balances
+    if (autoserviceBalances > 3) {
       recommendations.push({
         type: 'paper',
-        title: 'Adopta etiquetas linerless',
-        description: 'Reduce el 40% del consumo de papel térmico',
+        title: 'Adopta papel linerless',
+        description: 'Reduce hasta 40% el consumo de papel térmico en balanzas autoservicio',
         impact: 'Alto',
-        savings: '40%'
+        savings: '40%',
+        co2Reduction: '2.1 kg CO2e/mes'
       });
     }
     
-    if (energy > 150) {
+    // Energy efficiency recommendations 
+    if (energy > 100) {
       recommendations.push({
         type: 'energy',
-        title: 'Programa calibraciones',
-        description: 'Mejora la eficiencia energética en un 15%',
+        title: 'Optimiza horarios operativos',
+        description: 'Programa apagado automático en horarios no operativos',
         impact: 'Medio',
-        savings: '15%'
+        savings: '25%',
+        co2Reduction: '3.15 kg CO2e/mes'
       });
     }
     
-    if (score < 50) {
+    if (score < 60) {
       recommendations.push({
-        type: 'general',
-        title: 'Implementa modo eco',
-        description: 'Activa modo ahorro de energía fuera de horarios pico',
+        type: 'calibration',
+        title: 'Calibraciones programadas',
+        description: 'Mejora eficiencia energética con calibraciones regulares',
         impact: 'Medio',
-        savings: '20%'
+        savings: '15%',
+        co2Reduction: '1.89 kg CO2e/mes'
+      });
+    }
+    
+    if (score < 40) {
+      recommendations.push({
+        type: 'upgrade',
+        title: 'Actualizar firmware',
+        description: 'Versiones más eficientes reducen consumo energético',
+        impact: 'Alto',
+        savings: '30%',
+        co2Reduction: '3.78 kg CO2e/mes'
       });
     }
 
