@@ -361,7 +361,7 @@ const SustainabilityPage = ({ onLogout }) => {
                         </Badge>
                       </td>
                       <td className="p-3">{data?.energyConsumption.toFixed(1)}</td>
-                      <td className="p-3">{data?.paperConsumption.toLocaleString()}</td>
+                      <td className="p-3">{(data?.paperConsumption / 1000).toFixed(2)}</td>
                       <td className="p-3">
                         <div className="space-y-1">
                           {data?.recommendations.slice(0, 2).map((rec, index) => (
