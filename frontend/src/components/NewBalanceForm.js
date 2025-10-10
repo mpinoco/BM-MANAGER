@@ -102,12 +102,20 @@ const NewBalanceForm = ({ stores, onSave, onCancel }) => {
       toast.error('Debe seleccionar un local');
       return false;
     }
+    if (!formData.brand) {
+      toast.error('Debe seleccionar una marca de balanza');
+      return false;
+    }
     if (!formData.serialNumber || formData.serialNumber.length < 8) {
       toast.error('Número de serie inválido (mínimo 8 caracteres)');
       return false;
     }
-    if (formData.marquesKey && formData.marquesKey.length !== 12) {
-      toast.error('La clave Marques debe tener exactamente 12 caracteres hexadecimales');
+    if (formData.jsonIAKey && formData.jsonIAKey.length !== 12) {
+      toast.error('La clave JSON/IA debe tener exactamente 12 caracteres hexadecimales');
+      return false;
+    }
+    if (formData.jsonIAKey && !/^[A-F0-9]{12}$/i.test(formData.jsonIAKey)) {
+      toast.error('La clave JSON/IA debe contener solo caracteres hexadecimales (0-9, A-F)');
       return false;
     }
     return true;
