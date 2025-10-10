@@ -110,6 +110,14 @@ const NewBalanceForm = ({ stores, onSave, onCancel }) => {
       toast.error('Número de serie inválido (mínimo 8 caracteres)');
       return false;
     }
+    if (!formData.ipAddress) {
+      toast.error('La dirección IP es obligatoria');
+      return false;
+    }
+    if (!formData.macAddress) {
+      toast.error('La dirección MAC es obligatoria');
+      return false;
+    }
     if (formData.jsonIAKey && formData.jsonIAKey.length !== 12) {
       toast.error('La clave JSON/IA debe tener exactamente 12 caracteres hexadecimales');
       return false;
