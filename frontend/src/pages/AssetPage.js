@@ -32,7 +32,7 @@ const AssetPage = ({ onLogout }) => {
 
   const loadData = async () => {
     try {
-      const response = await axios.get(`${API}/api/stores`, { timeout: 10000 });
+      const response = await axios.get(`${API}/stores`, { timeout: 10000 });
       setStores(response.data);
       
       // Flatten all devices with store info
