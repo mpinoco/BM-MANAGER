@@ -1385,6 +1385,204 @@ const AIConnectorsPage = ({ onLogout }) => {
             </div>
           </TabsContent>
 
+          {/* Geographic Analysis Tab */}
+          <TabsContent value="locations" className="space-y-6">
+            {/* Santiago Comuna Analysis */}
+            <Card className="p-6">
+              <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
+                <MapPin className="w-5 h-5 text-red-600" />
+                Análisis por Comuna - Región Metropolitana de Santiago
+              </h3>
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div>
+                  <h4 className="font-medium mb-3">Top 10 Comunas con Mayor Fraude</h4>
+                  <div className="space-y-3 max-h-96 overflow-y-auto">
+                    {(fraudStats.topComunas || []).map((comuna, index) => (
+                      <div key={index} className="flex items-center justify-between p-3 border rounded-lg hover:bg-gray-50">
+                        <div className="flex items-center gap-3">
+                          <div className={`w-8 h-8 rounded-full flex items-center justify-center text-white font-bold text-sm ${
+                            index === 0 ? 'bg-red-600' :
+                            index === 1 ? 'bg-orange-500' :
+                            index === 2 ? 'bg-yellow-500' : 'bg-gray-400'
+                          }`}>
+                            {index + 1}
+                          </div>
+                          <div>
+                            <p className="font-medium">{comuna.comuna}</p>
+                            <p className="text-xs text-gray-600">
+                              {comuna.count} fraudes • Promedio: ${comuna.avgValue?.toLocaleString('es-CL')}
+                            </p>
+                          </div>
+                        </div>
+                        <div className="text-right">
+                          <p className="font-bold text-red-600">
+                            ${(comuna.totalValue / 1000000)?.toFixed(1)}M
+                          </p>
+                          <div className="flex items-center gap-2">
+                            <div className={`w-2 h-2 rounded-full ${
+                              comuna.riskScore > 15 ? 'bg-red-500' :
+                              comuna.riskScore > 10 ? 'bg-yellow-500' : 'bg-green-500'
+                            }`}></div>
+                            <span className="text-xs">
+                              Score: {comuna.riskScore?.toFixed(1)}
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div>
+                  <h4 className="font-medium mb-3">Mapa de Calor - Riesgo por Comuna</h4>
+                  <ResponsiveContainer width="100%" height={400}>
+                    <BarChart data={fraudStats.topComunas?.slice(0, 8) || []} layout="horizontal">
+                      <CartesianGrid strokeDasharray="3 3" />
+                      <XAxis type="number" />
+                      <YAxis dataKey="comuna" type="category" width={100} />
+                      <Tooltip formatter={(value, name) => [
+                        name === 'count' ? `${value} fraudes` : 
+                        name === 'riskScore' ? `Score: ${value}` :
+                        `$${value?.toLocaleString('es-CL')} CLP`,
+                        name === 'count' ? 'Fraudes Detectados' : 
+                        name === 'riskScore' ? 'Índice de Riesgo' : 'Valor Total'
+                      ]} />
+                      <Bar dataKey="count" fill="#EF4444" radius={[0, 4, 4, 0]} />
+                    </BarChart>
+                  </ResponsiveContainer>
+
+                  <div className="mt-4 p-4 bg-red-50 border border-red-200 rounded-lg">
+                    <h5 className="font-medium text-red-800 mb-2">Zonas de Alto Riesgo Identificadas</h5>
+                    <div className="grid grid-cols-2 gap-2 text-sm">
+                      <div>
+                        <span className="font-medium">Las Condes:</span>
+                        <p className="text-red-700">Centro financiero, productos premium</p>
+                      </div>
+                      <div>
+                        <span className="font-medium">Providencia:</span>
+                        <p className="text-red-700">Alto tráfico, centros comerciales</p>
+                      </div>
+                      <div>
+                        <span className="font-medium">Santiago Centro:</span>
+                        <p className="text-red-700">Diversidad demográfica, electrónicos</p>
+                      </div>
+                      <div>
+                        <span className="font-medium">Vitacura:</span>
+                        <p className="text-red-700">Ingresos altos, productos de lujo</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </Card>
+
+            {/* Store Performance Heatmap */}
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+              <Card className="lg:col-span-2 p-6">
+                <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
+                  <Target className="w-5 h-5 text-blue-600" />
+                  Rendimiento de Locales con Predicciones
+                </h3>
+                <div className="overflow-x-auto">
+                  <table className="w-full text-sm">
+                    <thead>
+                      <tr className="border-b">
+                        <th className="text-left p-2">Local</th>
+                        <th className="text-center p-2">Fraudes Actuales</th>
+                        <th className="text-center p-2">Predicción 7 días</th>
+                        <th className="text-center p-2">Valor Total</th>
+                        <th className="text-center p-2">Nivel de Riesgo</th>
+                        <th className="text-center p-2">Dispositivos</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {(fraudStats.topStores || []).slice(0, 12).map((store, index) => (
+                        <tr key={index} className="border-b hover:bg-gray-50">
+                          <td className="p-2">
+                            <div>
+                              <p className="font-medium text-xs">{store.name?.split(' - ')[0]}</p>
+                              <p className="text-xs text-gray-600">{store.name?.split(' - ')[1]}</p>
+                            </div>
+                          </td>
+                          <td className="p-2 text-center font-bold">{store.count}</td>
+                          <td className="p-2 text-center">
+                            <div className="flex items-center justify-center gap-1">
+                              <span className={store.predictedNext7Days > store.count ? 'text-red-600' : 'text-green-600'}>
+                                {store.predictedNext7Days}
+                              </span>
+                              {store.predictedNext7Days > store.count && (
+                                <TrendingUp className="w-3 h-3 text-red-600" />
+                              )}
+                            </div>
+                          </td>
+                          <td className="p-2 text-center font-medium text-orange-600">
+                            ${(store.totalValue / 1000)?.toFixed(0)}k
+                          </td>
+                          <td className="p-2 text-center">
+                            <Badge className={`${
+                              store.riskLevel === 'Alto' ? 'bg-red-100 text-red-700' :
+                              store.riskLevel === 'Medio' ? 'bg-yellow-100 text-yellow-700' :
+                              'bg-green-100 text-green-700'
+                            }`}>
+                              {store.riskLevel}
+                            </Badge>
+                          </td>
+                          <td className="p-2 text-center">
+                            <span className="text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded">
+                              {store.deviceTypes} tipos
+                            </span>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </Card>
+
+              <Card className="p-6">
+                <h3 className="text-lg font-semibold mb-4">Insights Geográficos</h3>
+                <div className="space-y-4">
+                  <div className="p-4 border-l-4 border-red-500 bg-red-50">
+                    <h4 className="font-medium text-red-800">Zona Crítica</h4>
+                    <p className="text-sm text-red-700 mb-2">Las Condes - Providencia</p>
+                    <ul className="text-xs text-red-600 space-y-1">
+                      <li>• 34% del total de fraudes</li>
+                      <li>• $28M CLP en riesgo</li>
+                      <li>• Recomendación: Refuerzo IA</li>
+                    </ul>
+                  </div>
+
+                  <div className="p-4 border-l-4 border-yellow-500 bg-yellow-50">
+                    <h4 className="font-medium text-yellow-800">Zona de Atención</h4>
+                    <p className="text-sm text-yellow-700 mb-2">Santiago Centro - Ñuñoa</p>
+                    <ul className="text-xs text-yellow-600 space-y-1">
+                      <li>• 22% del total de fraudes</li>
+                      <li>• Patrón: Productos electrónicos</li>
+                      <li>• Monitoreo intensificado</li>
+                    </ul>
+                  </div>
+
+                  <div className="p-4 border-l-4 border-green-500 bg-green-50">
+                    <h4 className="font-medium text-green-800">Zona Controlada</h4>
+                    <p className="text-sm text-green-700 mb-2">Resto RM</p>
+                    <ul className="text-xs text-green-600 space-y-1">
+                      <li>• <15% incidencia individual</li>
+                      <li>• Sistemas IA efectivos</li>
+                      <li>• Mantener protocolo actual</li>
+                    </ul>
+                  </div>
+
+                  <div className="mt-4 p-3 bg-blue-50 border border-blue-200 rounded-lg">
+                    <p className="text-sm text-blue-800">
+                      <strong>Correlación:</strong> Comunas de ingresos altos concentran 67% del valor total de fraudes, 
+                      pero solo 43% de la frecuencia.
+                    </p>
+                  </div>
+                </div>
+              </Card>
+            </div>
+          </TabsContent>
+
           {/* Predictions Tab */}
           <TabsContent value="predictions" className="space-y-6">
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
