@@ -21,10 +21,9 @@ import { toast } from 'sonner';
 
 const AIServicesPage = ({ onLogout }) => {
   const [stores, setStores] = useState([]);
-  const [problemBalances, setProblemBalances] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [showAddUser, setShowAddUser] = useState(false);
-  const [tickets, setTickets] = useState([]);
+  const [activeTab, setActiveTab] = useState('overview');
+  const [dateRange, setDateRange] = useState('30'); // days
 
   const [contacts, setContacts] = useState([
     { id: 1, name: 'Juan Pérez', phone: '+56 9 8765 4321', role: 'Supervisor Plataforma', permissions: 'admin' },
