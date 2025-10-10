@@ -218,6 +218,161 @@ const AssetPage = ({ onLogout }) => {
               </div>
             </Card>
 
+            {/* AI Vendor External Module */}
+            <Card className="p-8 shadow-xl border-2" style={{ borderColor: '#6366f1' }}>
+              <div className="mb-6">
+                <h2 className="text-2xl font-bold text-gray-800 mb-2" style={{ fontFamily: 'Inter, sans-serif' }}>
+                  Vendor Externo de IA
+                </h2>
+                <p className="text-gray-600">
+                  Conecte e integre servicios de IA externos para detección de fraude y análisis inteligente
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {/* GRABIT Card */}
+                <Card className="p-6 border-2 transition-all" style={{ 
+                  borderColor: grabitStatus === 'connected' ? '#10b981' : grabitStatus === 'connecting' ? '#f59e0b' : '#e5e7eb',
+                  backgroundColor: grabitStatus === 'connected' ? 'rgba(16, 185, 129, 0.05)' : 'white'
+                }}>
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center gap-3">
+                      <div className="w-12 h-12 rounded-xl flex items-center justify-center" style={{ backgroundColor: '#3b82f6' }}>
+                        <span className="text-white font-bold text-lg">G</span>
+                      </div>
+                      <div>
+                        <h3 className="text-xl font-bold text-gray-800">GRABIT</h3>
+                        <Badge 
+                          className="mt-1 text-xs"
+                          style={{ 
+                            backgroundColor: grabitStatus === 'connected' ? '#10b981' : grabitStatus === 'connecting' ? '#f59e0b' : '#6b7280',
+                            color: 'white'
+                          }}
+                        >
+                          {grabitStatus === 'connected' ? 'Conectado' : grabitStatus === 'connecting' ? 'Conectando...' : 'Desconectado'}
+                        </Badge>
+                      </div>
+                    </div>
+                    <Switch 
+                      checked={grabitEnabled}
+                      onCheckedChange={handleGrabitToggle}
+                      disabled={grabitStatus === 'connecting'}
+                    />
+                  </div>
+
+                  {/* Progress Steps */}
+                  {grabitProgress.length > 0 && (
+                    <div className="space-y-3 mt-6 border-t pt-4">
+                      {grabitProgress.map((step, index) => (
+                        <div 
+                          key={index}
+                          className="flex items-center gap-3 animate-fade-in"
+                          style={{
+                            animation: `fadeIn 0.5s ease-in`,
+                            opacity: 1
+                          }}
+                        >
+                          <div className={`w-8 h-8 rounded-full flex items-center justify-center ${
+                            step.final ? 'bg-green-500' : 'bg-blue-500'
+                          }`}>
+                            <step.icon className="w-4 h-4 text-white" />
+                          </div>
+                          <span className={`text-sm font-medium ${
+                            step.final ? 'text-green-600' : 'text-gray-700'
+                          }`}>
+                            {step.text}
+                          </span>
+                          {!step.final && (
+                            <div className="ml-auto">
+                              <div className="w-4 h-4 border-2 border-blue-500 border-t-transparent rounded-full animate-spin" />
+                            </div>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </Card>
+
+                {/* EDGIFY Card */}
+                <Card className="p-6 border-2 transition-all" style={{ 
+                  borderColor: edgifyStatus === 'connected' ? '#10b981' : edgifyStatus === 'connecting' ? '#f59e0b' : '#e5e7eb',
+                  backgroundColor: edgifyStatus === 'connected' ? 'rgba(16, 185, 129, 0.05)' : 'white'
+                }}>
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center gap-3">
+                      <div className="w-12 h-12 rounded-xl flex items-center justify-center" style={{ backgroundColor: '#8b5cf6' }}>
+                        <span className="text-white font-bold text-lg">E</span>
+                      </div>
+                      <div>
+                        <h3 className="text-xl font-bold text-gray-800">EDGIFY</h3>
+                        <Badge 
+                          className="mt-1 text-xs"
+                          style={{ 
+                            backgroundColor: edgifyStatus === 'connected' ? '#10b981' : edgifyStatus === 'connecting' ? '#f59e0b' : '#6b7280',
+                            color: 'white'
+                          }}
+                        >
+                          {edgifyStatus === 'connected' ? 'Conectado' : edgifyStatus === 'connecting' ? 'Conectando...' : 'Desconectado'}
+                        </Badge>
+                      </div>
+                    </div>
+                    <Switch 
+                      checked={edgifyEnabled}
+                      onCheckedChange={handleEdgifyToggle}
+                      disabled={edgifyStatus === 'connecting'}
+                    />
+                  </div>
+
+                  {/* Progress Steps */}
+                  {edgifyProgress.length > 0 && (
+                    <div className="space-y-3 mt-6 border-t pt-4">
+                      {edgifyProgress.map((step, index) => (
+                        <div 
+                          key={index}
+                          className="flex items-center gap-3 animate-fade-in"
+                          style={{
+                            animation: `fadeIn 0.5s ease-in`,
+                            opacity: 1
+                          }}
+                        >
+                          <div className={`w-8 h-8 rounded-full flex items-center justify-center ${
+                            step.final ? 'bg-green-500' : 'bg-purple-500'
+                          }`}>
+                            <step.icon className="w-4 h-4 text-white" />
+                          </div>
+                          <span className={`text-sm font-medium ${
+                            step.final ? 'text-green-600' : 'text-gray-700'
+                          }`}>
+                            {step.text}
+                          </span>
+                          {!step.final && (
+                            <div className="ml-auto">
+                              <div className="w-4 h-4 border-2 border-purple-500 border-t-transparent rounded-full animate-spin" />
+                            </div>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </Card>
+              </div>
+
+              {/* Info Box */}
+              {(grabitStatus === 'connected' || edgifyStatus === 'connected') && (
+                <div className="mt-6 p-4 rounded-lg" style={{ backgroundColor: 'rgba(16, 185, 129, 0.1)' }}>
+                  <div className="flex items-start gap-3">
+                    <CheckCircle2 className="w-5 h-5 text-green-600 mt-0.5" />
+                    <div>
+                      <p className="text-sm font-semibold text-green-800">Servicios de IA Activos</p>
+                      <p className="text-xs text-green-700 mt-1">
+                        Los vendors conectados están distribuyendo servicios LLM y MPC a los assets de Walmart en tiempo real.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </Card>
+
         {/* Summary Cards */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
           <Card className="p-6 shadow-lg">
