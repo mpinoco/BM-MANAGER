@@ -188,40 +188,70 @@ const AIServicesPage = ({ onLogout }) => {
           </div>
         </div>
 
-        {/* Summary */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <Card className="p-6 shadow-lg">
+        {/* Main KPI Dashboard */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <Card className="p-6 border-l-4 border-green-500 bg-gradient-to-br from-green-50 to-green-100">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-gray-600 mb-1">Balanzas con Problemas</p>
-                <h3 className="text-3xl font-bold text-red-600">{problemBalances.length}</h3>
+                <p className="text-sm font-medium text-gray-700">Ahorro Total Anual</p>
+                <p className="text-2xl font-bold text-green-700">
+                  ${(aiMetrics.totalSavings / 1000000).toFixed(0)}M CLP
+                </p>
+                <p className="text-xs text-green-600 flex items-center gap-1 mt-1">
+                  <TrendingUp className="w-3 h-3" />
+                  +28% vs año anterior
+                </p>
               </div>
-              <div className="w-12 h-12 rounded-full bg-red-100 flex items-center justify-center">
-                <AlertTriangle className="w-6 h-6 text-red-600" />
+              <div className="w-12 h-12 rounded-full bg-green-200 flex items-center justify-center">
+                <DollarSign className="w-6 h-6 text-green-700" />
               </div>
             </div>
           </Card>
 
-          <Card className="p-6 shadow-lg">
+          <Card className="p-6 border-l-4 border-red-500 bg-gradient-to-br from-red-50 to-red-100">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-gray-600 mb-1">Tickets Activos</p>
-                <h3 className="text-3xl font-bold" style={{ color: '#FFC220' }}>{tickets.length}</h3>
+                <p className="text-sm font-medium text-gray-700">Fraudes Detectados</p>
+                <p className="text-2xl font-bold text-red-700">{aiMetrics.fraudsDetected}</p>
+                <p className="text-xs text-green-600 flex items-center gap-1 mt-1">
+                  <Shield className="w-3 h-3" />
+                  {aiMetrics.preventionRate}% prevenidos
+                </p>
               </div>
-              <div className="w-12 h-12 rounded-full flex items-center justify-center" style={{ backgroundColor: 'rgba(255, 194, 32, 0.1)' }}>
-                <MessageCircle className="w-6 h-6" style={{ color: '#FFC220' }} />
+              <div className="w-12 h-12 rounded-full bg-red-200 flex items-center justify-center">
+                <Shield className="w-6 h-6 text-red-700" />
               </div>
             </div>
           </Card>
 
-          <Card className="p-6 shadow-lg">
+          <Card className="p-6 border-l-4 border-blue-500 bg-gradient-to-br from-blue-50 to-blue-100">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-gray-600 mb-1">Contactos Activos</p>
-                <h3 className="text-3xl font-bold" style={{ color: '#0071CE' }}>{contacts.length}</h3>
+                <p className="text-sm font-medium text-gray-700">ROI Anual</p>
+                <p className="text-2xl font-bold text-blue-700">{aiMetrics.roiAnnual}%</p>
+                <p className="text-xs text-blue-600 flex items-center gap-1 mt-1">
+                  <Target className="w-3 h-3" />
+                  Gravit + Edgify
+                </p>
               </div>
-              <div className="w-12 h-12 rounded-full flex items-center justify-center" style={{ backgroundColor: 'rgba(0, 113, 206, 0.1)' }}>
-                <User className="w-6 h-6" style={{ color: '#0071CE' }} />
+              <div className="w-12 h-12 rounded-full bg-blue-200 flex items-center justify-center">
+                <Target className="w-6 h-6 text-blue-700" />
+              </div>
+            </div>
+          </Card>
+
+          <Card className="p-6 border-l-4 border-purple-500 bg-gradient-to-br from-purple-50 to-purple-100">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm font-medium text-gray-700">Precisión IA</p>
+                <p className="text-2xl font-bold text-purple-700">97.7%</p>
+                <p className="text-xs text-purple-600 flex items-center gap-1 mt-1">
+                  <Activity className="w-3 h-3" />
+                  Promedio combinado
+                </p>
+              </div>
+              <div className="w-12 h-12 rounded-full bg-purple-200 flex items-center justify-center">
+                <Brain className="w-6 h-6 text-purple-700" />
               </div>
             </div>
           </Card>
