@@ -135,6 +135,7 @@ const AIConnectorsPage = ({ onLogout }) => {
           storeName: store.name,
           comuna: store.comuna,
           productName: productName,
+          productImage: fraudProductImages[productName],
           productCode: `SKU${Math.floor(Math.random() * 999999).toString().padStart(6, '0')}`,
           quantity: Math.floor(Math.random() * 5) + 1,
           estimatedValue: productPrices[productName] || Math.floor(Math.random() * 15000) + 1000, // CLP
