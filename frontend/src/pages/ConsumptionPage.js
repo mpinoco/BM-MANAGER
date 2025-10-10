@@ -60,8 +60,9 @@ const ConsumptionPage = ({ onLogout }) => {
   const topConsumers = stores
     .map(store => ({
       name: store.comuna,
-      energy: store.devices?.reduce((sum, d) => sum + (d.avg_consumption || 0), 0).toFixed(2) || 0,
-      paper: (store.balances_autoservicio * avgPaperPerBalance)
+      energy: ((store.devices?.length || 0) * DAILY_ENERGY_PER_SCALE).toFixed(2),
+      paper: (store.balances_autoservicio * METERS_PER_DAY_PER_SCALE),
+      deviceCount: store.devices?.length || 0
     }))
     .sort((a, b) => b.energy - a.energy)
     .slice(0, 10);
