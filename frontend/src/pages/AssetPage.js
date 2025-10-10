@@ -32,7 +32,7 @@ const AssetPage = ({ onLogout }) => {
 
   const loadData = async () => {
     try {
-      const response = await axios.get(`${API}/stores`);
+      const response = await axios.get(`${API}/api/stores`, { timeout: 10000 });
       setStores(response.data);
       
       // Flatten all devices with store info
@@ -56,6 +56,7 @@ const AssetPage = ({ onLogout }) => {
       
       setAllDevices(devices);
     } catch (error) {
+      console.error('Error loading assets:', error);
       toast.error('Error al cargar activos');
     } finally {
       setLoading(false);
