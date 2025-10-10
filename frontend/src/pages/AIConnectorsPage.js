@@ -1436,7 +1436,7 @@ const AIConnectorsPage = ({ onLogout }) => {
                     <h4 className="font-medium text-green-800">Zona Controlada</h4>
                     <p className="text-sm text-green-700 mb-2">Resto RM</p>
                     <ul className="text-xs text-green-600 space-y-1">
-                      <li>• <15% incidencia individual</li>
+                      <li>• &lt;15% incidencia individual</li>
                       <li>• Sistemas IA efectivos</li>
                       <li>• Mantener protocolo actual</li>
                     </ul>
