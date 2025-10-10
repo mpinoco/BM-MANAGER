@@ -798,4 +798,4 @@ Por favor atender a la brevedad.`;
   );
 };
 
-export default AIProvidersPage;
+export default AIServicesPage;
