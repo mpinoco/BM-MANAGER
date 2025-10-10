@@ -35,9 +35,11 @@ const PredictiveMaintenancePage = ({ onLogout }) => {
           const installationDate = new Date(2019 + Math.random() * 6, Math.floor(Math.random() * 12), Math.floor(Math.random() * 28));
           const ageInMonths = (new Date() - installationDate) / (1000 * 60 * 60 * 24 * 30);
           
-          // Simulate usage patterns
-          const dailyUsage = Math.random() * 12 + 8; // 8-20 hours per day
+          // Real consumption data (based on specifications)
+          const dailyUsage = 24; // 24 hours continuous operation
           const monthlyTransactions = Math.floor(Math.random() * 3000 + 1000); // 1000-4000 transactions
+          const monthlyEnergyConsumption = 25.2; // kWh per month (35W × 24h × 30 days)
+          const monthlyCO2Emissions = 12.6; // kg CO2e per month (25.2 kWh × 0.5 kg CO2e/kWh)
           const lastCalibration = new Date(Date.now() - Math.random() * 90 * 24 * 60 * 60 * 1000);
           const daysSinceCalibration = (new Date() - lastCalibration) / (1000 * 60 * 60 * 24);
           
