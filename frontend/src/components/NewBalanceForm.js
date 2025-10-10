@@ -326,7 +326,7 @@ const NewBalanceForm = ({ stores, onSave, onCancel }) => {
           </div>
         </Card>
 
-        {/* Column 3 - Datos Técnicos y Checklist */}
+        {/* Column 3 - Datos Técnicos */}
         <Card className="p-6 shadow-lg">
           <h3 className="text-lg font-semibold mb-4 text-gray-800 flex items-center gap-2">
             <div className="w-2 h-8" style={{ backgroundColor: '#1B4D89' }} />
@@ -334,7 +334,9 @@ const NewBalanceForm = ({ stores, onSave, onCancel }) => {
           </h3>
           <div className="space-y-4">
             <div>
-              <Label htmlFor="ipAddress" className="text-sm font-medium">Dirección IP</Label>
+              <Label htmlFor="ipAddress" className="text-sm font-medium">
+                Dirección IP <span className="text-red-500">*</span>
+              </Label>
               <Input
                 id="ipAddress"
                 value={formData.ipAddress}
@@ -345,7 +347,9 @@ const NewBalanceForm = ({ stores, onSave, onCancel }) => {
             </div>
 
             <div>
-              <Label htmlFor="macAddress" className="text-sm font-medium">Dirección MAC</Label>
+              <Label htmlFor="macAddress" className="text-sm font-medium">
+                Dirección MAC <span className="text-red-500">*</span>
+              </Label>
               <Input
                 id="macAddress"
                 value={formData.macAddress}
@@ -356,16 +360,17 @@ const NewBalanceForm = ({ stores, onSave, onCancel }) => {
             </div>
 
             <div>
-              <Label htmlFor="marquesKey" className="text-sm font-medium">Clave Marques (Key)</Label>
+              <Label htmlFor="providerKey" className="text-sm font-medium">
+                Clave del Proveedor
+              </Label>
               <Input
-                id="marquesKey"
-                value={formData.marquesKey}
-                onChange={(e) => setFormData({...formData, marquesKey: e.target.value.toUpperCase()})}
+                id="providerKey"
+                value={formData.providerKey}
+                onChange={(e) => setFormData({...formData, providerKey: e.target.value})}
                 className="mt-1 text-sm font-mono"
-                placeholder="A1B2C3D4E5F6"
-                maxLength={12}
+                placeholder="Clave proporcionada por el fabricante"
               />
-              <p className="text-xs text-gray-500 mt-1">12 caracteres hexadecimales</p>
+              <p className="text-xs text-gray-500 mt-1">Clave de conexión del fabricante</p>
             </div>
 
             {/* Checklist */}
@@ -398,6 +403,75 @@ const NewBalanceForm = ({ stores, onSave, onCancel }) => {
             </div>
           </div>
         </Card>
+      </div>
+
+      {/* JSON/IA Key Section - Only show when brand is selected */}
+      {formData.brand && (
+        <Card className="p-6 shadow-lg">
+          <div className="flex items-center gap-2 mb-4">
+            <h3 className="text-lg font-semibold text-gray-800">
+              Clave JSON / IA - {formData.brand}
+            </h3>
+            <div className="group relative">
+              <HelpCircle size={16} className="text-gray-400 cursor-help" />
+              <div className="invisible group-hover:visible absolute left-0 top-6 w-80 p-3 bg-gray-800 text-white text-xs rounded-lg shadow-lg z-10">
+                Esta clave se utilizará para integrar la balanza multimarca mediante APIs de JSON/IA. 
+                Debe ser una cadena hexadecimal de 12 caracteres proporcionada por el fabricante.
+              </div>
+            </div>
+          </div>
+          
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+            <div>
+              <Label htmlFor="jsonIAKey" className="text-sm font-medium">
+                Clave JSON / IA
+              </Label>
+              <Input
+                id="jsonIAKey"
+                value={formData.jsonIAKey}
+                onChange={(e) => setFormData({...formData, jsonIAKey: e.target.value.toUpperCase()})}
+                className="mt-1 text-sm font-mono"
+                placeholder="A1B2C3D4E5F6"
+                maxLength={12}
+              />
+              <p className="text-xs text-gray-500 mt-1">12 caracteres hexadecimales (0-9, A-F)</p>
+            </div>
+            
+            <div>
+              <Label className="text-sm font-medium text-gray-600">Ejemplos de formato:</Label>
+              <div className="mt-1 space-y-1">
+                {exampleKeys.map((key, index) => (
+                  <div key={index} className="flex items-center gap-2">
+                    <code className="text-xs font-mono bg-gray-100 px-2 py-1 rounded">
+                      {key}
+                    </code>
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="sm"
+                      className="h-6 px-2 text-xs"
+                      onClick={() => setFormData({...formData, jsonIAKey: key})}
+                    >
+                      Usar
+                    </Button>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+          
+          <div className="mt-4 p-3 bg-blue-50 border border-blue-200 rounded-lg">
+            <div className="flex items-start gap-2">
+              <Info size={16} className="text-blue-600 mt-0.5" />
+              <div className="text-sm text-blue-800">
+                <strong>Información importante:</strong> Esta clave permite la integración 
+                con balanzas multimarca a través de APIs JSON/IA. Debe ser proporcionada 
+                por el fabricante {formData.brand} para garantizar la compatibilidad completa.
+              </div>
+            </div>
+          </div>
+        </Card>
+      )}
       </div>
 
       {/* Action Buttons */}
