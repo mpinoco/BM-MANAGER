@@ -224,9 +224,9 @@ const ConsumptionPage = ({ onLogout }) => {
               </thead>
               <tbody>
                 {stores.slice(0, 15).map((store) => {
-                  const paperMeters = store.balances_autoservicio * avgPaperPerBalance;
-                  const rolls = Math.ceil(paperMeters / rollLength);
-                  const energy = store.devices?.reduce((sum, d) => sum + (d.avg_consumption || 0), 0).toFixed(2) || 0;
+                  const paperMeters = store.balances_autoservicio * METERS_PER_DAY_PER_SCALE;
+                  const rolls = store.balances_autoservicio * ROLLS_PER_DAY_PER_SCALE;
+                  const energy = ((store.devices?.length || 0) * DAILY_ENERGY_PER_SCALE).toFixed(2);
                   
                   return (
                     <tr key={store.id} className="border-b hover:bg-gray-50 transition-colors">
@@ -238,7 +238,7 @@ const ConsumptionPage = ({ onLogout }) => {
                       </td>
                       <td className="px-4 py-3 text-center font-semibold">{store.balances_autoservicio}</td>
                       <td className="px-4 py-3 text-center">{paperMeters.toLocaleString()} m</td>
-                      <td className="px-4 py-3 text-center">{rolls}</td>
+                      <td className="px-4 py-3 text-center">{rolls.toFixed(1)}</td>
                       <td className="px-4 py-3 text-center font-semibold" style={{ color: '#0071CE' }}>{energy}</td>
                     </tr>
                   );
