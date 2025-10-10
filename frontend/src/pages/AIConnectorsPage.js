@@ -81,9 +81,41 @@ const AIConnectorsPage = ({ onLogout }) => {
     ];
     const deviceTypes = ['balance', 'sco', 'pos'];
     
+    // High-value fraud products with real imagery and pricing
+    const fraudProductImages = {
+      'Whisky Premium Johnnie Walker': 'https://images.unsplash.com/photo-1569529465841-dfecdab7503b?w=400&h=300&fit=crop',
+      'iPhone 15 Pro Max': 'https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=400&h=300&fit=crop', 
+      'Perfume Chanel No.5': 'https://images.unsplash.com/photo-1588405748880-12d1d2a59db9?w=400&h=300&fit=crop',
+      'Reloj Apple Watch Ultra': 'https://images.unsplash.com/photo-1434493789847-2f02dc6ca35d?w=400&h=300&fit=crop',
+      'Auriculares Sony WH-1000XM5': 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400&h=300&fit=crop',
+      'Chocolate Lindt Excellence': 'https://images.unsplash.com/photo-1549007953-2f2dc0b24019?w=400&h=300&fit=crop',
+      'Vino Tinto Reserva Especial': 'https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?w=400&h=300&fit=crop',
+      'Queso Manchego Artesanal': 'https://images.unsplash.com/photo-1486297678162-eb2a19b44847?w=400&h=300&fit=crop',
+      'Aceite de Oliva Extra Virgen': 'https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?w=400&h=300&fit=crop',
+      'Salmón Premium Noruego': 'https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=400&h=300&fit=crop',
+      'Carne Wagyu A5': 'https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=400&h=300&fit=crop',
+      'Champagne Dom Pérignon': 'https://images.unsplash.com/photo-1547595628-c61a29f496f0?w=400&h=300&fit=crop'
+    };
+
+    const productNames = Object.keys(fraudProductImages);
+    const productPrices = {
+      'Whisky Premium Johnnie Walker': 89000,
+      'iPhone 15 Pro Max': 1200000,
+      'Perfume Chanel No.5': 125000,
+      'Reloj Apple Watch Ultra': 650000,
+      'Auriculares Sony WH-1000XM5': 280000,
+      'Chocolate Lindt Excellence': 8500,
+      'Vino Tinto Reserva Especial': 45000,
+      'Queso Manchego Artesanal': 15600,
+      'Aceite de Oliva Extra Virgen': 12000,
+      'Salmón Premium Noruego': 18500,
+      'Carne Wagyu A5': 150000,
+      'Champagne Dom Pérignon': 320000
+    };
+
     // Generate fraud events for the selected period
     for (let i = 0; i < days; i++) {
-      const eventsPerDay = Math.floor(Math.random() * 8) + 2; // 2-10 events per day
+      const eventsPerDay = Math.floor(Math.random() * 15) + 8; // 8-23 events per day (more realistic)
       
       for (let j = 0; j < eventsPerDay; j++) {
         const store = stores[Math.floor(Math.random() * stores.length)];
@@ -91,11 +123,7 @@ const AIConnectorsPage = ({ onLogout }) => {
         
         const fraudType = fraudTypes[Math.floor(Math.random() * fraudTypes.length)];
         const deviceType = deviceTypes[Math.floor(Math.random() * deviceTypes.length)];
-        const productNames = [
-          'Palta Hass Premium', 'Manzanas Gala', 'Plátanos Orgánicos', 'Tomates Cherry',
-          'Queso Gouda', 'Salmón Fresco', 'Pan Integral', 'Yogurt Griego',
-          'Aceite de Oliva', 'Vino Tinto Reserva', 'Chocolate Premium', 'Café Gourmet'
-        ];
+        const productName = productNames[Math.floor(Math.random() * productNames.length)];
         
         const event = {
           id: `fraud_${Date.now()}_${j}_${i}`,
