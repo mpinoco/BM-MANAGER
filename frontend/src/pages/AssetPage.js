@@ -6,7 +6,8 @@ import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { Search, HardDrive, Calendar, CheckCircle, AlertCircle, Plus, Settings } from 'lucide-react';
+import { Switch } from '@/components/ui/switch';
+import { Search, HardDrive, Calendar, CheckCircle, AlertCircle, Plus, Settings, Zap, Network, Package, CheckCircle2 } from 'lucide-react';
 import { toast } from 'sonner';
 import NewBalanceForm from '@/components/NewBalanceForm';
 
