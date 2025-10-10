@@ -152,14 +152,40 @@ const AIServicesPage = ({ onLogout }) => {
     <Layout onLogout={onLogout}>
       <div className="p-8 space-y-6">
         {/* Header */}
-        <div>
-          <h1 className="text-3xl font-bold text-gray-800 flex items-center gap-3" style={{ fontFamily: 'Inter, sans-serif' }}>
-            <div className="w-10 h-10 rounded-lg bg-gradient-to-r from-blue-600 to-purple-600 flex items-center justify-center">
-              <Settings className="w-6 h-6 text-white" />
+        <div className="flex justify-between items-start">
+          <div>
+            <h1 className="text-3xl font-bold text-gray-800 flex items-center gap-3" style={{ fontFamily: 'Inter, sans-serif' }}>
+              <div className="w-10 h-10 rounded-lg bg-gradient-to-r from-blue-600 to-purple-600 flex items-center justify-center">
+                <Brain className="w-6 h-6 text-white" />
+              </div>
+              Servicios IA - Allcom Technologies
+            </h1>
+            <p className="text-gray-600 mt-1">Gestión y monitoreo de servicios de inteligencia artificial</p>
+            
+            {/* Executive Summary */}
+            <div className="mt-4 p-4 bg-gradient-to-r from-green-50 to-blue-50 border border-green-200 rounded-lg">
+              <p className="text-sm text-gray-800">
+                <strong className="text-green-700">💰 Impacto Financiero:</strong> Los servicios de IA han generado un ahorro de{' '}
+                <span className="font-bold text-blue-600">${(aiMetrics.totalSavings / 1000000).toFixed(0)}M CLP anuales</span>, 
+                con una tasa de prevención del{' '}
+                <span className="font-bold text-green-600">{aiMetrics.preventionRate}%</span>{' '}
+                y un ROI del <span className="font-bold text-purple-600">{aiMetrics.roiAnnual}%</span>.
+              </p>
             </div>
-            Servicios IA - Allcom Technologies
-          </h1>
-          <p className="text-gray-600 mt-1">Gestión y monitoreo de servicios de inteligencia artificial</p>
+          </div>
+          
+          <div className="flex items-center gap-3">
+            <Badge className="px-4 py-2 bg-green-100 text-green-800">
+              Gravit: Activo ({aiMetrics.gravitPrecision}%)
+            </Badge>
+            <Badge className="px-4 py-2 bg-blue-100 text-blue-800">
+              Edgify: Activo ({aiMetrics.edgifyPrecision}%)
+            </Badge>
+            <Button onClick={() => window.location.href = '/ai-connectors'} className="bg-blue-600 hover:bg-blue-700">
+              <Settings className="w-4 h-4 mr-2" />
+              Panel Avanzado
+            </Button>
+          </div>
         </div>
 
         {/* Summary */}
