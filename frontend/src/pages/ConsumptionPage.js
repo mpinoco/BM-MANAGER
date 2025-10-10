@@ -67,9 +67,21 @@ const ConsumptionPage = ({ onLogout }) => {
     .slice(0, 10);
 
   const consumptionByType = [
-    { name: 'BMS Asistida', value: stores.reduce((sum, s) => sum + s.balances_bms, 0) * 1.5 },
-    { name: 'Autoservicio', value: stores.reduce((sum, s) => sum + s.balances_autoservicio, 0) * 2.1 },
-    { name: 'Balanzas IA', value: stores.reduce((sum, s) => sum + s.balances_ia, 0) * 1.8 }
+    { 
+      name: 'BMS Asistida', 
+      value: stores.reduce((sum, s) => sum + s.balances_bms, 0) * DAILY_ENERGY_PER_SCALE,
+      count: stores.reduce((sum, s) => sum + s.balances_bms, 0)
+    },
+    { 
+      name: 'Autoservicio', 
+      value: stores.reduce((sum, s) => sum + s.balances_autoservicio, 0) * DAILY_ENERGY_PER_SCALE,
+      count: stores.reduce((sum, s) => sum + s.balances_autoservicio, 0)
+    },
+    { 
+      name: 'Balanzas IA', 
+      value: stores.reduce((sum, s) => sum + s.balances_ia, 0) * DAILY_ENERGY_PER_SCALE,
+      count: stores.reduce((sum, s) => sum + s.balances_ia, 0)
+    }
   ];
 
   const COLORS = ['#0071CE', '#FFC220', '#1B4D89'];
