@@ -375,7 +375,12 @@ const SustainabilityPage = ({ onLogout }) => {
                               <span className="text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded">
                                 {rec.title}
                               </span>
-                              <span className="text-xs text-green-600">-{rec.savings}</span>
+                              <div className="flex flex-col">
+                                <span className="text-xs text-green-600">-{rec.savings}</span>
+                                {rec.co2Reduction && (
+                                  <span className="text-xs text-green-500">-{rec.co2Reduction}</span>
+                                )}
+                              </div>
                             </div>
                           ))}
                         </div>
