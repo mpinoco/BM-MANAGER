@@ -535,9 +535,11 @@ const AIConnectorsPage = ({ onLogout }) => {
         </Card>
 
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-          <TabsList className="grid w-full grid-cols-4">
+          <TabsList className="grid w-full grid-cols-6">
             <TabsTrigger value="dashboard">Dashboard</TabsTrigger>
-            <TabsTrigger value="analytics">Análisis</TabsTrigger>
+            <TabsTrigger value="financial">Análisis Financiero</TabsTrigger>
+            <TabsTrigger value="products">Productos & Fraudes</TabsTrigger>
+            <TabsTrigger value="locations">Análisis Geográfico</TabsTrigger>
             <TabsTrigger value="predictions">Predicciones</TabsTrigger>
             <TabsTrigger value="settings">Configuración</TabsTrigger>
           </TabsList>
