@@ -1083,8 +1083,210 @@ const AIConnectorsPage = ({ onLogout }) => {
             </Card>
           </TabsContent>
 
-          {/* Analytics Tab */}
+          {/* Products & Fraud Tab */}
           <TabsContent value="products" className="space-y-6">
+            {/* Top Fraud Products with Images */}
+            <Card className="p-6">
+              <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
+                <AlertTriangle className="w-5 h-5 text-red-600" />
+                Productos Más Utilizados para Fraude (Con Imágenes)
+              </h3>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                {(fraudStats.topProducts || []).map((product, index) => (
+                  <Card key={index} className="overflow-hidden hover:shadow-lg transition-shadow">
+                    <div className="aspect-[4/3] w-full overflow-hidden">
+                      {product.image ? (
+                        <img 
+                          src={product.image} 
+                          alt={product.name}
+                          className="w-full h-full object-cover transition-transform hover:scale-105"
+                          onError={(e) => {
+                            e.target.style.display = 'none';
+                            e.target.nextSibling.style.display = 'flex';
+                          }}
+                        />
+                      ) : null}
+                      <div className="w-full h-full bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center text-gray-400 text-sm" style={{ display: product.image ? 'none' : 'flex' }}>
+                        Imagen del producto
+                      </div>
+                    </div>
+                    <div className="p-4">
+                      <h4 className="font-semibold text-sm mb-2 line-clamp-2">{product.name}</h4>
+                      <div className="space-y-2 text-xs">
+                        <div className="flex justify-between">
+                          <span className="text-gray-600">Intentos de fraude:</span>
+                          <span className="font-bold text-red-600">{product.count}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-600">Valor promedio:</span>
+                          <span className="font-bold text-green-600">
+                            ${product.avgValue?.toLocaleString('es-CL')}
+                          </span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-600">Pérdida potencial:</span>
+                          <span className="font-bold text-orange-600">
+                            ${product.totalValue?.toLocaleString('es-CL')}
+                          </span>
+                        </div>
+                      </div>
+                      <div className="mt-3">
+                        <Badge className={`w-full text-center justify-center ${
+                          index < 2 ? 'bg-red-100 text-red-800' :
+                          index < 5 ? 'bg-orange-100 text-orange-800' :
+                          'bg-yellow-100 text-yellow-800'
+                        }`}>
+                          {index < 2 ? 'Riesgo Crítico' : index < 5 ? 'Riesgo Alto' : 'Riesgo Medio'}
+                        </Badge>
+                      </div>
+                    </div>
+                  </Card>
+                ))}
+              </div>
+            </Card>
+
+            {/* Fraud Pattern Analysis */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <Card className="p-6">
+                <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
+                  <Target className="w-5 h-5 text-purple-600" />
+                  Análisis por Tipo de Fraude
+                </h3>
+                <div className="space-y-4">
+                  {[
+                    { type: 'No Escaneado', percentage: 34, color: 'bg-red-500', detected: 89, prevented: 76 },
+                    { type: 'Manipulación de Peso', percentage: 28, color: 'bg-orange-500', detected: 73, prevented: 68 },
+                    { type: 'Cambio de Código', percentage: 22, color: 'bg-yellow-500', detected: 58, prevented: 55 },
+                    { type: 'Escaneo Incorrecto', percentage: 16, color: 'bg-blue-500', detected: 42, prevented: 39 }
+                  ].map((fraud, index) => (
+                    <div key={index} className="space-y-2">
+                      <div className="flex items-center justify-between">
+                        <span className="font-medium text-sm">{fraud.type}</span>
+                        <div className="flex items-center gap-3">
+                          <span className="text-sm text-gray-600">{fraud.detected} detectados</span>
+                          <Badge className="bg-green-100 text-green-800">
+                            {Math.round((fraud.prevented / fraud.detected) * 100)}% prevenidos
+                          </Badge>
+                        </div>
+                      </div>
+                      <div className="w-full bg-gray-200 rounded-full h-3">
+                        <div 
+                          className={`${fraud.color} h-3 rounded-full transition-all duration-500`}
+                          style={{ width: `${fraud.percentage}%` }}
+                        ></div>
+                      </div>
+                      <div className="flex justify-between text-xs text-gray-600">
+                        <span>{fraud.percentage}% del total</span>
+                        <span>Valor promedio: $35,400 CLP</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </Card>
+
+              <Card className="p-6">
+                <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
+                  <Activity className="w-5 h-5 text-green-600" />
+                  Impacto por Categoría de Producto
+                </h3>
+                <ResponsiveContainer width="100%" height={350}>
+                  <BarChart data={[
+                    { category: 'Electrónicos', frauds: 156, value: 89500000, prevented: 142 },
+                    { category: 'Licores Premium', frauds: 89, value: 45200000, prevented: 81 },
+                    { category: 'Perfumes/Cosméticos', frauds: 67, value: 18900000, prevented: 59 },
+                    { category: 'Alimentos Gourmet', frauds: 34, value: 8400000, prevented: 29 },
+                    { category: 'Accesorios', frauds: 28, value: 12100000, prevented: 24 },
+                  ]}>
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="category" angle={-45} textAnchor="end" height={100} />
+                    <YAxis />
+                    <Tooltip formatter={(value, name) => [
+                      name === 'frauds' ? `${value} fraudes` : 
+                      name === 'prevented' ? `${value} prevenidos` :
+                      `$${value?.toLocaleString('es-CL')} CLP`,
+                      name === 'frauds' ? 'Intentos de Fraude' : 
+                      name === 'prevented' ? 'Fraudes Prevenidos' : 'Valor Total'
+                    ]} />
+                    <Bar dataKey="frauds" fill="#EF4444" name="frauds" radius={[4, 4, 0, 0]} />
+                    <Bar dataKey="prevented" fill="#10B981" name="prevented" radius={[4, 4, 0, 0]} />
+                  </BarChart>
+                </ResponsiveContainer>
+              </Card>
+            </div>
+
+            {/* Fraud Intelligence Insights */}
+            <Card className="p-6">
+              <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
+                <Brain className="w-5 h-5 text-indigo-600" />
+                Análisis Inteligente de Patrones (IA)
+              </h3>
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div className="space-y-4">
+                  <div className="p-4 border-l-4 border-blue-500 bg-blue-50">
+                    <h4 className="font-medium text-blue-800 mb-2">Patrones Detectados por Gravit</h4>
+                    <ul className="text-sm text-blue-700 space-y-1">
+                      <li>• Productos electrónicos: 73% de intentos en SCO vs 27% en balanzas</li>
+                      <li>• Peak de fraude: viernes 18:00-20:00 (+145% vs promedio)</li>
+                      <li>• Correlación: productos >$100k tienen 340% más intentos</li>
+                      <li>• Patrón estacional: +28% en diciembre vs promedio anual</li>
+                    </ul>
+                  </div>
+
+                  <div className="p-4 border-l-4 border-purple-500 bg-purple-50">
+                    <h4 className="font-medium text-purple-800 mb-2">Insights de Edgify Analytics</h4>
+                    <ul className="text-sm text-purple-700 space-y-1">
+                      <li>• Operadores novatos: 2.3x más incidencias no detectadas</li>
+                      <li>• Localización: centros comerciales +67% vs locales de calle</li>
+                      <li>• Tiempo respuesta: detección <2s reduce fraude exitoso en 89%</li>
+                      <li>• Precisión mejora 12% con datos históricos >6 meses</li>
+                    </ul>
+                  </div>
+                </div>
+
+                <div>
+                  <h4 className="font-medium mb-3">Recomendaciones Automáticas</h4>
+                  <div className="space-y-3">
+                    {[
+                      {
+                        priority: 'Alta',
+                        action: 'Reforzar supervisión en SCO durante 18:00-20:00',
+                        impact: 'Reducción estimada: 23% fraudes',
+                        color: 'red'
+                      },
+                      {
+                        priority: 'Media',
+                        action: 'Capacitar operadores con <6 meses experiencia',
+                        impact: 'Mejora detección: +18%',
+                        color: 'orange'
+                      },
+                      {
+                        priority: 'Media',
+                        action: 'Implementar alertas para productos >$50k',
+                        impact: 'Prevención adicional: $12M/año',
+                        color: 'yellow'
+                      },
+                      {
+                        priority: 'Baja',
+                        action: 'Optimizar algoritmos para centros comerciales',
+                        impact: 'Eficiencia: +7%',
+                        color: 'green'
+                      }
+                    ].map((rec, index) => (
+                      <div key={index} className={`p-3 border-l-4 border-${rec.color}-500 bg-${rec.color}-50 rounded-r`}>
+                        <div className="flex items-center justify-between mb-1">
+                          <Badge className={`bg-${rec.color}-100 text-${rec.color}-800`}>
+                            {rec.priority}
+                          </Badge>
+                          <span className="text-xs text-gray-600">{rec.impact}</span>
+                        </div>
+                        <p className="text-sm font-medium">{rec.action}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </Card>
+          </TabsContent>
             {/* Performance Metrics */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <Card className="p-6">
