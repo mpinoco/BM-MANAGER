@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
-import { ArrowLeft, Save, X, CheckCircle2 } from 'lucide-react';
+import { ArrowLeft, Save, X, CheckCircle2, Info, HelpCircle } from 'lucide-react';
 import { toast } from 'sonner';
 
 const NewBalanceForm = ({ stores, onSave, onCancel }) => {
@@ -12,10 +12,12 @@ const NewBalanceForm = ({ stores, onSave, onCancel }) => {
     localSAP: '',
     address: '',
     comuna: '',
-    type: 'AUTOSERVICIO',
+    brand: '',
+    type: 'Asistida',
+    paperType: 'Liner',
     serialNumber: '',
     installationDate: new Date().toISOString().split('T')[0],
-    provider: 'Balanzas Chile S.A.',
+    provider: 'Allcom Chile',
     checklist: {
       calibrated: false,
       leveled: false,
@@ -25,7 +27,8 @@ const NewBalanceForm = ({ stores, onSave, onCancel }) => {
     },
     ipAddress: '',
     macAddress: '',
-    marquesKey: ''
+    providerKey: '',
+    jsonIAKey: ''
   });
 
   const providers = [
