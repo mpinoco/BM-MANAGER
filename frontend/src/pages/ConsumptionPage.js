@@ -26,22 +26,35 @@ const ConsumptionPage = ({ onLogout }) => {
     }
   };
 
-  // Calculate consumption data
-  const totalEnergyConsumption = stores.reduce((sum, store) => {
-    const storeConsumption = store.devices?.reduce((deviceSum, device) => 
-      deviceSum + (device.avg_consumption || 0), 0) || 0;
-    return sum + storeConsumption;
-  }, 0);
+  // Real consumption calculations based on specifications
+  // Energy: Each scale consumes 35W continuous (35W/h)
+  // Per day: 35W × 24h = 840 Wh = 0.84 kWh
+  // Per month: 0.84 kWh × 30 days = 25.2 kWh
+  const POWER_CONSUMPTION_PER_SCALE = 0.035; // 35W in kW
+  const HOURS_PER_DAY = 24;
+  const DAILY_ENERGY_PER_SCALE = POWER_CONSUMPTION_PER_SCALE * HOURS_PER_DAY; // 0.84 kWh
+  const MONTHLY_ENERGY_PER_SCALE = DAILY_ENERGY_PER_SCALE * 30; // 25.2 kWh
 
+  // Paper consumption: Each autoservice scale uses 3.5 rolls per day
+  // Each roll = 50m, so 3.5 rolls = 175m per day per scale
+  // Monthly: 175m × 30 days = 5,250m = 5.25 km per scale
+  const ROLL_LENGTH = 50; // meters per roll
+  const ROLLS_PER_DAY_PER_SCALE = 3.5;
+  const METERS_PER_DAY_PER_SCALE = ROLLS_PER_DAY_PER_SCALE * ROLL_LENGTH; // 175m
+  const MONTHLY_PAPER_PER_SCALE = METERS_PER_DAY_PER_SCALE * 30; // 5,250m = 5.25km
+
+  // Calculate totals based on actual device count from all stores
+  const totalDevices = stores.reduce((sum, store) => 
+    sum + (store.devices?.length || 0), 0);
+  
   const autoserviceBalances = stores.reduce((sum, store) => 
     sum + (store.balances_autoservicio || 0), 0);
 
-  // Paper consumption (dummy data per balance)
-  const avgPaperPerBalance = 300; // meters per day
-  const totalPaperMeters = autoserviceBalances * avgPaperPerBalance;
+  // Daily totals
+  const totalEnergyConsumption = totalDevices * DAILY_ENERGY_PER_SCALE;
+  const totalPaperMeters = autoserviceBalances * METERS_PER_DAY_PER_SCALE;
   const totalPaperKm = (totalPaperMeters / 1000).toFixed(2);
-  const rollLength = 80; // meters per roll
-  const totalRolls = Math.ceil(totalPaperMeters / rollLength);
+  const totalRolls = Math.ceil(totalPaperMeters / ROLL_LENGTH);
 
   // Top consumers
   const topConsumers = stores
