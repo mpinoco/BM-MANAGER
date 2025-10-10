@@ -16,7 +16,7 @@ const Layout = ({ children, onLogout }) => {
     { icon: HardDrive, label: 'Activos', path: '/assets' },
     { icon: Megaphone, label: 'Campañas', path: '/campaigns' },
     { icon: Workflow, label: 'Autoservicio', path: '/self-service' },
-    { icon: BrainCircuit, label: 'Menú IA', path: '/ai-menu' },
+    { icon: Settings, label: 'Proveedores de IA', path: '/ai-providers' },
     { icon: Leaf, label: 'Sostenibilidad', path: '/sustainability' },
     { icon: AlertTriangle, label: 'Obsolescencia', path: '/obsolescence' },
     { icon: TrendingUp, label: 'Ventas & Análisis', path: '/sales-analysis' },
