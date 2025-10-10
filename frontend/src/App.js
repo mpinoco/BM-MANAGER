@@ -168,6 +168,14 @@ function App() {
               <Navigate to="/login" replace />
             } 
           />
+          <Route 
+            path="/ai-connectors" 
+            element={
+              isAuthenticated ? 
+              <AIConnectorsPage onLogout={handleLogout} /> : 
+              <Navigate to="/login" replace />
+            } 
+          />
         </Routes>
       </BrowserRouter>
       <Toaster position="top-right" />
