@@ -17,7 +17,7 @@ import {
 import { 
   Brain, Shield, TrendingUp, AlertTriangle, MapPin, Calendar, 
   Download, Settings, CheckCircle, XCircle, DollarSign, Target,
-  Zap, Activity, Eye, RefreshCw, Bell, Filter, Search
+  Zap, Activity, Eye, RefreshCw, Bell, Filter, Search, MessageSquare
 } from 'lucide-react';
 import { toast } from 'sonner';
 
