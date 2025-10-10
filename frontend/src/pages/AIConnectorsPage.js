@@ -134,10 +134,10 @@ const AIConnectorsPage = ({ onLogout }) => {
           storeId: store.id,
           storeName: store.name,
           comuna: store.comuna,
-          productName: productNames[Math.floor(Math.random() * productNames.length)],
+          productName: productName,
           productCode: `SKU${Math.floor(Math.random() * 999999).toString().padStart(6, '0')}`,
           quantity: Math.floor(Math.random() * 5) + 1,
-          estimatedValue: Math.floor(Math.random() * 15000) + 1000, // CLP
+          estimatedValue: productPrices[productName] || Math.floor(Math.random() * 15000) + 1000, // CLP
           operator: `Operador ${Math.floor(Math.random() * 20) + 1}`,
           confidence: Math.floor(Math.random() * 20) + 80, // 80-100%
           source: Math.random() > 0.5 ? 'gravit' : 'edgify',
