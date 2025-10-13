@@ -250,12 +250,13 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Fix Sucursal to Local naming in database"
-    - "Create AI Assistant prediction API"
-    - "Implement AI Assistant component for login page"
+    - "QA Testing - Full System Review"
+    - "Security & Vulnerability Assessment"
+    - "Data Coherence & Graph Validation"
+    - "Vendor Externo de IA Module"
   stuck_tasks: []
-  test_all: false
-  test_priority: "high_first"
+  test_all: true
+  test_priority: "comprehensive_qa"
 
 agent_communication:
   - agent: "main"
