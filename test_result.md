@@ -262,13 +262,13 @@ metadata:
 
 test_plan:
   current_focus:
-    - "QA Testing - Full System Review"
+    - "Implement comprehensive security fixes"
     - "Security & Vulnerability Assessment"
     - "Data Coherence & Graph Validation"
     - "Vendor Externo de IA Module"
   stuck_tasks: []
   test_all: true
-  test_priority: "comprehensive_qa"
+  test_priority: "critical_security_first"
 
 agent_communication:
   - agent: "main"
