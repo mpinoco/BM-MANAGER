@@ -230,6 +230,18 @@ frontend:
         agent: "main"
         comment: "Currently only UI mockup, need functional ticket generation and persistence"
 
+  - task: "Vendor Externo de IA Module (GRABIT & EDGIFY)"
+    implemented: true
+    working: true
+    file: "/app/frontend/src/pages/AssetPage.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: true
+        agent: "main"
+        comment: "Implemented complete MVP module for AI vendor connections (GRABIT & EDGIFY) with iOS-style switches, 4-step connection simulation, animated progress indicators, state management, and visual feedback. All functionality verified via screenshot testing."
+
 metadata:
   created_by: "main_agent"
   version: "1.0"
