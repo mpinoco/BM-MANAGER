@@ -185,7 +185,8 @@ const EnhancedBarChart = ({ data, title, stores }) => {
           <YAxis 
             dataKey="name" 
             type="category" 
-            width={120}
+            width={150}
+            tick={{ fontSize: 12, textAnchor: 'start' }}
             tickFormatter={(value, index) => `#${dataWithTrends[index]?.rank} ${value}`}
           />
           <Tooltip content={<CustomTooltip />} />
