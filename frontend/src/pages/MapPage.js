@@ -28,8 +28,8 @@ const SupermarketFloorPlan = () => {
   const balanceLocations = [
     { id: 1, section: 'Frutas y Verduras', x: 15, y: 20, z: 0, type: 'BMS', status: 'online', count: 3 },
     { id: 2, section: 'Panadería', x: 70, y: 15, z: 0, type: 'Autoservicio', status: 'online', count: 2 },
-    { id: 3, section: 'Pescadería', x: 15, y: 65, z: 0, type: 'BMS', status: 'online', count: 2 },
-    { id: 4, section: 'Rotisería', x: 45, y: 70, z: 0, type: 'IA', status: 'online', count: 1 },
+    { id: 3, section: 'Pescadería', x: 15, y: 65, z: 0, type: 'BMS', status: 'online', count: 3 },
+    { id: 4, section: 'Rotisería', x: 45, y: 70, z: 0, type: 'IA', status: 'online', count: 2 },
     { id: 5, section: 'Carnes', x: 70, y: 65, z: 0, type: 'BMS', status: 'online', count: 2 },
     { id: 6, section: 'Lácteos', x: 45, y: 20, z: 0, type: 'Autoservicio', status: 'online', count: 1 },
   ];
@@ -37,7 +37,7 @@ const SupermarketFloorPlan = () => {
   const handleMouseMove = (e) => {
     if (e.buttons === 1) {
       setRotation(prev => ({
-        x: Math.max(-60, Math.min(0, prev.x + e.movementY * 0.5)),
+        x: prev.x + e.movementY * 0.5, // Sin límites ahora
         y: prev.y + e.movementX * 0.5
       }));
     }
