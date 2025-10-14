@@ -274,13 +274,13 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Implement comprehensive security fixes"
-    - "Security & Vulnerability Assessment"
-    - "Data Coherence & Graph Validation"
-    - "Vendor Externo de IA Module"
+    - "Comprehensive QA - All Components"
+    - "3D Map Functionality Testing"
+    - "UI/UX Validation"
+    - "Integration Testing"
   stuck_tasks: []
   test_all: true
-  test_priority: "critical_security_first"
+  test_priority: "comprehensive_qa_with_3d"
 
 agent_communication:
   - agent: "main"
