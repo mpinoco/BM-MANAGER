@@ -238,8 +238,12 @@ const AssetPage = ({ onLogout }) => {
                 }}>
                   <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center gap-3">
-                      <div className="w-12 h-12 rounded-xl flex items-center justify-center" style={{ backgroundColor: '#3b82f6' }}>
-                        <span className="text-white font-bold text-lg">G</span>
+                      <div className="w-16 h-16 rounded-xl flex items-center justify-center bg-white p-2 shadow-md">
+                        <img 
+                          src="https://customer-assets.emergentagent.com/job_bm-intelligence/artifacts/rolvx4qh_grabit.png" 
+                          alt="GRABIT"
+                          className="w-full h-full object-contain"
+                        />
                       </div>
                       <div>
                         <h3 className="text-xl font-bold text-gray-800">GRABIT</h3>
