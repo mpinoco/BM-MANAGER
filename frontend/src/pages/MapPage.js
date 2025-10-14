@@ -19,6 +19,321 @@ L.Icon.Default.mergeOptions({
   shadowUrl: require('leaflet/dist/images/marker-shadow.png'),
 });
 
+// 3D Supermarket Floor Plan Component
+const SupermarketFloorPlan = () => {
+  const [rotation, setRotation] = useState({ x: -20, y: 45 });
+  const [selectedScale, setSelectedScale] = useState(null);
+
+  const balanceLocations = [
+    { id: 1, section: 'Frutas y Verduras', x: 15, y: 20, z: 0, type: 'BMS', status: 'online', count: 3 },
+    { id: 2, section: 'Panadería', x: 70, y: 15, z: 0, type: 'Autoservicio', status: 'online', count: 2 },
+    { id: 3, section: 'Pescadería', x: 15, y: 65, z: 0, type: 'BMS', status: 'online', count: 2 },
+    { id: 4, section: 'Rotisería', x: 45, y: 70, z: 0, type: 'IA', status: 'online', count: 1 },
+    { id: 5, section: 'Carnes', x: 70, y: 65, z: 0, type: 'BMS', status: 'online', count: 2 },
+    { id: 6, section: 'Lácteos', x: 45, y: 20, z: 0, type: 'Autoservicio', status: 'online', count: 1 },
+  ];
+
+  const handleMouseMove = (e) => {
+    if (e.buttons === 1) {
+      setRotation(prev => ({
+        x: Math.max(-60, Math.min(0, prev.x + e.movementY * 0.5)),
+        y: prev.y + e.movementX * 0.5
+      }));
+    }
+  };
+
+  return (
+    <div className="space-y-4">
+      {/* Controls */}
+      <div className="flex gap-2 mb-4">
+        <Button size="sm" variant="outline" onClick={() => setRotation({ x: -20, y: 45 })}>
+          Vista Frontal
+        </Button>
+        <Button size="sm" variant="outline" onClick={() => setRotation({ x: -40, y: 0 })}>
+          Vista Superior
+        </Button>
+        <Button size="sm" variant="outline" onClick={() => setRotation({ x: -20, y: 90 })}>
+          Vista Lateral
+        </Button>
+      </div>
+
+      {/* 3D Container */}
+      <div 
+        className="relative bg-gradient-to-br from-blue-50 to-gray-100 rounded-lg overflow-hidden"
+        style={{ height: '600px', perspective: '1200px', cursor: 'grab' }}
+        onMouseMove={handleMouseMove}
+      >
+        <div
+          style={{
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: `translate(-50%, -50%) rotateX(${rotation.x}deg) rotateY(${rotation.y}deg)`,
+            transformStyle: 'preserve-3d',
+            transition: 'transform 0.3s ease',
+            width: '800px',
+            height: '600px'
+          }}
+        >
+          {/* Floor */}
+          <div
+            style={{
+              position: 'absolute',
+              width: '100%',
+              height: '100%',
+              backgroundColor: '#f8fafc',
+              border: '2px solid #cbd5e1',
+              boxShadow: '0 10px 50px rgba(0,0,0,0.1)',
+              transform: 'translateZ(0px)',
+            }}
+          >
+            {/* Grid lines */}
+            <div className="w-full h-full" style={{
+              backgroundImage: 'linear-gradient(#e2e8f0 1px, transparent 1px), linear-gradient(90deg, #e2e8f0 1px, transparent 1px)',
+              backgroundSize: '50px 50px'
+            }} />
+          </div>
+
+          {/* Walls */}
+          <div
+            style={{
+              position: 'absolute',
+              width: '100%',
+              height: '80px',
+              backgroundColor: '#e0f2fe',
+              border: '2px solid #0ea5e9',
+              transform: 'translateY(0) rotateX(90deg)',
+              transformOrigin: 'top',
+            }}
+          />
+
+          {/* Section Areas */}
+          <div
+            style={{
+              position: 'absolute',
+              left: '10%',
+              top: '10%',
+              width: '25%',
+              height: '30%',
+              backgroundColor: 'rgba(134, 239, 172, 0.3)',
+              border: '2px solid #10b981',
+              borderRadius: '8px',
+              transform: 'translateZ(1px)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              fontSize: '12px',
+              fontWeight: 'bold',
+              color: '#047857'
+            }}
+          >
+            Frutas y Verduras
+          </div>
+
+          <div
+            style={{
+              position: 'absolute',
+              left: '65%',
+              top: '5%',
+              width: '25%',
+              height: '25%',
+              backgroundColor: 'rgba(254, 215, 170, 0.3)',
+              border: '2px solid #f97316',
+              borderRadius: '8px',
+              transform: 'translateZ(1px)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              fontSize: '12px',
+              fontWeight: 'bold',
+              color: '#c2410c'
+            }}
+          >
+            Panadería
+          </div>
+
+          <div
+            style={{
+              position: 'absolute',
+              left: '10%',
+              top: '55%',
+              width: '25%',
+              height: '30%',
+              backgroundColor: 'rgba(147, 197, 253, 0.3)',
+              border: '2px solid #3b82f6',
+              borderRadius: '8px',
+              transform: 'translateZ(1px)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              fontSize: '12px',
+              fontWeight: 'bold',
+              color: '#1e40af'
+            }}
+          >
+            Pescadería
+          </div>
+
+          <div
+            style={{
+              position: 'absolute',
+              left: '40%',
+              top: '60%',
+              width: '20%',
+              height: '25%',
+              backgroundColor: 'rgba(252, 211, 77, 0.3)',
+              border: '2px solid #f59e0b',
+              borderRadius: '8px',
+              transform: 'translateZ(1px)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              fontSize: '12px',
+              fontWeight: 'bold',
+              color: '#92400e'
+            }}
+          >
+            Rotisería
+          </div>
+
+          <div
+            style={{
+              position: 'absolute',
+              left: '65%',
+              top: '55%',
+              width: '25%',
+              height: '30%',
+              backgroundColor: 'rgba(248, 113, 113, 0.3)',
+              border: '2px solid #ef4444',
+              borderRadius: '8px',
+              transform: 'translateZ(1px)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              fontSize: '12px',
+              fontWeight: 'bold',
+              color: '#991b1b'
+            }}
+          >
+            Carnes
+          </div>
+
+          <div
+            style={{
+              position: 'absolute',
+              left: '40%',
+              top: '10%',
+              width: '20%',
+              height: '25%',
+              backgroundColor: 'rgba(196, 181, 253, 0.3)',
+              border: '2px solid #8b5cf6',
+              borderRadius: '8px',
+              transform: 'translateZ(1px)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              fontSize: '12px',
+              fontWeight: 'bold',
+              color: '#5b21b6'
+            }}
+          >
+            Lácteos
+          </div>
+
+          {/* Balance Markers */}
+          {balanceLocations.map((scale) => (
+            <div
+              key={scale.id}
+              style={{
+                position: 'absolute',
+                left: `${scale.x}%`,
+                top: `${scale.y}%`,
+                width: '40px',
+                height: '40px',
+                transform: `translateZ(${scale.z + 15}px)`,
+                cursor: 'pointer',
+                transition: 'transform 0.2s',
+              }}
+              onClick={() => setSelectedScale(scale)}
+              onMouseEnter={(e) => e.currentTarget.style.transform = `translateZ(${scale.z + 25}px) scale(1.2)`}
+              onMouseLeave={(e) => e.currentTarget.style.transform = `translateZ(${scale.z + 15}px) scale(1)`}
+            >
+              <div style={{
+                width: '100%',
+                height: '100%',
+                backgroundColor: scale.type === 'IA' ? '#8b5cf6' : scale.type === 'Autoservicio' ? '#f59e0b' : '#0071CE',
+                borderRadius: '50%',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                color: 'white',
+                fontWeight: 'bold',
+                fontSize: '18px',
+                boxShadow: '0 4px 12px rgba(0,0,0,0.3)',
+                border: '3px solid white'
+              }}>
+                ⚖️
+              </div>
+              <div style={{
+                position: 'absolute',
+                bottom: '-20px',
+                left: '50%',
+                transform: 'translateX(-50%)',
+                backgroundColor: 'white',
+                padding: '2px 6px',
+                borderRadius: '4px',
+                fontSize: '10px',
+                fontWeight: 'bold',
+                whiteSpace: 'nowrap',
+                boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
+              }}>
+                x{scale.count}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Selected Scale Info */}
+      {selectedScale && (
+        <Card className="p-4 bg-blue-50 border-2 border-blue-300">
+          <div className="flex justify-between items-start">
+            <div>
+              <h3 className="font-bold text-lg text-gray-800">{selectedScale.section}</h3>
+              <div className="mt-2 space-y-1 text-sm">
+                <p><span className="font-semibold">Tipo:</span> {selectedScale.type}</p>
+                <p><span className="font-semibold">Cantidad:</span> {selectedScale.count} balanza{selectedScale.count > 1 ? 's' : ''}</p>
+                <p><span className="font-semibold">Estado:</span> <span className="text-green-600 font-semibold">En línea</span></p>
+              </div>
+            </div>
+            <Button size="sm" variant="outline" onClick={() => setSelectedScale(null)}>
+              Cerrar
+            </Button>
+          </div>
+        </Card>
+      )}
+
+      {/* Legend */}
+      <div className="flex gap-4 flex-wrap">
+        <div className="flex items-center gap-2">
+          <div className="w-4 h-4 rounded-full" style={{ backgroundColor: '#0071CE' }} />
+          <span className="text-sm">BMS Asistida</span>
+        </div>
+        <div className="flex items-center gap-2">
+          <div className="w-4 h-4 rounded-full" style={{ backgroundColor: '#f59e0b' }} />
+          <span className="text-sm">Autoservicio</span>
+        </div>
+        <div className="flex items-center gap-2">
+          <div className="w-4 h-4 rounded-full" style={{ backgroundColor: '#8b5cf6' }} />
+          <span className="text-sm">IA</span>
+        </div>
+      </div>
+
+      <p className="text-sm text-gray-600 italic">💡 Arrastra con el mouse para rotar la vista del supermercado</p>
+    </div>
+  );
+};
+
 const MapPage = ({ onLogout }) => {
   const navigate = useNavigate();
   const [stores, setStores] = useState([]);
