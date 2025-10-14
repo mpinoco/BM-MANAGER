@@ -731,27 +731,125 @@ const AIServicesPage = ({ onLogout }) => {
               </div>
             </Card>
 
-            {/* Fraud Patterns Analysis */}
+            {/* High Risk Products Section */}
+            <Card className="p-6 bg-gradient-to-br from-orange-50 to-red-50 border-2 border-orange-300">
+              <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
+                <Shield className="w-5 h-5 text-orange-600" />
+                Productos de Alto Riesgo Detectados por IA
+              </h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                {highRiskProducts.map((product, index) => (
+                  <Card key={index} className="p-4 border-2 bg-white" style={{ 
+                    borderColor: product.riskLevel === 'Crítico' ? '#EF4444' : 
+                                product.riskLevel === 'Alto' ? '#F59E0B' : '#10B981' 
+                  }}>
+                    <div className="relative mb-3">
+                      <img 
+                        src={product.image} 
+                        alt={product.name}
+                        className="w-full h-32 object-cover rounded-lg"
+                        onError={(e) => {
+                          e.target.src = 'https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=400&h=300&fit=crop';
+                        }}
+                      />
+                      <Badge 
+                        className="absolute top-2 right-2"
+                        style={{
+                          backgroundColor: product.riskLevel === 'Crítico' ? '#EF4444' : 
+                                          product.riskLevel === 'Alto' ? '#F59E0B' : '#10B981',
+                          color: 'white'
+                        }}
+                      >
+                        {product.riskLevel}
+                      </Badge>
+                    </div>
+                    <div className="space-y-2">
+                      <h4 className="font-semibold text-gray-800 text-sm">{product.name}</h4>
+                      <div className="text-xs space-y-1">
+                        <div className="flex justify-between">
+                          <span className="text-gray-600">Intentos:</span>
+                          <span className="font-medium text-red-600">{product.attempts}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-600">Valor promedio:</span>
+                          <span className="font-medium">${(product.avgValue / 1000).toFixed(1)}K</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-600">Pérdida total:</span>
+                          <span className="font-bold text-red-700">${(product.totalLoss / 1000000).toFixed(2)}M</span>
+                        </div>
+                      </div>
+                    </div>
+                  </Card>
+                ))}
+              </div>
+            </Card>
+
+            {/* Fraud Patterns Analysis - Improved Chart */}
             <Card className="p-6">
               <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
                 <TrendingUp className="w-5 h-5 text-blue-600" />
                 Análisis de Patrones de Fraude
               </h3>
-              <ResponsiveContainer width="100%" height={400}>
-                <BarChart data={fraudProducts}>
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis 
-                    dataKey="name" 
-                    angle={-45}
-                    textAnchor="end"
-                    height={100}
-                    fontSize={12}
-                  />
-                  <YAxis />
-                  <Tooltip formatter={(value) => [`${value}`, 'Intentos de fraude']} />
-                  <Bar dataKey="attempts" fill="#EF4444" />
-                </BarChart>
-              </ResponsiveContainer>
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                {/* Bar Chart */}
+                <div>
+                  <h4 className="text-sm font-medium text-gray-600 mb-3">Productos Más Utilizados para Fraude</h4>
+                  <ResponsiveContainer width="100%" height={300}>
+                    <BarChart data={fraudProducts}>
+                      <defs>
+                        <linearGradient id="colorAttempts" x1="0" y1="0" x2="0" y2="1">
+                          <stop offset="5%" stopColor="#EF4444" stopOpacity={0.8}/>
+                          <stop offset="95%" stopColor="#EF4444" stopOpacity={0.3}/>
+                        </linearGradient>
+                      </defs>
+                      <CartesianGrid strokeDasharray="3 3" stroke="#e0e0e0" />
+                      <XAxis 
+                        dataKey="name" 
+                        angle={-30}
+                        textAnchor="end"
+                        height={80}
+                        fontSize={10}
+                      />
+                      <YAxis />
+                      <Tooltip 
+                        contentStyle={{ backgroundColor: '#fff', border: '1px solid #ddd', borderRadius: '8px' }}
+                        formatter={(value) => [`${value} intentos`, 'Fraude']} 
+                      />
+                      <Bar dataKey="attempts" fill="url(#colorAttempts)" radius={[8, 8, 0, 0]} />
+                    </BarChart>
+                  </ResponsiveContainer>
+                </div>
+
+                {/* Area Chart for High Risk */}
+                <div>
+                  <h4 className="text-sm font-medium text-gray-600 mb-3">Productos de Alto Riesgo</h4>
+                  <ResponsiveContainer width="100%" height={300}>
+                    <AreaChart data={highRiskProducts}>
+                      <defs>
+                        <linearGradient id="colorRisk" x1="0" y1="0" x2="0" y2="1">
+                          <stop offset="5%" stopColor="#F59E0B" stopOpacity={0.8}/>
+                          <stop offset="95%" stopColor="#F59E0B" stopOpacity={0.1}/>
+                        </linearGradient>
+                      </defs>
+                      <CartesianGrid strokeDasharray="3 3" stroke="#e0e0e0" />
+                      <XAxis 
+                        dataKey="name" 
+                        angle={-30}
+                        textAnchor="end"
+                        height={80}
+                        fontSize={10}
+                      />
+                      <YAxis />
+                      <Tooltip 
+                        contentStyle={{ backgroundColor: '#fff', border: '1px solid #ddd', borderRadius: '8px' }}
+                        formatter={(value) => [`${value} intentos`, 'Detecciones']} 
+                      />
+                      <Area type="monotone" dataKey="attempts" stroke="#F59E0B" fillOpacity={1} fill="url(#colorRisk)" />
+                    </AreaChart>
+                  </ResponsiveContainer>
+                </div>
+              </div>
             </Card>
           </TabsContent>
 
