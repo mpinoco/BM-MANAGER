@@ -10,6 +10,7 @@ import { toast } from 'sonner';
 import 'leaflet/dist/leaflet.css';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
+import { Scale } from 'lucide-react';
 
 // Fix Leaflet default icon issue
 delete L.Icon.Default.prototype._getIconUrl;
