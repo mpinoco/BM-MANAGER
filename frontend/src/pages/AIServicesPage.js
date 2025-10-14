@@ -41,36 +41,72 @@ const AIServicesPage = ({ onLogout }) => {
   // High-value fraud products with real imagery
   const fraudProducts = [
     {
-      name: 'iPhone 15 Pro Max',
-      image: 'https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=400&h=300&fit=crop',
+      name: 'Queso Quilque Soprole',
+      image: 'https://images.unsplash.com/photo-1486297678162-eb2a19b0a32d?w=400&h=300&fit=crop',
       attempts: 89,
-      avgValue: 1200000,
-      totalLoss: 106800000,
+      avgValue: 5500,
+      totalLoss: 489500,
       riskLevel: 'Crítico'
     },
     {
       name: 'Whisky Premium Johnnie Walker',
-      image: 'https://images.unsplash.com/photo-1569529465841-dfecdab7503b?w=400&h=300&fit=crop',
+      image: 'https://images.unsplash.com/photo-1527281400683-1aae777175f8?w=400&h=300&fit=crop',
       attempts: 67,
       avgValue: 89000,
       totalLoss: 5963000,
       riskLevel: 'Alto'
     },
     {
-      name: 'Reloj Apple Watch Ultra',
-      image: 'https://images.unsplash.com/photo-1434493789847-2f02dc6ca35d?w=400&h=300&fit=crop',
+      name: 'Bolsa con Pan Artesanal',
+      image: 'https://images.unsplash.com/photo-1509440159596-0249088772ff?w=400&h=300&fit=crop',
       attempts: 45,
-      avgValue: 650000,
-      totalLoss: 29250000,
+      avgValue: 3500,
+      totalLoss: 157500,
       riskLevel: 'Alto'
     },
     {
-      name: 'Perfume Chanel No.5',
-      image: 'https://images.unsplash.com/photo-1588405748880-12d1d2a59db9?w=400&h=300&fit=crop',
+      name: 'Lata de Café Premium',
+      image: 'https://images.unsplash.com/photo-1559056199-641a0ac8b55e?w=400&h=300&fit=crop',
       attempts: 34,
-      avgValue: 125000,
-      totalLoss: 4250000,
+      avgValue: 8500,
+      totalLoss: 289000,
       riskLevel: 'Medio'
+    }
+  ];
+
+  // High-risk products detected by AI
+  const highRiskProducts = [
+    {
+      name: 'Taladro Eléctrico',
+      image: 'https://images.unsplash.com/photo-1504148455328-c376907d081c?w=400&h=300&fit=crop',
+      attempts: 52,
+      avgValue: 85000,
+      totalLoss: 4420000,
+      riskLevel: 'Alto'
+    },
+    {
+      name: 'Set de Atornilladores',
+      image: 'https://images.unsplash.com/photo-1530124566582-a618bc2615dc?w=400&h=300&fit=crop',
+      attempts: 38,
+      avgValue: 35000,
+      totalLoss: 1330000,
+      riskLevel: 'Medio'
+    },
+    {
+      name: 'Lomo de Vacuno al Vacío',
+      image: 'https://images.unsplash.com/photo-1603048588665-791ca8aea617?w=400&h=300&fit=crop',
+      attempts: 71,
+      avgValue: 12000,
+      totalLoss: 852000,
+      riskLevel: 'Crítico'
+    },
+    {
+      name: 'Tablet Samsung',
+      image: 'https://images.unsplash.com/photo-1561154464-82e9adf32764?w=400&h=300&fit=crop',
+      attempts: 44,
+      avgValue: 350000,
+      totalLoss: 15400000,
+      riskLevel: 'Alto'
     }
   ];
 
