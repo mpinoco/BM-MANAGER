@@ -95,16 +95,60 @@ const SupermarketFloorPlan = () => {
             }} />
           </div>
 
-          {/* Walls */}
+          {/* Walls - 4 muros */}
+          {/* Muro frontal (frente) */}
           <div
             style={{
               position: 'absolute',
               width: '100%',
-              height: '80px',
-              backgroundColor: '#e0f2fe',
-              border: '2px solid #0ea5e9',
+              height: '100px',
+              backgroundColor: '#dbeafe',
+              border: '2px solid #3b82f6',
               transform: 'translateY(0) rotateX(90deg)',
               transformOrigin: 'top',
+              boxShadow: 'inset 0 0 20px rgba(59, 130, 246, 0.2)'
+            }}
+          />
+          
+          {/* Muro trasero (atrás) */}
+          <div
+            style={{
+              position: 'absolute',
+              width: '100%',
+              height: '100px',
+              backgroundColor: '#dbeafe',
+              border: '2px solid #3b82f6',
+              transform: 'translateY(600px) rotateX(90deg)',
+              transformOrigin: 'bottom',
+              boxShadow: 'inset 0 0 20px rgba(59, 130, 246, 0.2)'
+            }}
+          />
+          
+          {/* Muro izquierdo */}
+          <div
+            style={{
+              position: 'absolute',
+              width: '600px',
+              height: '100px',
+              backgroundColor: '#dbeafe',
+              border: '2px solid #3b82f6',
+              transform: 'translateX(0) rotateY(90deg)',
+              transformOrigin: 'left',
+              boxShadow: 'inset 0 0 20px rgba(59, 130, 246, 0.2)'
+            }}
+          />
+          
+          {/* Muro derecho */}
+          <div
+            style={{
+              position: 'absolute',
+              width: '600px',
+              height: '100px',
+              backgroundColor: '#dbeafe',
+              border: '2px solid #3b82f6',
+              transform: 'translateX(800px) rotateY(90deg)',
+              transformOrigin: 'right',
+              boxShadow: 'inset 0 0 20px rgba(59, 130, 246, 0.2)'
             }}
           />
 
