@@ -307,7 +307,7 @@ const SupermarketFloorPlan = () => {
                 width: '100%',
                 height: '100%',
                 backgroundColor: scale.type === 'IA' ? '#8b5cf6' : scale.type === 'Autoservicio' ? '#f59e0b' : '#0071CE',
-                borderRadius: '50%',
+                borderRadius: '8px',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
@@ -317,7 +317,7 @@ const SupermarketFloorPlan = () => {
                 boxShadow: '0 4px 12px rgba(0,0,0,0.3)',
                 border: '3px solid white'
               }}>
-                ⚖️
+                <Scale size={24} strokeWidth={2.5} />
               </div>
               <div style={{
                 position: 'absolute',
