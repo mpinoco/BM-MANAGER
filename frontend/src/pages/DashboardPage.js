@@ -120,7 +120,7 @@ const DashboardPage = ({ onLogout }) => {
           </div>
           <div>
             <img 
-              src="https://customer-assets.emergentagent.com/job_bm-intelligence/artifacts/kgdig180_log.png" 
+              src="https://customer-assets.emergentagent.com/job_bm-intelligence/artifacts/h5yx4md2_allcom%20logo.png" 
               alt="ALLCOM"
               className="h-12 w-auto object-contain"
             />
