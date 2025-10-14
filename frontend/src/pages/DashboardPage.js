@@ -114,18 +114,16 @@ const DashboardPage = ({ onLogout }) => {
       <div className="p-8 space-y-6">
         {/* Header */}
         <div className="flex justify-between items-center">
-          <div className="flex items-center gap-4">
-            <div>
-              <h1 className="text-3xl font-bold text-gray-800" style={{ fontFamily: 'Inter, sans-serif' }}>Panel de Control</h1>
-              <p className="text-gray-600 mt-1">Vista general del sistema de balanzas</p>
-            </div>
-            <div className="ml-6">
-              <img 
-                src="https://customer-assets.emergentagent.com/job_bm-intelligence/artifacts/v7gnb3kx_allcom%20logo.png" 
-                alt="ALLCOM"
-                className="h-16 w-auto object-contain"
-              />
-            </div>
+          <div>
+            <h1 className="text-3xl font-bold text-gray-800" style={{ fontFamily: 'Inter, sans-serif' }}>Panel de Control</h1>
+            <p className="text-gray-600 mt-1">Vista general del sistema de balanzas</p>
+          </div>
+          <div>
+            <img 
+              src="https://customer-assets.emergentagent.com/job_bm-intelligence/artifacts/kgdig180_log.png" 
+              alt="ALLCOM"
+              className="h-12 w-auto object-contain"
+            />
           </div>
         </div>
 
